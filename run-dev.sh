@@ -12,4 +12,5 @@ export MYSQL_PORT=4233
 export MYSQL_USER=root
 export MYSQL_PASS=
 export MYSQL_DB=kubevious-portable
+
 cd src && npm run dev
