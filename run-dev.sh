@@ -8,8 +8,8 @@ export NODE_ENV=development
 # export DEBUG=express:*
 #  --max_old_space_size=2048
 export MYSQL_HOST=localhost
-export MYSQL_PORT=4033
+export MYSQL_PORT=4233
 export MYSQL_USER=root
 export MYSQL_PASS=
-export MYSQL_DB=kubevious
-node src/
+export MYSQL_DB=kubevious-portable
+cd src && npm run dev

@@ -1,0 +1,137 @@
+@import "styles/fonts";
+
+h1, h2, h3, h4 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+html, body {
+  height: 100%;
+  background: #1E1E1E;
+  color: #FFF;
+  margin: 0;
+}
+
+div {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #666;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #f2a81c;
+  }
+}
+
+#root {
+  height: 100vh;
+}
+
+.button {
+  min-width: 100px;
+  height: 40px;
+  margin-right: 10px;
+  border: 1px solid #4E515B;
+  border-radius: 3px;
+  color: #4E515B;
+  background: #1E1E1E;
+  outline: none;
+}
+
+.button.square {
+  width: 40px;
+  height: 40px;
+}
+
+.button.success {
+  color: white;
+  background: #4ECD77;
+}
+
+.button.light {
+  background: #557C9B;
+  color: white;
+}
+
+.button.light:disabled {
+  background: #45596c;
+  color: #9a9b9e;
+}
+
+.button:hover {
+  color: white;
+  border: 1px solid white;
+  cursor: pointer;
+}
+
+.button.success:hover {
+  background: #249448;
+  border-color: #249448;
+}
+
+.button:disabled:hover {
+  cursor: not-allowed;
+}
+
+.button:last-child {
+  margin-right: 0;
+}
+
+.checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #CCCCCC;
+  border: 5px solid #4E515B;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #4ECD77;
+  border: 5px solid #4E515B;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkmark:hover {
+  background-color: #35373E;
+}
+
+.checkbox-container input:checked ~ .checkmark:hover {
+  background-color: #249448;
+}
+

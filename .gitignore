@@ -62,5 +62,7 @@ typings/
 # next.js build output
 .next
 
+src/client/node_modules
+src/node_modules
 
 .history

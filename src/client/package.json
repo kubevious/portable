@@ -1,0 +1,54 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/react-fontawesome": "^0.1.9",
+    "axios": "^0.19.2",
+    "bootstrap": "^4.5.0",
+    "classnames": "^2.2.6",
+    "codemirror": "^5.54.0",
+    "d3": "^5.16.0",
+    "golden-layout": "^1.5.9",
+    "highlight.js": "^10.0.3",
+    "jquery": "^3.5.1",
+    "js-yaml": "^3.14.0",
+    "kubevious-helpers": "git+https://github.com/kubevious/helpers.git",
+    "moment": "^2.26.0",
+    "node-sass": "^4.14.1",
+    "popper.js": "^1.16.1",
+    "react": "^16.13.1",
+    "react-codemirror2": "^7.2.0",
+    "react-color": "^2.18.1",
+    "react-dom": "^16.13.1",
+    "react-helmet": "^6.1.0",
+    "react-scripts": "3.4.1",
+    "the-lodash": "^1.1.1",
+    "webpack-jquery-ui": "^2.0.1",
+    "websocket-subscription-client": "^1.0.8",
+    "xml-js": "^1.6.11"
+  },
+  "scripts": {
+    "start": "PORT=5000 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

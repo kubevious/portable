@@ -7,3 +7,8 @@ cd src
 rm -rf node_modules/
 npm install
 npm update kubevious-helpers kubevious-kubik websocket-subscription-server
+
+cd client
+rm -rf node_modules/
+npm install
+npm install --save-dev

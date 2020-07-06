@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+
+ mysql-kubevious-portable:
+  image: 'mysql:8.0.19'
+  container_name: 'kubevious-portable-mysql'
+  networks:
+    - kubevious-portable
+  volumes:
+    - ./runtime-data:/var/lib/mysql:rw
+    - ./db-init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+  command: ["--default-authentication-plugin=mysql_native_password"]
+  restart: always
+  environment:
+    MYSQL_DATABASE: kubevious-portable
+    MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+  ports:
+    - '4233:3306'
+
+networks:
+  kubevious-portable:
+    external: true
