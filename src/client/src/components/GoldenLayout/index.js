@@ -28,6 +28,7 @@ class GoldenLayoutComponent extends BaseComponent {
             component: Diagram,
             location: 'main',
             title: 'Universe',
+            height: 75,
             skipClose: true
         })
         this._register({
@@ -45,27 +46,6 @@ class GoldenLayoutComponent extends BaseComponent {
             title: 'Alerts',
             allowVerticalScroll: true
         })
-        // this._register({
-        //     name: 'Events',
-        //     component: Events,
-        //     location: 'bottom',
-        //     title: 'Events',
-        //     allowVerticalScroll: true
-        // })
-        // this._register({
-        //     name: 'Logs',
-        //     component: Logs,
-        //     location: 'bottom',
-        //     title: 'Logs',
-        //     allowVerticalScroll: true
-        // })
-        // this._register({
-        //     name: 'UI Logs',
-        //     component: UiLogs,
-        //     location: 'bottom',
-        //     title: 'UI Logs',
-        //     allowVerticalScroll: true
-        // })
 
         this._activateLayout()
     }
