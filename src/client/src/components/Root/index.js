@@ -33,19 +33,9 @@ class Root extends BaseComponent {
         this.handleChangeWindow = this.handleChangeWindow.bind(this)
         this.closeError = this.closeError.bind(this)
 
-        this.subscribeToSharedState([
-            'time_machine_enabled', 'time_machine_date', 'selected_dn',
-            'time_machine_date_to', 'time_machine_duration', 'time_machine_date_from'
-        ],
-            ({
-                time_machine_enabled, time_machine_date, selected_dn, time_machine_date_to, time_machine_date_from,
-                time_machine_target_date = this.sharedState.get('time_machine_target_date'), time_machine_duration,
-            }) => {
-
-                this._fieldsSaver.setValue({
-                    time_machine_enabled, time_machine_date, selected_dn, time_machine_date_to, 
-                    time_machine_target_date, time_machine_duration, time_machine_date_from
-                })
+        this.subscribeToSharedState('selected_dn',
+            (selected_dn) => {
+                this._fieldsSaver.setValue({ selected_dn })
             })
     }
 
@@ -65,15 +55,15 @@ class Root extends BaseComponent {
         this.setState({
             layout: value, windows: value._components
                 .filter(item => !item.skipClose)
-                .map(component => ({ ...component, isVisible: true }))
+                .map(component => ({ ...component, isVisible: true })),
         })
 
-        this.subscribeToSharedState(['selected_dn', 'auto_pan_to_selected_dn'], 
-            ({selected_dn, auto_pan_to_selected_dn}) => {
+        this.subscribeToSharedState(['selected_dn', 'auto_pan_to_selected_dn'],
+            ({ selected_dn, auto_pan_to_selected_dn }) => {
                 if (selected_dn) {
                     value.activateComponent('universeComponent')
                 }
-            }
+            },
         );
     }
 
@@ -104,7 +94,7 @@ class Root extends BaseComponent {
 
     componentDidMount() {
         this.subscribeToSharedState(['is_error', 'error'], ({ is_error, error }) => {
-            this.setState({ error: error, isError: is_error})
+            this.setState({ error: error, isError: is_error })
         })
     }
 
@@ -142,7 +132,7 @@ class Root extends BaseComponent {
                         {popupContent}
                     </Popup>}
 
-                    {isError && <ErrorBox error={error} closeError={this.closeError}/>}
+                    {isError && <ErrorBox error={error} closeError={this.closeError} />}
                 </div>
             </>
         )

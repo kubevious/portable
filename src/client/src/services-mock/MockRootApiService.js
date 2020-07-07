@@ -8,8 +8,6 @@ import BaseRootApiService from '../BaseRootApiService'
 
 import DiagramService from './MockDiagramService'
 import WebSocketService from './MockWebSocketService'
-import RuleService from './MockRuleService'
-import MarkerService from './MockMarkerService'
 import MiscService from './MockMiscService';
 
 class MockRootApiService extends BaseRootApiService
@@ -17,14 +15,6 @@ class MockRootApiService extends BaseRootApiService
     constructor(sharedState)
     {
         super(sharedState);
-
-        this.registerService({kind: 'rule'}, () => {
-            return new RuleService(this, sharedState);
-        });
-
-        this.registerService({kind: 'marker'}, () => {
-            return new MarkerService(this, sharedState);
-        });
 
         this.registerService({kind: 'socket'}, () => {
             return new WebSocketService(sharedState);
@@ -41,14 +31,6 @@ class MockRootApiService extends BaseRootApiService
     
     socketService() {
         return this.resolveService({kind: 'socket'});
-    }
-
-    ruleService() {
-        return this.resolveService({kind: 'rule'});
-    }
-
-    markerService() {
-        return this.resolveService({kind: 'marker'});
     }
 
     diagramService(params) {

@@ -6,7 +6,6 @@ const Promise = require('the-promise');
 const ProcessingTracker = require("kubevious-helpers").ProcessingTracker;
 const FacadeRegistry = require('./facade/registry');
 const SearchEngine = require('./search/engine');
-const Database = require('./db');
 const Registry = require('./registry/registry');
 const Collector = require('./collector/collector');
 const ClusterLeaderElector = require('./cluster/leader-elector')
@@ -21,7 +20,6 @@ class Context
     {
         this._logger = logger.sublogger("Context");
         this._tracker = new ProcessingTracker(logger.sublogger("Tracker"));
-        this._database = new Database(logger);
         this._searchEngine = new SearchEngine(this);
         this._collector = new Collector(this);
         this._registry = new Registry(this);
@@ -43,14 +41,6 @@ class Context
 
     get tracker() {
         return this._tracker;
-    }
-
-    get mysqlDriver() {
-        return this.database.driver;
-    }
-
-    get database() {
-        return this._database;
     }
 
     get facadeRegistry() {
@@ -104,7 +94,6 @@ class Context
         }
 
         return Promise.resolve()
-            .then(() => this._database.init())
             .then(() => this._runServer())
             .then(() => this._setupWebSocket())
             .catch(reason => {

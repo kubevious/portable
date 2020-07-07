@@ -29,46 +29,6 @@ class DiagramService {
                 cb(result.data);
             })
     }
-
-    fetchHistoryRange(cb) {
-        return this._client.get('/v1/history/range')
-            .then(result => {
-                cb(result.data);
-            });
-    }
-
-    fetchHistoryTimeline(from, to, cb) {
-        var params = {
-            from: from,
-            to: to
-        };
-        return this._client.get('/v1/history/timeline', params)
-            .then(result => {
-                cb(result.data);
-            });
-    }
-
-    fetchHistorySnapshot(date, cb) {
-        var params = {
-            date: date
-        };
-        return this._client.get('/v1/history/snapshot', params)
-            .then(result => {
-                cb(result.data);
-            });
-    }
-
-    fetchHistoryProperties(dn, date, cb) {
-        var params = {
-            dn: dn,
-            date: date
-        };
-        return this._client.get('/v1/history/assets', params)
-            .then(result => {
-                cb(result.data);
-            });
-    }
-
 }
 
 export default DiagramService

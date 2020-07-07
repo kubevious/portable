@@ -187,11 +187,6 @@ class FacadeRegistry
                     return this._context.searchEngine.accept(registryState);
                 });
             })
-            .then(() => {
-                return tracker.scope("history-accept", () => {
-                    return this._context.historyProcessor.accept(registryState);
-                });
-            })
     }
 
 }

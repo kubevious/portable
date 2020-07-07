@@ -4,10 +4,8 @@
 
 import _ from 'the-lodash'
 import {
-    ABOUT_DATA,
     ALERTS_DATA,
-    GRAPH_DATA, HISTORY_GRAPH_DATA, HISTORY_PROPERTIES,
-    HISTORY_RANGE, HISTORY_TIMELINE,
+    GRAPH_DATA,
     PROPERTIES_DATA,
     DN_LIST
 } from '../boot/diagramMockData'
@@ -16,15 +14,13 @@ class MockDiagramService {
     constructor(sharedState) {
         this.sharedState = sharedState;
 
-        this.sharedState.subscribe(['selected_dn', 'time_machine_enabled'],
-            ({ selected_dn, time_machine_enabled }) => {
+        this.sharedState.subscribe(['selected_dn'],
+            ({ selected_dn }) => {
 
                 if (selected_dn) {
-                    if (!time_machine_enabled) {
-                        this.fetchAssets(selected_dn, (data) => {
-                            this.sharedState.set('selected_object_assets', data);
-                        })
-                    }
+                    this.fetchAssets(selected_dn, (data) => {
+                        this.sharedState.set('selected_object_assets', data);
+                    })
                 }
             });
     }
@@ -66,26 +62,6 @@ class MockDiagramService {
     _randomInt(x)
     {
         return Math.floor(Math.random() * x); 
-    }
-
-    fetchAbout(cb) {
-        cb(ABOUT_DATA)
-    }
-
-    fetchHistoryRange(cb) {
-        cb(HISTORY_RANGE)
-    }
-
-    fetchHistoryTimeline(from, to, cb) {
-        cb(HISTORY_TIMELINE)
-    }
-
-    fetchHistorySnapshot(date, cb) {
-        cb(HISTORY_GRAPH_DATA)
-    }
-
-    fetchHistoryProperties(dn, date, cb) {
-        cb(_.cloneDeep(HISTORY_PROPERTIES))
     }
 }
 

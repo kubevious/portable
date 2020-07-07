@@ -23,14 +23,6 @@ class DiagramSource
                 this._updateSubscriptions();
                 this._handleTreeChange();
             });
-
-        this._sharedState.subscribe('time_machine_enabled', 
-            (time_machine_enabled) => {
-                if (!time_machine_enabled)
-                {
-                    this._handleTreeChange();
-                }
-            });
     }
 
     getChildren(dn)
@@ -111,16 +103,8 @@ class DiagramSource
 
     _handleTreeChange()
     {
-        if (this._sharedState.get('time_machine_enabled')) {
-            return;
-        }
-
         this._executeDelayedAction('build-tree', 
             () => {
-                if (this._sharedState.get('time_machine_enabled')) {
-                    return;
-                }
-
                 var tree = this._buildTreeData();
                 this._sharedState.set('diagram_data', tree);
             });

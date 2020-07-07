@@ -26,11 +26,8 @@ class StateHandler {
 
         this._handleDefaultParams()
         this._handleSelectedDnAutoExpandChange()
-        this._handleTimeMachineChange()
         this._handleSelectedObjectChange()
         this._handleSelectedObjectAssetsChange()
-        this._handleTimelineDataChange()
-        this._handleMarkerListChange()
     }
 
     _handleDefaultParams() {
@@ -38,35 +35,11 @@ class StateHandler {
 
         const fields = this._fieldsSaver.decodeParams(params)
 
-        const { sd, tme, tmdat, tmdt, tmdf, tmtd, tmdu } = fields
-
-        if (tme) {
-            this.sharedState.set('time_machine_enabled', tme === 'true')
-        }
-
-        if (tmdat) {
-            this.sharedState.set('time_machine_date', tmdat)
-        }
-
-        if (tmdt) {
-            this.sharedState.set('time_machine_date_to', Date.parse(tmdt))
-        }
-        
-        if (tmdf) {
-            this.sharedState.set('time_machine_date_from', Date.parse(tmdf))
-        }
-
-        if (tmtd) {
-            this.sharedState.set('time_machine_target_date', Date.parse(tmtd))
-        }
+        const { sd } = fields
 
         if (sd) {
             this.sharedState.set('selected_dn', sd)
             this.sharedState.set('auto_pan_to_selected_dn', true);
-        }
-
-        if (tmdu) {
-            this.sharedState.set('time_machine_duration', tmdu)
         }
     }
 
@@ -88,38 +61,11 @@ class StateHandler {
             });
     }
 
-    _handleTimeMachineChange() {
-        // TODO: .....
-        this.sharedState.subscribe(['time_machine_enabled', 'time_machine_date'],
-            ({ time_machine_enabled, time_machine_date }) => {
-            console.log('time_machine_enabled', time_machine_enabled)
-                if (time_machine_enabled) {
-                    this._service.fetchHistorySnapshot(time_machine_date, (sourceData) => {
-
-                        if (this.sharedState.get('time_machine_enabled') &&
-                            (this.sharedState.get('time_machine_date') === time_machine_date ))
-                        {
-                            this.sharedState.set('diagram_data', sourceData);
-                        }
-                    })
-                }
-            })
-    }
-
     _handleSelectedObjectChange() {
 
-        this.sharedState.subscribe(['selected_dn', 'time_machine_enabled', 'time_machine_date'],
-            ({ selected_dn, time_machine_enabled, time_machine_date }) => {
-
-                if (selected_dn) {
-                    if (time_machine_enabled) {
-                        this._service.fetchHistoryProperties(selected_dn, time_machine_date, (config) => {
-                            this.sharedState.set('selected_object_assets', config);
-                        })
-                    }
-                } else {
-                    this.sharedState.set('selected_object_assets', null);
-                }
+        this.sharedState.subscribe(['selected_dn'],
+            ({ selected_dn }) => {
+                this.sharedState.set('selected_object_assets', null);
             });
 
     }
@@ -135,57 +81,6 @@ class StateHandler {
                     this.sharedState.set('selected_object_alerts', []);
                 }
             })
-    }
-
-    _handleTimelineDataChange() {
-        this.sharedState.subscribe(['time_machine_date_from', 'time_machine_date_to'],
-            ({ time_machine_date_from, time_machine_date_to }) => {
-
-                if (!time_machine_date_from || !time_machine_date_to) {
-                    this.sharedState.set('time_machine_timeline_data', null);
-                    this.sharedState.set('time_machine_actual_date_from', null);
-                    this.sharedState.set('time_machine_actual_date_to', null);
-
-                    return;
-                }
-
-                var from = time_machine_date_from ? new Date(time_machine_date_from) : time_machine_date_from.toISOString()
-                var to = time_machine_date_to ? new Date(time_machine_date_to) : time_machine_date_to.toISOString()
-
-                this._service.fetchHistoryTimeline(from, to, data => {
-                    for(var x of data)
-                    {
-                        x.date = new Date(x.date);
-                    }
-                    var orderedData = _.orderBy(data, ['date'], ['asc']);
-                    this.sharedState.set('time_machine_timeline_data', orderedData);
-
-                    this.sharedState.set('time_machine_actual_date_from', time_machine_date_from);
-                    this.sharedState.set('time_machine_actual_date_to', time_machine_date_to);
-
-                });
-
-            }
-        )
-    }
-
-    _handleMarkerListChange()
-    {
-        this.sharedState.subscribe('marker_editor_items',
-            (marker_editor_items) => {
-
-                var markerDict = {};
-                if (marker_editor_items) {
-                    markerDict = _.makeDict(marker_editor_items, 
-                        x => x.name,
-                        x => ({
-                            shape: x.shape,
-                            color: x.color
-                        }))
-                }
-
-                this.sharedState.set('markers_dict', markerDict);
-            });
     }
 
 }
