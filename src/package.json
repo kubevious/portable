@@ -17,6 +17,7 @@
     "url": "git+https://kubevious@github.com/kubevious/portable.git"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "express": "^4.17.1",
     "flexsearch": "^0.6.32",
     "js-yaml": "^3.13.1",

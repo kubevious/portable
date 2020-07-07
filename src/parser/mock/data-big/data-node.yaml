@@ -1,0 +1,511 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Node
+  metadata:
+    annotations:
+      container.googleapis.com/instance_id: "872934624543430241"
+      node.alpha.kubernetes.io/ttl: "0"
+      volumes.kubernetes.io/controller-managed-attach-detach: "true"
+    creationTimestamp: "2020-04-23T10:07:06Z"
+    labels:
+      beta.kubernetes.io/arch: amd64
+      beta.kubernetes.io/fluentd-ds-ready: "true"
+      beta.kubernetes.io/instance-type: n1-standard-2
+      beta.kubernetes.io/masq-agent-ds-ready: "true"
+      beta.kubernetes.io/os: linux
+      cloud.google.com/gke-nodepool: pool-2
+      cloud.google.com/gke-os-distribution: cos
+      failure-domain.beta.kubernetes.io/region: us-central1
+      failure-domain.beta.kubernetes.io/zone: us-central1-a
+      kubernetes.io/arch: amd64
+      kubernetes.io/hostname: gke-kubevious-samples-pool-2-d17eaa99-95cn
+      kubernetes.io/os: linux
+      node.kubernetes.io/masq-agent-ds-ready: "true"
+      projectcalico.org/ds-ready: "true"
+    name: gke-kubevious-samples-pool-2-d17eaa99-95cn
+    resourceVersion: "52633654"
+    selfLink: /api/v1/nodes/gke-kubevious-samples-pool-2-d17eaa99-95cn
+    uid: 2fe302ca-854a-11ea-bb1c-42010a800057
+  spec:
+    podCIDR: 10.8.1.0/24
+    providerID: gce://cellular-ring-264803/us-central1-a/gke-kubevious-samples-pool-2-d17eaa99-95cn
+  status:
+    addresses:
+    - address: 10.128.0.40
+      type: InternalIP
+    - address: 35.224.115.114
+      type: ExternalIP
+    - address: gke-kubevious-samples-pool-2-d17eaa99-95cn.us-central1-a.c.cellular-ring-264803.internal
+      type: InternalDNS
+    - address: gke-kubevious-samples-pool-2-d17eaa99-95cn.us-central1-a.c.cellular-ring-264803.internal
+      type: Hostname
+    allocatable:
+      attachable-volumes-gce-pd: "127"
+      cpu: 1930m
+      ephemeral-storage: "47093746742"
+      hugepages-2Mi: "0"
+      memory: 5777164Ki
+      pods: "110"
+    capacity:
+      attachable-volumes-gce-pd: "127"
+      cpu: "2"
+      ephemeral-storage: 98868448Ki
+      hugepages-2Mi: "0"
+      memory: 7657228Ki
+      pods: "110"
+    conditions:
+    - lastHeartbeatTime: "2020-05-22T04:51:07Z"
+      lastTransitionTime: "2020-04-23T10:07:14Z"
+      message: kernel has no deadlock
+      reason: KernelHasNoDeadlock
+      status: "False"
+      type: KernelDeadlock
+    - lastHeartbeatTime: "2020-05-22T04:51:07Z"
+      lastTransitionTime: "2020-04-23T10:07:14Z"
+      message: Filesystem is not read-only
+      reason: FilesystemIsNotReadOnly
+      status: "False"
+      type: ReadonlyFilesystem
+    - lastHeartbeatTime: "2020-05-22T04:51:07Z"
+      lastTransitionTime: "2020-04-23T10:07:14Z"
+      message: docker overlay2 is functioning properly
+      reason: NoCorruptDockerOverlay2
+      status: "False"
+      type: CorruptDockerOverlay2
+    - lastHeartbeatTime: "2020-05-22T04:51:07Z"
+      lastTransitionTime: "2020-04-23T10:07:14Z"
+      message: node is functioning properly
+      reason: NoFrequentUnregisterNetDevice
+      status: "False"
+      type: FrequentUnregisterNetDevice
+    - lastHeartbeatTime: "2020-05-22T04:51:07Z"
+      lastTransitionTime: "2020-04-23T10:07:14Z"
+      message: kubelet is functioning properly
+      reason: NoFrequentKubeletRestart
+      status: "False"
+      type: FrequentKubeletRestart
+    - lastHeartbeatTime: "2020-05-22T04:51:07Z"
+      lastTransitionTime: "2020-04-23T10:07:14Z"
+      message: docker is functioning properly
+      reason: NoFrequentDockerRestart
+      status: "False"
+      type: FrequentDockerRestart
+    - lastHeartbeatTime: "2020-05-22T04:51:07Z"
+      lastTransitionTime: "2020-04-23T10:07:14Z"
+      message: containerd is functioning properly
+      reason: NoFrequentContainerdRestart
+      status: "False"
+      type: FrequentContainerdRestart
+    - lastHeartbeatTime: "2020-05-20T08:18:46Z"
+      lastTransitionTime: "2020-05-20T08:18:46Z"
+      message: NodeController create implicit route
+      reason: RouteCreated
+      status: "False"
+      type: NetworkUnavailable
+    - lastHeartbeatTime: "2020-05-22T04:50:41Z"
+      lastTransitionTime: "2020-04-28T23:32:51Z"
+      message: kubelet has sufficient memory available
+      reason: KubeletHasSufficientMemory
+      status: "False"
+      type: MemoryPressure
+    - lastHeartbeatTime: "2020-05-22T04:50:41Z"
+      lastTransitionTime: "2020-04-23T10:07:06Z"
+      message: kubelet has no disk pressure
+      reason: KubeletHasNoDiskPressure
+      status: "False"
+      type: DiskPressure
+    - lastHeartbeatTime: "2020-05-22T04:50:41Z"
+      lastTransitionTime: "2020-04-23T10:07:06Z"
+      message: kubelet has sufficient PID available
+      reason: KubeletHasSufficientPID
+      status: "False"
+      type: PIDPressure
+    - lastHeartbeatTime: "2020-05-22T04:50:41Z"
+      lastTransitionTime: "2020-04-23T10:07:36Z"
+      message: kubelet is posting ready status. AppArmor enabled
+      reason: KubeletReady
+      status: "True"
+      type: Ready
+    daemonEndpoints:
+      kubeletEndpoint:
+        Port: 10250
+    images:
+    - names:
+      - registry.gitlab.com/gitlab-org/build/cng/gitaly@sha256:39cba22d0752c351c71d81d5f256e4ab15775c99e1384bc44b9e49df2a87315a
+      - registry.gitlab.com/gitlab-org/build/cng/gitaly:v1.77.1
+      sizeBytes: 1660554186
+    - names:
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-task-runner-ee@sha256:d8d8050ef9af602f0f8b402a0335e2f24a0b01d4a0d8742ec14fe126b300a5d4
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-task-runner-ee:v12.6.4
+      sizeBytes: 1236906531
+    - names:
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-unicorn-ee@sha256:b47d7878f286b55537822d6cf11ca4dd02796153ff0855cb5dac9f9d10991c72
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-unicorn-ee:v12.6.4
+      sizeBytes: 1158004510
+    - names:
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-shell@sha256:3bf341ee201c88d919c89e28c54c25ed9e1c2a0ab86ef7e0f197251e3fa13880
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-shell:v10.3.0
+      sizeBytes: 1119283307
+    - names:
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ee@sha256:fe237c2c5e64dade77d841a034a16b84ce5afa9f619f8519fa0d846dfed5289b
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ee:v12.6.4
+      sizeBytes: 1073366011
+    - names:
+      - quay.io/kubernetes-ingress-controller/nginx-ingress-controller@sha256:617076c3e3d4d0638a4927702530d8456bda64c67194f6daed272a59e93b992f
+      - quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.21.0
+      sizeBytes: 568075227
+    - names:
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-workhorse-ee@sha256:6dba4d45e8a1f975604894e9fa12c28e5d30c126480ca4346ea449c25a69c4c5
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-workhorse-ee:v12.6.4
+      sizeBytes: 548184528
+    - names:
+      - gcr.io/google-samples/microservices-demo/emailservice@sha256:d42ee712cbb4806a8b922e303a5e6734f342dfb6c92c81284a289912165b7314
+      - gcr.io/google-samples/microservices-demo/emailservice:v0.1.3
+      sizeBytes: 340073854
+    - names:
+      - gcr.io/google-samples/microservices-demo/adservice@sha256:5edd0b072ec9f582693a4de28a50721028868dad453910c867268c231af734e1
+      - gcr.io/google-samples/microservices-demo/adservice:v0.1.3
+      sizeBytes: 330613661
+    - names:
+      - gcr.io/stackdriver-agents/stackdriver-logging-agent@sha256:810aadac042cee96db99d94cec2436482b886774681b44bb141254edda5e3cdf
+      - gcr.io/stackdriver-agents/stackdriver-logging-agent:1.6.17
+      sizeBytes: 238318516
+    - names:
+      - postgres@sha256:6e1efcd656386fc0c0a9893fda0c0ec6704868fbaad5ad5be3732c4f81cf21c9
+      - postgres:9.6.8
+      sizeBytes: 234295589
+    - names:
+      - gcr.io/google-samples/microservices-demo/loadgenerator@sha256:d0701c6a89b4b47b90932d59f84d8840f093e54ceec1ca2d4789ed8daac752e9
+      - gcr.io/google-samples/microservices-demo/loadgenerator:v0.1.3
+      sizeBytes: 220425545
+    - names:
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-exporter@sha256:a38a46a08c03e312750a885e9ad708024e6e7c47286f3d568d63467852aa271b
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-exporter:5.1.0
+      sizeBytes: 216562521
+    - names:
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-redis-ha@sha256:fd0cc46056de7f542953ac852265919552285a388fe2616ca593fbc147d86c4c
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-redis-ha:732704f18e34ba469df34b10c3b2465e0469d484
+      sizeBytes: 185103554
+    - names:
+      - gcr.io/google-samples/microservices-demo/currencyservice@sha256:52818623cf85b8a0f01709b06ce94bde44b9ee27203c35b832663f55cde1fe83
+      - gcr.io/google-samples/microservices-demo/currencyservice:v0.1.3
+      sizeBytes: 152976787
+    - names:
+      - gcr.io/google-samples/microservices-demo/paymentservice@sha256:c82409d85cd2006ee13537d3f404b0c85d9fbb55642450602e015f63abc571e1
+      - gcr.io/google-samples/microservices-demo/paymentservice:v0.1.3
+      sizeBytes: 150117861
+    - names:
+      - kubevious/kubevious@sha256:f9dafd9eb2f8df910ff854a846d40ba6f7f8bad6aa1209e7ec6e9182a9eef054
+      - kubevious/kubevious:0.6.19
+      sizeBytes: 141214247
+    - names:
+      - kubevious/kubevious@sha256:aa80deb1ea881fef805e9ebe99a3c001ff8e4d87caa52827ed6dd0a33ba1e2d9
+      - kubevious/kubevious:0.6.15
+      sizeBytes: 141152427
+    - names:
+      - k8s.gcr.io/fluentd-elasticsearch@sha256:5a704c386f66bb3c24e3bcf2e94269c426f1473100fcd37b31579ca8b709c558
+      - k8s.gcr.io/fluentd-elasticsearch:v2.4.0
+      sizeBytes: 139904122
+    - names:
+      - kubevious/parser@sha256:f5d6bf64b0cdf33b2e442bcac894efa8edb2a621766e7baba7ed2f17c9460511
+      - kubevious/parser:0.6.5
+      sizeBytes: 124451687
+    - names:
+      - k8s.gcr.io/kubernetes-dashboard-amd64@sha256:0ae6b69432e78069c5ce2bcde0fe409c5c4d6f0f4d9cd50a17974fea38898747
+      - k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1
+      sizeBytes: 121711221
+    - names:
+      - weaveworksdemos/front-end@sha256:26a2d9b6b291dee2dca32fca3f5bff6c2fa07bb5954359afcbc8001cc70eac71
+      - weaveworksdemos/front-end:0.3.12
+      sizeBytes: 119797603
+    - names:
+      - kubevious/ui@sha256:cfed7199c48a4874864ca6f3b2cbc76c25eeea35d253d635612939246c0ef8c4
+      - kubevious/ui:0.6.3
+      sizeBytes: 115944346
+    - names:
+      - kubevious/kubevious@sha256:d307caa89f9a75ffb3ad236d68702c6604ec42620f8cb78180497955cc507e0e
+      - kubevious/kubevious:0.5.3
+      sizeBytes: 114660969
+    - names:
+      - kubevious/ui@sha256:466c489d85a6aaf0faf0ccd19ed4ee2ede50e8d668c408d61a9974fa28eff284
+      - kubevious/ui:0.5.8
+      sizeBytes: 104864605
+    nodeInfo:
+      architecture: amd64
+      bootID: 69852669-ca0b-4811-a70e-a457c06c2ef4
+      containerRuntimeVersion: docker://18.9.7
+      kernelVersion: 4.14.138+
+      kubeProxyVersion: v1.14.10-gke.27
+      kubeletVersion: v1.14.10-gke.27
+      machineID: a9915f34b9bbb3ce918fef95ad06041c
+      operatingSystem: linux
+      osImage: Container-Optimized OS from Google
+      systemUUID: A9915F34-B9BB-B3CE-918F-EF95AD06041C
+    volumesAttached:
+    - devicePath: /dev/disk/by-id/google-gke-kubevious-samples--pvc-99ab6319-398b-11ea-b115-42010a8001d6
+      name: kubernetes.io/gce-pd/gke-kubevious-samples--pvc-99ab6319-398b-11ea-b115-42010a8001d6
+    - devicePath: /dev/disk/by-id/google-gke-kubevious-samples--pvc-9a4f5da5-398b-11ea-b115-42010a8001d6
+      name: kubernetes.io/gce-pd/gke-kubevious-samples--pvc-9a4f5da5-398b-11ea-b115-42010a8001d6
+    - devicePath: /dev/disk/by-id/google-gke-kubevious-samples--pvc-9820ef3b-398b-11ea-b115-42010a8001d6
+      name: kubernetes.io/gce-pd/gke-kubevious-samples--pvc-9820ef3b-398b-11ea-b115-42010a8001d6
+    volumesInUse:
+    - kubernetes.io/gce-pd/gke-kubevious-samples--pvc-9820ef3b-398b-11ea-b115-42010a8001d6
+    - kubernetes.io/gce-pd/gke-kubevious-samples--pvc-99ab6319-398b-11ea-b115-42010a8001d6
+    - kubernetes.io/gce-pd/gke-kubevious-samples--pvc-9a4f5da5-398b-11ea-b115-42010a8001d6
+- apiVersion: v1
+  kind: Node
+  metadata:
+    annotations:
+      container.googleapis.com/instance_id: "4860114196061063384"
+      node.alpha.kubernetes.io/ttl: "0"
+      volumes.kubernetes.io/controller-managed-attach-detach: "true"
+    creationTimestamp: "2020-03-27T23:11:50Z"
+    labels:
+      beta.kubernetes.io/arch: amd64
+      beta.kubernetes.io/fluentd-ds-ready: "true"
+      beta.kubernetes.io/instance-type: n1-standard-2
+      beta.kubernetes.io/masq-agent-ds-ready: "true"
+      beta.kubernetes.io/os: linux
+      cloud.google.com/gke-nodepool: pool-2
+      cloud.google.com/gke-os-distribution: cos
+      failure-domain.beta.kubernetes.io/region: us-central1
+      failure-domain.beta.kubernetes.io/zone: us-central1-a
+      kubernetes.io/arch: amd64
+      kubernetes.io/hostname: gke-kubevious-samples-pool-2-d17eaa99-w6zl
+      kubernetes.io/os: linux
+      node.kubernetes.io/masq-agent-ds-ready: "true"
+      projectcalico.org/ds-ready: "true"
+    name: gke-kubevious-samples-pool-2-d17eaa99-w6zl
+    resourceVersion: "52633479"
+    selfLink: /api/v1/nodes/gke-kubevious-samples-pool-2-d17eaa99-w6zl
+    uid: 56b9f2dd-7080-11ea-8ebf-42010a800207
+  spec:
+    podCIDR: 10.8.0.0/24
+    providerID: gce://cellular-ring-264803/us-central1-a/gke-kubevious-samples-pool-2-d17eaa99-w6zl
+  status:
+    addresses:
+    - address: 10.128.0.39
+      type: InternalIP
+    - address: 35.226.72.212
+      type: ExternalIP
+    - address: gke-kubevious-samples-pool-2-d17eaa99-w6zl.us-central1-a.c.cellular-ring-264803.internal
+      type: InternalDNS
+    - address: gke-kubevious-samples-pool-2-d17eaa99-w6zl.us-central1-a.c.cellular-ring-264803.internal
+      type: Hostname
+    allocatable:
+      attachable-volumes-gce-pd: "127"
+      cpu: 1930m
+      ephemeral-storage: "47093746742"
+      hugepages-2Mi: "0"
+      memory: 5777164Ki
+      pods: "110"
+    capacity:
+      attachable-volumes-gce-pd: "127"
+      cpu: "2"
+      ephemeral-storage: 98868448Ki
+      hugepages-2Mi: "0"
+      memory: 7657228Ki
+      pods: "110"
+    conditions:
+    - lastHeartbeatTime: "2020-05-22T04:50:22Z"
+      lastTransitionTime: "2020-05-20T16:05:29Z"
+      message: docker overlay2 is functioning properly
+      reason: NoCorruptDockerOverlay2
+      status: "False"
+      type: CorruptDockerOverlay2
+    - lastHeartbeatTime: "2020-05-22T04:50:22Z"
+      lastTransitionTime: "2020-05-20T16:05:29Z"
+      message: node is functioning properly
+      reason: NoFrequentUnregisterNetDevice
+      status: "False"
+      type: FrequentUnregisterNetDevice
+    - lastHeartbeatTime: "2020-05-22T04:50:22Z"
+      lastTransitionTime: "2020-05-20T16:05:29Z"
+      message: kubelet is functioning properly
+      reason: NoFrequentKubeletRestart
+      status: "False"
+      type: FrequentKubeletRestart
+    - lastHeartbeatTime: "2020-05-22T04:50:22Z"
+      lastTransitionTime: "2020-05-20T16:05:29Z"
+      message: docker is functioning properly
+      reason: NoFrequentDockerRestart
+      status: "False"
+      type: FrequentDockerRestart
+    - lastHeartbeatTime: "2020-05-22T04:50:22Z"
+      lastTransitionTime: "2020-05-20T16:05:29Z"
+      message: containerd is functioning properly
+      reason: NoFrequentContainerdRestart
+      status: "False"
+      type: FrequentContainerdRestart
+    - lastHeartbeatTime: "2020-05-22T04:50:22Z"
+      lastTransitionTime: "2020-05-20T16:05:29Z"
+      message: kernel has no deadlock
+      reason: KernelHasNoDeadlock
+      status: "False"
+      type: KernelDeadlock
+    - lastHeartbeatTime: "2020-05-22T04:50:22Z"
+      lastTransitionTime: "2020-05-20T16:05:29Z"
+      message: Filesystem is not read-only
+      reason: FilesystemIsNotReadOnly
+      status: "False"
+      type: ReadonlyFilesystem
+    - lastHeartbeatTime: "2020-05-20T08:18:46Z"
+      lastTransitionTime: "2020-05-20T08:18:46Z"
+      message: NodeController create implicit route
+      reason: RouteCreated
+      status: "False"
+      type: NetworkUnavailable
+    - lastHeartbeatTime: "2020-05-22T04:50:27Z"
+      lastTransitionTime: "2020-05-20T16:05:31Z"
+      message: kubelet has sufficient memory available
+      reason: KubeletHasSufficientMemory
+      status: "False"
+      type: MemoryPressure
+    - lastHeartbeatTime: "2020-05-22T04:50:27Z"
+      lastTransitionTime: "2020-05-20T16:05:31Z"
+      message: kubelet has no disk pressure
+      reason: KubeletHasNoDiskPressure
+      status: "False"
+      type: DiskPressure
+    - lastHeartbeatTime: "2020-05-22T04:50:27Z"
+      lastTransitionTime: "2020-05-20T16:05:31Z"
+      message: kubelet has sufficient PID available
+      reason: KubeletHasSufficientPID
+      status: "False"
+      type: PIDPressure
+    - lastHeartbeatTime: "2020-05-22T04:50:27Z"
+      lastTransitionTime: "2020-05-21T01:26:17Z"
+      message: kubelet is posting ready status. AppArmor enabled
+      reason: KubeletReady
+      status: "True"
+      type: Ready
+    daemonEndpoints:
+      kubeletEndpoint:
+        Port: 10250
+    images:
+    - names:
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-unicorn-ee@sha256:b47d7878f286b55537822d6cf11ca4dd02796153ff0855cb5dac9f9d10991c72
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-unicorn-ee:v12.6.4
+      sizeBytes: 1158004510
+    - names:
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-shell@sha256:3bf341ee201c88d919c89e28c54c25ed9e1c2a0ab86ef7e0f197251e3fa13880
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-shell:v10.3.0
+      sizeBytes: 1119283307
+    - names:
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ee@sha256:fe237c2c5e64dade77d841a034a16b84ce5afa9f619f8519fa0d846dfed5289b
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ee:v12.6.4
+      sizeBytes: 1073366011
+    - names:
+      - weaveworksdemos/user-db@sha256:b43f0f8a76e0c908805fcec74d1ad7f4af4d93c4612632bd6dc20a87508e0b68
+      - weaveworksdemos/user-db:0.4.0
+      sizeBytes: 716879935
+    - names:
+      - quay.io/kubernetes-ingress-controller/nginx-ingress-controller@sha256:617076c3e3d4d0638a4927702530d8456bda64c67194f6daed272a59e93b992f
+      - quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.21.0
+      sizeBytes: 568075227
+    - names:
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-workhorse-ee@sha256:6dba4d45e8a1f975604894e9fa12c28e5d30c126480ca4346ea449c25a69c4c5
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-workhorse-ee:v12.6.4
+      sizeBytes: 548184528
+    - names:
+      - mysql@sha256:fc77c7d56aa74239e659d0bb4aa3268f476c595521f932e90aca530687709598
+      - mysql:8.0.19
+      sizeBytes: 546299331
+    - names:
+      - weaveworksdemos/catalogue-db@sha256:7ba74ec9adf88f6625b8d85d3323d1ee5232b39877e1590021ea485cf9457251
+      - weaveworksdemos/catalogue-db:0.3.0
+      sizeBytes: 400161654
+    - names:
+      - mongo@sha256:8c48baa1571469d7f5ae6d603b92b8027ada5eb39826c009cb33a13b46864908
+      - mongo:latest
+      sizeBytes: 387786744
+    - names:
+      - mongo@sha256:18f7e39575cd12e9177017ddaa4bcb6c3bae1f6468f3922dc1ecd0662e10281c
+      sizeBytes: 387786474
+    - names:
+      - gcr.io/google-samples/microservices-demo/recommendationservice@sha256:4ad2659fbe0a68bdfebcf86b8d95c5734f44014d484c94d9ffe0d313eed57f4e
+      - gcr.io/google-samples/microservices-demo/recommendationservice:v0.1.3
+      sizeBytes: 346962447
+    - names:
+      - gcr.io/google-samples/microservices-demo/emailservice@sha256:d42ee712cbb4806a8b922e303a5e6734f342dfb6c92c81284a289912165b7314
+      - gcr.io/google-samples/microservices-demo/emailservice:v0.1.3
+      sizeBytes: 340073854
+    - names:
+      - gcr.io/google-samples/microservices-demo/adservice@sha256:5edd0b072ec9f582693a4de28a50721028868dad453910c867268c231af734e1
+      - gcr.io/google-samples/microservices-demo/adservice:v0.1.3
+      sizeBytes: 330613661
+    - names:
+      - gcr.io/stackdriver-agents/stackdriver-logging-agent@sha256:810aadac042cee96db99d94cec2436482b886774681b44bb141254edda5e3cdf
+      - gcr.io/stackdriver-agents/stackdriver-logging-agent:1.6.17
+      sizeBytes: 238318516
+    - names:
+      - gcr.io/google-samples/microservices-demo/loadgenerator@sha256:d0701c6a89b4b47b90932d59f84d8840f093e54ceec1ca2d4789ed8daac752e9
+      - gcr.io/google-samples/microservices-demo/loadgenerator:v0.1.3
+      sizeBytes: 220425545
+    - names:
+      - weaveworksdemos/shipping@sha256:983305c948fded487f4a4acdeab5f898e89d577b4bc1ca3de7750076469ccad4
+      - weaveworksdemos/shipping:0.4.8
+      sizeBytes: 198611718
+    - names:
+      - weaveworksdemos/orders@sha256:b622e40e83433baf6374f15e076b53893f79958640fc6667dff597622eff03b9
+      - weaveworksdemos/orders:0.4.7
+      sizeBytes: 197650258
+    - names:
+      - weaveworksdemos/carts@sha256:434d2f5a6e0e8beef1f253fe96f45b8437a703125fc003434c5282ecf8969a4f
+      - weaveworksdemos/carts:0.4.8
+      sizeBytes: 197631354
+    - names:
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-redis-ha@sha256:fd0cc46056de7f542953ac852265919552285a388fe2616ca593fbc147d86c4c
+      - registry.gitlab.com/gitlab-org/build/cng/gitlab-redis-ha:732704f18e34ba469df34b10c3b2465e0469d484
+      sizeBytes: 185103554
+    - names:
+      - rabbitmq@sha256:a9f4923559bbcd00b93b02e61615aef5eb6f1d1c98db51053bab0fa6b680db26
+      - rabbitmq:3.6.8
+      sizeBytes: 179449238
+    - names:
+      - weaveworksdemos/queue-master@sha256:6292d3095f4c7aeed8d863527f8ef6d7a75d3128f20fc61e57f398c100142712
+      - weaveworksdemos/queue-master:0.3.1
+      sizeBytes: 178508575
+    - names:
+      - gcr.io/google-samples/microservices-demo/cartservice@sha256:4e9c6ad41328210e0a4b181add097d60900ecc1b990527a832a5d47e3f209d69
+      - gcr.io/google-samples/microservices-demo/cartservice:v0.1.3
+      sizeBytes: 154279137
+    - names:
+      - gcr.io/google-samples/microservices-demo/currencyservice@sha256:52818623cf85b8a0f01709b06ce94bde44b9ee27203c35b832663f55cde1fe83
+      - gcr.io/google-samples/microservices-demo/currencyservice:v0.1.3
+      sizeBytes: 152976787
+    - names:
+      - gitlab/gitlab-runner@sha256:b2638eafdd22b1e3166206838143a44468fd87d33ed76958563630301238852f
+      - gitlab/gitlab-runner:alpine-v12.6.0
+      sizeBytes: 141319386
+    - names:
+      - kubevious/kubevious@sha256:317fbdac4aac2506da038708c7b77c9846a47894c47f2818b1fc1c469e72a0e5
+      - kubevious/kubevious:0.6.18
+      sizeBytes: 141214105
+    nodeInfo:
+      architecture: amd64
+      bootID: c2a89014-c70f-4ab6-ab3a-e578ea53e45a
+      containerRuntimeVersion: docker://18.9.7
+      kernelVersion: 4.14.138+
+      kubeProxyVersion: v1.14.10-gke.27
+      kubeletVersion: v1.14.10-gke.27
+      machineID: c3f233b35921ea6d21673b264d9d4f22
+      operatingSystem: linux
+      osImage: Container-Optimized OS from Google
+      systemUUID: C3F233B3-5921-EA6D-2167-3B264D9D4F22
+    volumesAttached:
+    - devicePath: /dev/disk/by-id/google-gke-kubevious-samples--pvc-7e708bba-7083-11ea-8ebf-42010a800207
+      name: kubernetes.io/gce-pd/gke-kubevious-samples--pvc-7e708bba-7083-11ea-8ebf-42010a800207
+    - devicePath: /dev/disk/by-id/google-gke-kubevious-samples--pvc-9822a8a0-398b-11ea-b115-42010a8001d6
+      name: kubernetes.io/gce-pd/gke-kubevious-samples--pvc-9822a8a0-398b-11ea-b115-42010a8001d6
+    - devicePath: /dev/disk/by-id/google-gke-kubevious-samples--pvc-982374b9-398b-11ea-b115-42010a8001d6
+      name: kubernetes.io/gce-pd/gke-kubevious-samples--pvc-982374b9-398b-11ea-b115-42010a8001d6
+    volumesInUse:
+    - kubernetes.io/gce-pd/gke-kubevious-samples--pvc-7e708bba-7083-11ea-8ebf-42010a800207
+    - kubernetes.io/gce-pd/gke-kubevious-samples--pvc-9822a8a0-398b-11ea-b115-42010a8001d6
+    - kubernetes.io/gce-pd/gke-kubevious-samples--pvc-982374b9-398b-11ea-b115-42010a8001d6
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

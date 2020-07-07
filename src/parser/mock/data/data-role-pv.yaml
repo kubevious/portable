@@ -1,0 +1,496 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    annotations:
+      kubernetes.io/createdby: gce-pd-dynamic-provisioner
+      pv.kubernetes.io/bound-by-controller: "yes"
+      pv.kubernetes.io/provisioned-by: kubernetes.io/gce-pd
+    creationTimestamp: "2020-04-08T21:00:43Z"
+    finalizers:
+    - kubernetes.io/pv-protection
+    labels:
+      failure-domain.beta.kubernetes.io/region: us-central1
+      failure-domain.beta.kubernetes.io/zone: us-central1-a
+    name: pvc-0045971e-79dc-11ea-bb1c-42010a800057
+    resourceVersion: "36407821"
+    selfLink: /api/v1/persistentvolumes/pvc-0045971e-79dc-11ea-bb1c-42010a800057
+    uid: 02ab9e6d-79dc-11ea-bb1c-42010a800057
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 10Gi
+    claimRef:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      name: data-kubevious-mysql-0
+      namespace: experiment
+      resourceVersion: "36407788"
+      uid: 0045971e-79dc-11ea-bb1c-42010a800057
+    gcePersistentDisk:
+      fsType: ext4
+      pdName: gke-kubevious-samples--pvc-0045971e-79dc-11ea-bb1c-42010a800057
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: failure-domain.beta.kubernetes.io/zone
+            operator: In
+            values:
+            - us-central1-a
+          - key: failure-domain.beta.kubernetes.io/region
+            operator: In
+            values:
+            - us-central1
+    persistentVolumeReclaimPolicy: Delete
+    storageClassName: standard
+    volumeMode: Filesystem
+  status:
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    annotations:
+      kubernetes.io/createdby: gce-pd-dynamic-provisioner
+      pv.kubernetes.io/bound-by-controller: "yes"
+      pv.kubernetes.io/provisioned-by: kubernetes.io/gce-pd
+    creationTimestamp: "2020-01-18T01:01:22Z"
+    finalizers:
+    - kubernetes.io/pv-protection
+    labels:
+      failure-domain.beta.kubernetes.io/region: us-central1
+      failure-domain.beta.kubernetes.io/zone: us-central1-a
+    name: pvc-09728c28-398e-11ea-97ba-42010a800159
+    resourceVersion: "2021123"
+    selfLink: /api/v1/persistentvolumes/pvc-09728c28-398e-11ea-97ba-42010a800159
+    uid: 0b2e1ea5-398e-11ea-97ba-42010a800159
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 8Gi
+    claimRef:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      name: data-gitlab-redis-server-2
+      namespace: gitlab
+      resourceVersion: "2021101"
+      uid: 09728c28-398e-11ea-97ba-42010a800159
+    gcePersistentDisk:
+      fsType: ext4
+      pdName: gke-kubevious-samples--pvc-09728c28-398e-11ea-97ba-42010a800159
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: failure-domain.beta.kubernetes.io/zone
+            operator: In
+            values:
+            - us-central1-a
+          - key: failure-domain.beta.kubernetes.io/region
+            operator: In
+            values:
+            - us-central1
+    persistentVolumeReclaimPolicy: Delete
+    storageClassName: standard
+    volumeMode: Filesystem
+  status:
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    annotations:
+      kubernetes.io/createdby: gce-pd-dynamic-provisioner
+      pv.kubernetes.io/bound-by-controller: "yes"
+      pv.kubernetes.io/provisioned-by: kubernetes.io/gce-pd
+    creationTimestamp: "2020-03-27T23:34:27Z"
+    finalizers:
+    - kubernetes.io/pv-protection
+    labels:
+      failure-domain.beta.kubernetes.io/region: us-central1
+      failure-domain.beta.kubernetes.io/zone: us-central1-a
+    name: pvc-7e708bba-7083-11ea-8ebf-42010a800207
+    resourceVersion: "31995188"
+    selfLink: /api/v1/persistentvolumes/pvc-7e708bba-7083-11ea-8ebf-42010a800207
+    uid: 7fe08e66-7083-11ea-8ebf-42010a800207
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 30Gi
+    claimRef:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      name: data-kubevious-mysql-0
+      namespace: kubevious
+      resourceVersion: "31995172"
+      uid: 7e708bba-7083-11ea-8ebf-42010a800207
+    gcePersistentDisk:
+      fsType: ext4
+      pdName: gke-kubevious-samples--pvc-7e708bba-7083-11ea-8ebf-42010a800207
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: failure-domain.beta.kubernetes.io/zone
+            operator: In
+            values:
+            - us-central1-a
+          - key: failure-domain.beta.kubernetes.io/region
+            operator: In
+            values:
+            - us-central1
+    persistentVolumeReclaimPolicy: Delete
+    storageClassName: standard
+    volumeMode: Filesystem
+  status:
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    annotations:
+      kubernetes.io/createdby: gce-pd-dynamic-provisioner
+      pv.kubernetes.io/bound-by-controller: "yes"
+      pv.kubernetes.io/provisioned-by: kubernetes.io/gce-pd
+    creationTimestamp: "2020-01-18T00:50:40Z"
+    finalizers:
+    - kubernetes.io/pv-protection
+    labels:
+      failure-domain.beta.kubernetes.io/region: us-central1
+      failure-domain.beta.kubernetes.io/zone: us-central1-a
+    name: pvc-8b2d52c7-398c-11ea-b115-42010a8001d6
+    resourceVersion: "2018936"
+    selfLink: /api/v1/persistentvolumes/pvc-8b2d52c7-398c-11ea-b115-42010a8001d6
+    uid: 8cbb1676-398c-11ea-b115-42010a8001d6
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 8Gi
+    claimRef:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      name: data-gitlab-redis-server-1
+      namespace: gitlab
+      resourceVersion: "2018905"
+      uid: 8b2d52c7-398c-11ea-b115-42010a8001d6
+    gcePersistentDisk:
+      fsType: ext4
+      pdName: gke-kubevious-samples--pvc-8b2d52c7-398c-11ea-b115-42010a8001d6
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: failure-domain.beta.kubernetes.io/region
+            operator: In
+            values:
+            - us-central1
+          - key: failure-domain.beta.kubernetes.io/zone
+            operator: In
+            values:
+            - us-central1-a
+    persistentVolumeReclaimPolicy: Delete
+    storageClassName: standard
+    volumeMode: Filesystem
+  status:
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    annotations:
+      kubernetes.io/createdby: gce-pd-dynamic-provisioner
+      pv.kubernetes.io/bound-by-controller: "yes"
+      pv.kubernetes.io/provisioned-by: kubernetes.io/gce-pd
+    creationTimestamp: "2020-01-18T00:43:52Z"
+    finalizers:
+    - kubernetes.io/pv-protection
+    labels:
+      failure-domain.beta.kubernetes.io/region: us-central1
+      failure-domain.beta.kubernetes.io/zone: us-central1-a
+    name: pvc-9820ef3b-398b-11ea-b115-42010a8001d6
+    resourceVersion: "2016359"
+    selfLink: /api/v1/persistentvolumes/pvc-9820ef3b-398b-11ea-b115-42010a8001d6
+    uid: 99a9c385-398b-11ea-b115-42010a8001d6
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 8Gi
+    claimRef:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      name: gitlab-postgresql
+      namespace: gitlab
+      resourceVersion: "2016142"
+      uid: 9820ef3b-398b-11ea-b115-42010a8001d6
+    gcePersistentDisk:
+      fsType: ext4
+      pdName: gke-kubevious-samples--pvc-9820ef3b-398b-11ea-b115-42010a8001d6
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: failure-domain.beta.kubernetes.io/zone
+            operator: In
+            values:
+            - us-central1-a
+          - key: failure-domain.beta.kubernetes.io/region
+            operator: In
+            values:
+            - us-central1
+    persistentVolumeReclaimPolicy: Delete
+    storageClassName: standard
+    volumeMode: Filesystem
+  status:
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    annotations:
+      kubernetes.io/createdby: gce-pd-dynamic-provisioner
+      pv.kubernetes.io/bound-by-controller: "yes"
+      pv.kubernetes.io/provisioned-by: kubernetes.io/gce-pd
+    creationTimestamp: "2020-01-18T00:43:52Z"
+    finalizers:
+    - kubernetes.io/pv-protection
+    labels:
+      failure-domain.beta.kubernetes.io/region: us-central1
+      failure-domain.beta.kubernetes.io/zone: us-central1-a
+    name: pvc-9822a8a0-398b-11ea-b115-42010a8001d6
+    resourceVersion: "2016351"
+    selfLink: /api/v1/persistentvolumes/pvc-9822a8a0-398b-11ea-b115-42010a8001d6
+    uid: 999ed4b4-398b-11ea-b115-42010a8001d6
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 10Gi
+    claimRef:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      name: gitlab-minio
+      namespace: gitlab
+      resourceVersion: "2016143"
+      uid: 9822a8a0-398b-11ea-b115-42010a8001d6
+    gcePersistentDisk:
+      fsType: ext4
+      pdName: gke-kubevious-samples--pvc-9822a8a0-398b-11ea-b115-42010a8001d6
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: failure-domain.beta.kubernetes.io/zone
+            operator: In
+            values:
+            - us-central1-a
+          - key: failure-domain.beta.kubernetes.io/region
+            operator: In
+            values:
+            - us-central1
+    persistentVolumeReclaimPolicy: Delete
+    storageClassName: standard
+    volumeMode: Filesystem
+  status:
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    annotations:
+      kubernetes.io/createdby: gce-pd-dynamic-provisioner
+      pv.kubernetes.io/bound-by-controller: "yes"
+      pv.kubernetes.io/provisioned-by: kubernetes.io/gce-pd
+    creationTimestamp: "2020-01-18T00:43:52Z"
+    finalizers:
+    - kubernetes.io/pv-protection
+    labels:
+      failure-domain.beta.kubernetes.io/region: us-central1
+      failure-domain.beta.kubernetes.io/zone: us-central1-a
+    name: pvc-982374b9-398b-11ea-b115-42010a8001d6
+    resourceVersion: "2016384"
+    selfLink: /api/v1/persistentvolumes/pvc-982374b9-398b-11ea-b115-42010a8001d6
+    uid: 99aec62d-398b-11ea-b115-42010a8001d6
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 8Gi
+    claimRef:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      name: gitlab-prometheus-server
+      namespace: gitlab
+      resourceVersion: "2016144"
+      uid: 982374b9-398b-11ea-b115-42010a8001d6
+    gcePersistentDisk:
+      fsType: ext4
+      pdName: gke-kubevious-samples--pvc-982374b9-398b-11ea-b115-42010a8001d6
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: failure-domain.beta.kubernetes.io/zone
+            operator: In
+            values:
+            - us-central1-a
+          - key: failure-domain.beta.kubernetes.io/region
+            operator: In
+            values:
+            - us-central1
+    persistentVolumeReclaimPolicy: Delete
+    storageClassName: standard
+    volumeMode: Filesystem
+  status:
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    annotations:
+      kubernetes.io/createdby: gce-pd-dynamic-provisioner
+      pv.kubernetes.io/bound-by-controller: "yes"
+      pv.kubernetes.io/provisioned-by: kubernetes.io/gce-pd
+    creationTimestamp: "2020-01-18T00:43:56Z"
+    finalizers:
+    - kubernetes.io/pv-protection
+    labels:
+      failure-domain.beta.kubernetes.io/region: us-central1
+      failure-domain.beta.kubernetes.io/zone: us-central1-a
+    name: pvc-99ab6319-398b-11ea-b115-42010a8001d6
+    resourceVersion: "2016550"
+    selfLink: /api/v1/persistentvolumes/pvc-99ab6319-398b-11ea-b115-42010a8001d6
+    uid: 9beff124-398b-11ea-b115-42010a8001d6
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 8Gi
+    claimRef:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      name: data-gitlab-redis-server-0
+      namespace: gitlab
+      resourceVersion: "2016437"
+      uid: 99ab6319-398b-11ea-b115-42010a8001d6
+    gcePersistentDisk:
+      fsType: ext4
+      pdName: gke-kubevious-samples--pvc-99ab6319-398b-11ea-b115-42010a8001d6
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: failure-domain.beta.kubernetes.io/zone
+            operator: In
+            values:
+            - us-central1-a
+          - key: failure-domain.beta.kubernetes.io/region
+            operator: In
+            values:
+            - us-central1
+    persistentVolumeReclaimPolicy: Delete
+    storageClassName: standard
+    volumeMode: Filesystem
+  status:
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    annotations:
+      kubernetes.io/createdby: gce-pd-dynamic-provisioner
+      pv.kubernetes.io/bound-by-controller: "yes"
+      pv.kubernetes.io/provisioned-by: kubernetes.io/gce-pd
+    creationTimestamp: "2020-01-18T00:43:57Z"
+    finalizers:
+    - kubernetes.io/pv-protection
+    labels:
+      failure-domain.beta.kubernetes.io/region: us-central1
+      failure-domain.beta.kubernetes.io/zone: us-central1-a
+    name: pvc-9a4f5da5-398b-11ea-b115-42010a8001d6
+    resourceVersion: "2016570"
+    selfLink: /api/v1/persistentvolumes/pvc-9a4f5da5-398b-11ea-b115-42010a8001d6
+    uid: 9c8dbc92-398b-11ea-b115-42010a8001d6
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 50Gi
+    claimRef:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      name: repo-data-gitlab-gitaly-0
+      namespace: gitlab
+      resourceVersion: "2016478"
+      uid: 9a4f5da5-398b-11ea-b115-42010a8001d6
+    gcePersistentDisk:
+      fsType: ext4
+      pdName: gke-kubevious-samples--pvc-9a4f5da5-398b-11ea-b115-42010a8001d6
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: failure-domain.beta.kubernetes.io/zone
+            operator: In
+            values:
+            - us-central1-a
+          - key: failure-domain.beta.kubernetes.io/region
+            operator: In
+            values:
+            - us-central1
+    persistentVolumeReclaimPolicy: Delete
+    storageClassName: standard
+    volumeMode: Filesystem
+  status:
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    annotations:
+      kubernetes.io/createdby: gce-pd-dynamic-provisioner
+      pv.kubernetes.io/bound-by-controller: "yes"
+      pv.kubernetes.io/provisioned-by: kubernetes.io/gce-pd
+    creationTimestamp: "2020-01-18T00:38:42Z"
+    finalizers:
+    - kubernetes.io/pv-protection
+    labels:
+      failure-domain.beta.kubernetes.io/region: us-central1
+      failure-domain.beta.kubernetes.io/zone: us-central1-a
+    name: pvc-dd9134a6-398a-11ea-b115-42010a8001d6
+    resourceVersion: "2014437"
+    selfLink: /api/v1/persistentvolumes/pvc-dd9134a6-398a-11ea-b115-42010a8001d6
+    uid: e0b93d18-398a-11ea-b115-42010a8001d6
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 50Gi
+    claimRef:
+      apiVersion: v1
+      kind: PersistentVolumeClaim
+      name: repo-data-gitlab-gitaly-0
+      namespace: default
+      resourceVersion: "2014409"
+      uid: dd9134a6-398a-11ea-b115-42010a8001d6
+    gcePersistentDisk:
+      fsType: ext4
+      pdName: gke-kubevious-samples--pvc-dd9134a6-398a-11ea-b115-42010a8001d6
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: failure-domain.beta.kubernetes.io/zone
+            operator: In
+            values:
+            - us-central1-a
+          - key: failure-domain.beta.kubernetes.io/region
+            operator: In
+            values:
+            - us-central1
+    persistentVolumeReclaimPolicy: Delete
+    storageClassName: standard
+    volumeMode: Filesystem
+  status:
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

@@ -1,0 +1,19 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    name: kubevious-pods-fetcher
+    namespace: book
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: kubevious-kubevious-parser
+  subjects:
+    - kind: ServiceAccount
+      name: default
+      namespace: book
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

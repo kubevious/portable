@@ -15,10 +15,28 @@ class FacadeRegistry
 
         this._configMap = {};
         this._latestSnapshot = null;
+
+        this._setupSnapshots()
     }
 
     get logger() {
         return this._logger;
+    }
+
+    _setupSnapshots() {
+        const ParserContext = require('../../parser/context');
+
+        const context = new ParserContext(this._logger, this._context);
+        var mockDirName = 'mock/data';
+        var myArgs = process.argv.slice(2);
+        if (myArgs.length > 0) {
+            mockDirName = myArgs[0];
+        }
+        const MockLoader = require('../../parser/k8s-mock');
+        var loader = new MockLoader(context, mockDirName);
+        context.addLoader(loader);
+
+        context.run();
     }
 
     acceptCurrentSnapshot(snapshotInfo)
