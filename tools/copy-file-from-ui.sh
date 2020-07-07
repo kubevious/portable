@@ -7,7 +7,7 @@ SRC_FILE=$1
 DEST_FILE=$2
 echo "Syncing ${SRC_FILE} to ${DEST_FILE}..."
 
-SRC_FILE="../ui/src/${SRC_FILE}"
+SRC_FILE="../ui.git/src/${SRC_FILE}"
 DEST_FILE="client/${DEST_FILE}"
 
 DEST_DIR=$(dirname "${DEST_FILE}")

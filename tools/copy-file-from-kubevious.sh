@@ -7,7 +7,7 @@ SRC_FILE=$1
 DEST_FILE=$2
 echo "Syncing ${SRC_FILE} to ${DEST_FILE}..."
 
-SRC_FILE="../kubevious/src/${SRC_FILE}"
+SRC_FILE="../kubevious.git/src/${SRC_FILE}"
 DEST_FILE="src/${DEST_FILE}"
 
 DEST_DIR=$(dirname "${DEST_FILE}")
