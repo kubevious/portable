@@ -22,7 +22,6 @@ class GoldenLayoutComponent extends BaseComponent {
 
     componentDidMount() {
         new RegisterComponents(this)
-
         this._activateLayout()
     }
 

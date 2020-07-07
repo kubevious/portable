@@ -5,26 +5,21 @@ cd $MY_DIR
 
 echo "Sync from kubevious..."
 
-./copy-file-from-kubevious.sh "index.js" "index.js"
-./copy-file-from-kubevious.sh "logger.js" "logger.js"
-./copy-file-from-kubevious.sh "version.js" "version.js"
+./copy-file-from-source.sh "index.js" "index.js" "kubevious"
+./copy-file-from-source.sh "logger.js" "logger.js" "kubevious"
+./copy-file-from-source.sh "version.js" "version.js" "kubevious"
 
-./copy-file-from-kubevious.sh "lib/server.js" "lib/server.js"
+./copy-file-from-source.sh "lib/cluster/leader-elector.js" "lib/cluster/leader-elector.js" "kubevious"
 
-./copy-file-from-kubevious.sh "lib/cluster/leader-elector.js" "lib/cluster/leader-elector.js"
+./copy-file-from-source.sh "lib/processing/alert-count-processor.js" "lib/processing/alert-count-processor.js" "kubevious"
+./copy-file-from-source.sh "lib/processing/children-count-processor.js" "lib/processing/children-count-processor.js" "kubevious"
+./copy-file-from-source.sh "lib/processing/hierarchy-alert-count-processor.js" "lib/processing/hierarchy-alert-count-processor.js" "kubevious"
+./copy-file-from-source.sh "lib/processing/parser-alerts-preprocessor.js" "lib/processing/parser-alerts-preprocessor.js" "kubevious"
 
-./copy-file-from-kubevious.sh "lib/collector/collector.js" "lib/collector/collector.js"
+./copy-file-from-source.sh "lib/registry/registry.js" "lib/registry/registry.js" "kubevious"
+./copy-file-from-source.sh "lib/search/engine.js" "lib/search/engine.js" "kubevious"
+./copy-file-from-source.sh "lib/utils/debug-object-logger.js" "lib/utils/debug-object-logger.js" "kubevious"
+./copy-file-from-source.sh "lib/utils/name-helpers.js" "lib/utils/name-helpers.js" "kubevious"
 
-./copy-file-from-kubevious.sh "lib/processing/alert-count-processor.js" "lib/processing/alert-count-processor.js"
-./copy-file-from-kubevious.sh "lib/processing/children-count-processor.js" "lib/processing/children-count-processor.js"
-./copy-file-from-kubevious.sh "lib/processing/hierarchy-alert-count-processor.js" "lib/processing/hierarchy-alert-count-processor.js"
-./copy-file-from-kubevious.sh "lib/processing/parser-alerts-preprocessor.js" "lib/processing/parser-alerts-preprocessor.js"
-
-./copy-file-from-kubevious.sh "lib/registry/registry.js" "lib/registry/registry.js"
-./copy-file-from-kubevious.sh "lib/search/engine.js" "lib/search/engine.js"
-./copy-file-from-kubevious.sh "lib/utils/debug-object-logger.js" "lib/utils/debug-object-logger.js"
-./copy-file-from-kubevious.sh "lib/utils/name-helpers.js" "lib/utils/name-helpers.js"
-./copy-file-from-kubevious.sh "lib/websocket/server.js" "lib/websocket/server.js"
-
-./copy-file-from-kubevious.sh "lib/routers/api.js" "lib/routers/api.js"
-./copy-file-from-kubevious.sh "lib/routers/top.js" "lib/routers/top.js"
+./copy-file-from-source.sh "lib/routers/api.js" "lib/routers/api.js" "kubevious"
+./copy-file-from-source.sh "lib/routers/top.js" "lib/routers/top.js" "kubevious"
