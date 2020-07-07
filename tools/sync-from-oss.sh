@@ -29,6 +29,9 @@ echo "Sync from oss..."
 ./copy-file-from-ui.sh "src/components/ErrorBox/index.js" "src/components/ErrorBox/index.js"
 ./copy-file-from-ui.sh "src/components/ErrorBox/styles.scss" "src/components/ErrorBox/styles.scss"
 
+./copy-file-from-ui.sh "src/components/GoldenLayout/index.js" "src/components/GoldenLayout/index.js"
+./copy-file-from-ui.sh "src/components/GoldenLayout/styles.scss" "src/components/GoldenLayout/styles.scss"
+
 ./copy-file-from-ui.sh "src/components/Header/index.js" "src/components/Header/index.js"
 ./copy-file-from-ui.sh "src/components/Header/styles.scss" "src/components/Header/styles.scss"
 

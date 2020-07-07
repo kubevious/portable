@@ -10,9 +10,7 @@ import _ from 'the-lodash'
 import 'golden-layout/src/css/goldenlayout-base.css'
 import 'golden-layout/src/css/goldenlayout-dark-theme.css'
 import GoldenLayout from 'golden-layout'
-import Diagram from '../Diagram'
-import Properties from '../Properties'
-import Alerts from '../Alerts'
+import RegisterComponents from './register-components';
 
 import './styles.scss'
 
@@ -23,29 +21,7 @@ class GoldenLayoutComponent extends BaseComponent {
     }
 
     componentDidMount() {
-        this._register({
-            name: 'Universe',
-            component: Diagram,
-            location: 'main',
-            title: 'Universe',
-            height: 75,
-            skipClose: true
-        })
-        this._register({
-            name: 'Properties',
-            component: Properties,
-            location: 'right',
-            title: 'Properties',
-            width: 25,
-            allowVerticalScroll: true
-        })
-        this._register({
-            name: 'Alerts',
-            component: Alerts,
-            location: 'bottom',
-            title: 'Alerts',
-            allowVerticalScroll: true
-        })
+        new RegisterComponents(this)
 
         this._activateLayout()
     }
