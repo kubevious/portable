@@ -32,8 +32,6 @@ echo "Sync from oss..."
 ./copy-file-from-ui.sh "src/components/Header/index.js" "src/components/Header/index.js"
 ./copy-file-from-ui.sh "src/components/Header/styles.scss" "src/components/Header/styles.scss"
 
-./copy-file-from-ui.sh "src/components/MarkerPreview/index.js" "src/components/MarkerPreview/index.js"
-
 ./copy-file-from-ui.sh "src/components/Popup/index.js" "src/components/Popup/index.js"
 ./copy-file-from-ui.sh "src/components/Popup/styles.scss" "src/components/Popup/styles.scss"
 

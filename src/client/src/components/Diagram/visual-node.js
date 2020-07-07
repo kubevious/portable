@@ -40,7 +40,6 @@ class VisualNode {
 
         this._expanderNodes = []
         this._flagNodes = []
-        this._markerNodes = [];
         this._severityNodes = []
         this._severityTextNodes = []
 
@@ -109,23 +108,12 @@ class VisualNode {
         return this.data.flags;
     }
 
-    get markers() {
-        if (!this.data.markers) {
-            return []
-        }
-        return this.data.markers;
-    }
-
     get expanderNodes() {
         return this._expanderNodes
     }
 
     get flagNodes() {
         return this._flagNodes
-    }
-
-    get markerNodes() {
-        return this._markerNodes;
     }
 
     get severityNodes() {
@@ -319,15 +307,6 @@ class VisualNode {
         }
         this._flagNodes = this.flags.map(x => new VisualNodeHeaderFlag(this, x))
 
-        for (var marker of this.markers) {
-            this._addToHeader('marker-' + marker, {
-                kind: 'marker',
-                icon: marker,
-                location: 'right'
-            })
-        }
-        this._markerNodes = this.markers.map(x => new VisualNodeHeaderMarker(this, x))
-
         this._measureHeaders()
     }
 
@@ -456,9 +435,6 @@ class VisualNode {
         if (header.kind === 'text') {
             return header.top + header.height / 2 + header.height / 4
         }
-        if (header.kind === 'marker') {
-            return header.top;
-        }
         return header.top
     }
 
@@ -495,9 +471,6 @@ class VisualNode {
         } else if (header.kind === 'icon') {
             header.width = 16
             header.height = 16
-        } else if (header.kind === 'marker') {
-            header.width = 20
-            header.height = 20
         }
 
         if (header.bounding) {
@@ -839,40 +812,6 @@ class VisualNodeHeaderFlag extends BaseVisualNodeHeader {
             return ''
         }
         return '/img/flags/' + header.icon + '.svg'
-    }
-}
-
-/*
- *
- */
-class VisualNodeHeaderMarker extends BaseVisualNodeHeader {
-    constructor(node, marker) {
-        super(node, 'marker-' + marker, null)
-
-        this._marker = marker;
-        this._flavor = 'marker';
-    }
-
-    get marker() {
-        return this._marker
-    }
-
-    fill() {
-        var marker = this.view._markerData[this.marker];
-        if (marker) {
-            return marker.color;
-        }
-        return 'white';
-    }
-
-    html() {
-        var marker = this.view._markerData[this.marker];
-        if (marker) {
-            if (marker.shape) {
-                return '&#x' + marker.shape + ';';
-            }
-        }
-        return '';
     }
 }
 

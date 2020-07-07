@@ -6,8 +6,6 @@ import React from 'react'
 import DnComponent from '../DnComponent'
 import { popupClose } from '../../utils/ui-utils'
 import BaseComponent from '../../HOC/BaseComponent'
-import { isEmptyArray } from '../../utils/util'
-import MarkerPreview from '../MarkerPreview'
 
 import './styles.scss'
 
@@ -25,29 +23,13 @@ class DnShortcutComponent extends BaseComponent {
     }
 
     render() {
-        const { dn, options, errors, warnings, markers } = this.props
-
-        var markerDict = this.sharedState.get('markers_dict');
-        if (!markerDict) {
-            markerDict = {};
-        }
-
-        var markerItems = [];
-        if (markers) {
-            markerItems = markers.map(x => markerDict[x]);
-            markerItems = markerItems.filter(x => x);
-        }
+        const { dn, options, errors, warnings } = this.props
 
         return (
             <div className="dn-shortcut" dn={dn} onClick={this.clickDn}>
                 <DnComponent dn={dn} options={options} />
 
                 <div className="dn-alert">
-                    {!isEmptyArray(markers) && markerItems.map(({ shape, color }) => (
-                        <div className="marker">
-                            <MarkerPreview key={shape} shape={shape} color={color} />
-                        </div>
-                    ))}
                     {errors > 0 && <div className="indicator error-object">{errors > 1 && errors}</div>}
                     {warnings > 0 && <div className="indicator warning-object">{warnings > 1 && warnings}</div>}
                 </div>

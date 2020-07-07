@@ -32,23 +32,12 @@ class VisualView {
         this._flatVisualNodes = []
 
         this._existingNodeIds = {}
-        
-        this._markerData = {}
 
         sharedState.subscribe("selected_dn",
             (selected_dn) => {
 
                 this._updateSelection(selected_dn);
 
-            });
-
-        sharedState.subscribe('markers_dict',
-            (markers_dict) => {
-                this._markerData = markers_dict;
-                if (!markers_dict) {
-                    this._markerData = {};
-                }
-                this.updateAll(true);
             });
     }
 
@@ -527,7 +516,6 @@ class VisualView {
                 self._renderNodeExpander(d)
                 self._renderNodeSeverity(d)
                 self._renderNodeFlags(d)
-                self._renderNodeMarkers(d)
             })
     }
 
@@ -636,58 +624,8 @@ class VisualView {
             })
     }
 
-    _renderNodeMarkers(visualNode) {
-        var self = this
-        var selection =
-            d3.select(visualNode.node)
-                .selectAll('.node-marker')
-                .data(visualNode.markerNodes, function (x) {
-                    return x.headerName
-                })
-
-        selection
-            .exit()
-            .remove()
-
-        selection = selection
-            .enter()
-            .append('g')
-            .attr('class', 'node-marker')
-            .attr('id', function (d) {
-                return d.id
-            })
-            .attr('transform', x => x.transform())
-            .on('mouseover', function (d) {
-                self._showMarkerTooltip(this, d.marker)
-            })
-
-        selection
-            .append('rect')
-            .attr('class', 'marker-bg')
-            .attr('rx', 3)
-            .attr('ry', 3)
-            .attr('width', 20)
-            .attr('height', 20)
-            .style('fill', '#292A2F')
-
-        selection
-            .append('text')
-            .attr('class', 'marker-text')
-            .attr('x', 10)
-            .attr('y', 10)
-            .attr('dominant-baseline', 'middle')
-            .attr('text-anchor', 'middle')
-            .attr('fill', x => x.fill())
-            .html(x => x.html())
-    }
-
     _showFlagTooltip(elem, name) {
         var descr = flagTooltip(name);
-        this._showTooltip(elem, descr);
-    }
-
-    _showMarkerTooltip(elem, name) {
-        var descr = 'Marker <b>' + name + '</b>';
         this._showTooltip(elem, descr);
     }
 
@@ -719,7 +657,6 @@ class VisualView {
             this._renderNodeExpander(visualNode)
             this._renderNodeSeverity(visualNode)
             this._renderNodeFlags(visualNode)
-            this._renderNodeMarkers(visualNode)
         } 
             
         d3
