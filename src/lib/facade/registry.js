@@ -27,12 +27,12 @@ class FacadeRegistry
         const ParserContext = require('../../parser/context');
 
         const context = new ParserContext(this._logger, this._context);
-        var mockDirName = 'mock/data';
+        var mockDirName = 'data';
         var myArgs = process.argv.slice(2);
         if (myArgs.length > 0) {
             mockDirName = myArgs[0];
         }
-        const MockLoader = require('../../parser/k8s-mock');
+        const MockLoader = require('../../parser/mock/k8s-mock');
         var loader = new MockLoader(context, mockDirName);
         context.addLoader(loader);
 
