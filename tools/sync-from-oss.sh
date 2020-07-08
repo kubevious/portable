@@ -23,17 +23,10 @@ echo "Sync from oss..."
 ./copy-file-from-source.sh "src/components/DnComponent/index.js" "src/components/DnComponent/index.js" "ui"
 ./copy-file-from-source.sh "src/components/DnComponent/styles.scss" "src/components/DnComponent/styles.scss" "ui"
 
-#./copy-file-from-source.sh "src/components/DnShortcutComponent/index.js" "src/components/DnShortcutComponent/index.js" "ui"
-#./copy-file-from-source.sh "src/components/DnShortcutComponent/styles.scss" "src/components/DnShortcutComponent/styles.scss" "ui"
-
 ./copy-file-from-source.sh "src/components/ErrorBox/index.js" "src/components/ErrorBox/index.js" "ui"
 ./copy-file-from-source.sh "src/components/ErrorBox/styles.scss" "src/components/ErrorBox/styles.scss" "ui"
 
-./copy-file-from-source.sh "src/components/GoldenLayout/index.js" "src/components/GoldenLayout/index.js" "ui"
 ./copy-file-from-source.sh "src/components/GoldenLayout/styles.scss" "src/components/GoldenLayout/styles.scss" "ui"
-
-./copy-file-from-source.sh "src/components/Header/index.js" "src/components/Header/index.js" "ui"
-./copy-file-from-source.sh "src/components/Header/styles.scss" "src/components/Header/styles.scss" "ui"
 
 ./copy-file-from-source.sh "src/components/Popup/index.js" "src/components/Popup/index.js" "ui"
 ./copy-file-from-source.sh "src/components/Popup/styles.scss" "src/components/Popup/styles.scss" "ui"
@@ -65,9 +58,7 @@ echo "Sync from oss..."
 # Finish copying HOC
 
 #Copying state
-#./copy-file-from-source.sh "src/state/diagram-source.js" "src/state/diagram-source.js" "ui"
 ./copy-file-from-source.sh "src/state/shared-state.js" "src/state/shared-state.js" "ui"
-#./copy-file-from-source.sh "src/state/state-handler.js" "src/state/state-handler.js" "ui"
 ./copy-file-from-source.sh "src/state/kubevious-handler.js" "src/state/kubevious-handler.js" "ui"
 # Finish copying state
 
@@ -84,16 +75,11 @@ echo "Sync from oss..."
 
 # Copying services
 ./copy-file-from-source.sh "src/services/BackendClient.js" "src/services/BackendClient.js" "ui"
-#./copy-file-from-source.sh "src/services/DiagramService.js" "src/services/DiagramService.js" "ui"
 ./copy-file-from-source.sh "src/services/MiscService.js" "src/services/MiscService.js" "ui"
-#./copy-file-from-source.sh "src/services/RootApiService.js" "src/services/RootApiService.js" "ui"
-#./copy-file-from-source.sh "src/services/WebSocketService.js" "src/services/WebSocketService.js" "ui"
 # Finish copying services
 
 # Copying services-mock
-#./copy-file-from-source.sh "src/services-mock/MockDiagramService.js" "src/services-mock/MockDiagramService.js" "ui"
 ./copy-file-from-source.sh "src/services-mock/MockMiscService.js" "src/services-mock/MockMiscService.js" "ui"
-#./copy-file-from-source.sh "src/services-mock/MockRootApiService.js" "src/services-mock/MockRootApiService.js" "ui"
 ./copy-file-from-source.sh "src/services-mock/MockWebSocketService.js" "src/services-mock/MockWebSocketService.js" "ui"
 # Finish copying services-mock
 
