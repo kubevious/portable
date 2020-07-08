@@ -6,8 +6,6 @@ cd $MY_DIR
 echo "Sync from kubevious..."
 
 ./copy-file-from-source.sh "index.js" "index.js" "kubevious"
-./copy-file-from-source.sh "logger.js" "logger.js" "kubevious"
-./copy-file-from-source.sh "version.js" "version.js" "kubevious"
 
 ./copy-file-from-source.sh "lib/cluster/leader-elector.js" "lib/cluster/leader-elector.js" "kubevious"
 

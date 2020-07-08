@@ -1,7 +1,3 @@
-/*** UNDER NO CIRCUMSTANCES DO NOT SnapshotReporterEDIT THIS FILE. THIS FILE IS COPIED                                    ***/
-/*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
-/*** SOURCE: ../kubevious/src/lib/context.js                                                              ***/
-
 const Promise = require('the-promise');
 const ProcessingTracker = require("kubevious-helpers").ProcessingTracker;
 const FacadeRegistry = require('./facade/registry');
