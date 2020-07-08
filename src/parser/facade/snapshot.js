@@ -43,7 +43,7 @@ class Snapshot
     setDate(date) {
         this._date = date;
     }
-    
+
     addItem(item)
     {
         var hash = this._makeHash(item);

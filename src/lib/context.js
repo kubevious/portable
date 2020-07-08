@@ -3,7 +3,6 @@ const ProcessingTracker = require("kubevious-helpers").ProcessingTracker;
 const FacadeRegistry = require('./facade/registry');
 const SearchEngine = require('./search/engine');
 const Registry = require('./registry/registry');
-const Collector = require('./collector/collector');
 const ClusterLeaderElector = require('./cluster/leader-elector')
 const DebugObjectLogger = require('./utils/debug-object-logger');
 const WebSocketServer = require('./websocket/server');
@@ -17,7 +16,6 @@ class Context
         this._logger = logger.sublogger("Context");
         this._tracker = new ProcessingTracker(logger.sublogger("Tracker"));
         this._searchEngine = new SearchEngine(this);
-        this._collector = new Collector(this);
         this._registry = new Registry(this);
 
         this._facadeRegistry = new FacadeRegistry(this);
@@ -45,10 +43,6 @@ class Context
 
     get searchEngine() {
         return this._searchEngine;
-    }
-
-    get collector() {
-        return this._collector;
     }
 
     get registry() {

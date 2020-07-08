@@ -1,6 +1,7 @@
 const Promise = require('the-promise');
 const _ = require('lodash');
 const JobDampener = require('../utils/job-dampener');
+const Snapshot = require('./snapshot')
 
 class FacadeRegistry
 {
@@ -26,7 +27,44 @@ class FacadeRegistry
     _processItems(date, items)
     {
         this._logger.info("[_processItems] Date: %s. item count: %s", date.toISOString(), items.length);
-        return this._context.reporter.acceptLogicItems(date, items);
+        var snapshot = this._transformItems(date, items);
+        return this._context._appContext.facadeRegistry.acceptCurrentSnapshot(snapshot)
+    }
+
+    _transformItems(date, items) {
+        var snapshot = new Snapshot(date);
+
+        for (var item of items) {
+            snapshot.addItem({
+                dn: item.dn,
+                kind: item.kind,
+                config_kind: 'node',
+                config: item.exportNode(),
+            });
+
+            var alerts = item.extractAlerts();
+            if (alerts.length > 0) {
+                snapshot.addItem({
+                    dn: item.dn,
+                    kind: item.kind,
+                    config_kind: 'alerts',
+                    config: alerts,
+                });
+            }
+
+            var properties = item.extractProperties();
+            for (var props of properties) {
+                snapshot.addItem({
+                    dn: item.dn,
+                    kind: item.kind,
+                    config_kind: 'props',
+                    name: props.id,
+                    config: props,
+                })
+            }
+        }
+
+        return snapshot;
     }
 
     _handleConcreteRegistryChange()

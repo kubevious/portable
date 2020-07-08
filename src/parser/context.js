@@ -9,7 +9,6 @@ const K8sParser = require('./parsers/k8s');
 const ConcreteRegistry = require('./concrete/registry');
 const FacadeRegistry = require('./facade/registry');
 const LogicProcessor = require('./logic/processor');
-const Reporter = require('./reporting/reporter');
 const DebugObjectLogger = require('./utils/debug-object-logger');
 
 class Context
@@ -22,7 +21,6 @@ class Context
         this._concreteRegistry = new ConcreteRegistry(this);
         this._k8sParser = new K8sParser(this);
         this._logicProcessor = new LogicProcessor(this);
-        this._reporter = new Reporter(this);
 
         this._facadeRegistry = new FacadeRegistry(this);
 
@@ -52,10 +50,6 @@ class Context
 
     get logicProcessor() {
         return this._logicProcessor;
-    }
-
-    get reporter() {
-        return this._reporter;
     }
 
     get areLoadersReady() {
