@@ -8,4 +8,5 @@ docker run \
     -it \
     -v ~/.kube/config:/root/.kube/config \
     -p 5001:5001 \
+    -e NODE_ENV=development \
     kubevious/portable:dev

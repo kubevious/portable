@@ -8,6 +8,10 @@ if (process.env.LOG_TO_FILE) {
 }
 
 const logger = require('the-logger').setup('kubevious-portable', config);
-logger.level = 'debug';
+if (process.env.NODE_ENV == 'production') {
+    logger.level = 'warn';
+} else {
+    logger.level = 'debug';
+}
 
 module.exports = logger;

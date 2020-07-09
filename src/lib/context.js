@@ -13,6 +13,9 @@ class Context
 {
     constructor(logger)
     {
+        console.log("Launching Kubevious Portable...")
+        require('./art');
+        
         this._logger = logger.sublogger("Context");
         this._tracker = new ProcessingTracker(logger.sublogger("Tracker"));
         this._searchEngine = new SearchEngine(this);

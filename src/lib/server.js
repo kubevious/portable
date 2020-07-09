@@ -47,6 +47,8 @@ class Server
 
         this._app.use((error, req, res, next) => {
             var status = 500
+            this._logger.error('[server::error] ', error);
+
             res.status(status).json({
                 status: status,
                 message: error.message || 'Internal Server Error',
@@ -54,17 +56,9 @@ class Server
             });
         });
 
-        console.log('process.env.NODE_ENV', process.env.NODE_ENV === 'production')
-        if (process.env.NODE_ENV === 'production') {
-            this._app.use(express.static('../client/build'))
-
-            this._app.get('*', (req, res) => {
-                res.send(Path.resolve('../', 'client', 'build', 'index.html'))
-            })
-        }
-
         this._httpServer = this._app.listen(this._port, () => {
             this.logger.info("listening on port %s", this._port);
+            console.log("Ready at http://localhost:" + this._port);
         });
     }
 
@@ -161,6 +155,7 @@ class Server
             }
         } else {
             var status = 500;
+            this._logger.error('[_handleError] ', reason);
             if (this._isDev) {
                 res.status(status).json({ message: reason.message, stack: reason.stack })
             } else {
