@@ -115,9 +115,7 @@ class Server
             logger: this.logger.sublogger("Router" + name),
             router: wrappedRouter,
             app: this._app,
-            websocket: this._context.websocket,
             context: this._context,
-            collector: this._context.collector,
             reportError: (statusCode, message) => {
                 throw new RouterError(message, statusCode);
             },
@@ -128,7 +126,10 @@ class Server
 
         routerModule.setup(routerContext);
         
-        this._app.use(routerModule.url, router);
+        if (routerModule.url)
+        {
+            this._app.use(routerModule.url, router);
+        }
     }
 
     _handleRoute(req, res, handler)

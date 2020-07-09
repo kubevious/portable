@@ -3,7 +3,8 @@ MY_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE
 MY_DIR="$(dirname $MY_PATH)"
 cd $MY_DIR
 
-docker build --no-cache \
+# --no-cache
+docker build \
     -m 4000m \
-    -t portable-frontend:dev \
+    -t kubevious/portable:dev \
     .
