@@ -3,7 +3,5 @@ MY_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE
 MY_DIR="$(dirname $MY_PATH)"
 cd $MY_DIR
 
-export LOG_TO_FILE=true
-export NODE_ENV=development
+docker-compose up --build
 
-cd client && ./run-dev-mock.sh

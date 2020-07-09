@@ -54,6 +54,15 @@ class Server
             });
         });
 
+        console.log('process.env.NODE_ENV', process.env.NODE_ENV === 'production')
+        if (process.env.NODE_ENV === 'production') {
+            this._app.use(express.static('../client/build'))
+
+            this._app.get('*', (req, res) => {
+                res.send(Path.resolve('../', 'client', 'build', 'index.html'))
+            })
+        }
+
         this._httpServer = this._app.listen(this._port, () => {
             this.logger.info("listening on port %s", this._port);
         });

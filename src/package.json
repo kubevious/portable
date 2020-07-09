@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "server": "node index.js",
-    "client": "npm start --prefix client",
+    "client": "cd ../client && npm start",
     "client-mock": "npm run start-mock --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "dev-mock": "concurrently \"npm run client-mock\"",
