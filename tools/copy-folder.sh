@@ -1,7 +1,7 @@
 #!/bin/bash
 MY_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
 MY_DIR="$(dirname "$MY_PATH")"
-cd $MY_DIR/../..
+cd $MY_DIR/..
 
 SRC_FOLDER=$1
 DEST_FOLDER=$2
@@ -9,16 +9,16 @@ TYPE=$3
 
 case $TYPE in
 "ui")
-  SRC_FOLDER="ui.git/src/${SRC_FOLDER}"
-  DEST_FOLDER="portable/src/client/${DEST_FOLDER}"
+  SRC_FOLDER="../ui.git/src/${SRC_FOLDER}"
+  DEST_FOLDER="src/client/${DEST_FOLDER}"
   ;;
 "kubevious")
   SRC_FOLDER="../kubevious.git/src/${SRC_FOLDER}"
-  DEST_FOLDER="portable/src/${DEST_FOLDER}"
+  DEST_FOLDER="src/${DEST_FOLDER}"
   ;;
 "parser")
-  SRC_FOLDER="parser/src/${SRC_FOLDER}"
-  DEST_FOLDER="portable/src/parser/${DEST_FOLDER}"
+  SRC_FOLDER="../parser.git/src/${SRC_FOLDER}"
+  DEST_FOLDER="src/parser/${DEST_FOLDER}"
   ;;
 esac
 
