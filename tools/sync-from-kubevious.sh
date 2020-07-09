@@ -5,19 +5,23 @@ cd $MY_DIR
 
 echo "Sync from kubevious..."
 
-./copy-file-from-source.sh "index.js" "index.js" "kubevious"
+function sync {
+    ./copy-file-from-source.sh "$1" "$2" "kubevious"
+}
 
-./copy-file-from-source.sh "lib/cluster/leader-elector.js" "lib/cluster/leader-elector.js" "kubevious"
+sync "index.js" "index.js"
 
-./copy-file-from-source.sh "lib/processing/alert-count-processor.js" "lib/processing/alert-count-processor.js" "kubevious"
-./copy-file-from-source.sh "lib/processing/children-count-processor.js" "lib/processing/children-count-processor.js" "kubevious"
-./copy-file-from-source.sh "lib/processing/hierarchy-alert-count-processor.js" "lib/processing/hierarchy-alert-count-processor.js" "kubevious"
-./copy-file-from-source.sh "lib/processing/parser-alerts-preprocessor.js" "lib/processing/parser-alerts-preprocessor.js" "kubevious"
+sync "lib/cluster/leader-elector.js" "lib/cluster/leader-elector.js"
 
-./copy-file-from-source.sh "lib/registry/registry.js" "lib/registry/registry.js" "kubevious"
-./copy-file-from-source.sh "lib/search/engine.js" "lib/search/engine.js" "kubevious"
-./copy-file-from-source.sh "lib/utils/debug-object-logger.js" "lib/utils/debug-object-logger.js" "kubevious"
-./copy-file-from-source.sh "lib/utils/name-helpers.js" "lib/utils/name-helpers.js" "kubevious"
+sync "lib/processing/alert-count-processor.js" "lib/processing/alert-count-processor.js"
+sync "lib/processing/children-count-processor.js" "lib/processing/children-count-processor.js"
+sync "lib/processing/hierarchy-alert-count-processor.js" "lib/processing/hierarchy-alert-count-processor.js"
+sync "lib/processing/parser-alerts-preprocessor.js" "lib/processing/parser-alerts-preprocessor.js"
 
-./copy-file-from-source.sh "lib/routers/api.js" "lib/routers/api.js" "kubevious"
-./copy-file-from-source.sh "lib/routers/top.js" "lib/routers/top.js" "kubevious"
+sync "lib/registry/registry.js" "lib/registry/registry.js"
+sync "lib/search/engine.js" "lib/search/engine.js"
+sync "lib/utils/debug-object-logger.js" "lib/utils/debug-object-logger.js"
+sync "lib/utils/name-helpers.js" "lib/utils/name-helpers.js"
+
+sync "lib/routers/api.js" "lib/routers/api.js"
+sync "lib/routers/top.js" "lib/routers/top.js"

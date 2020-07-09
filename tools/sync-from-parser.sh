@@ -3,25 +3,29 @@ MY_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE
 MY_DIR="$(dirname $MY_PATH)"
 cd $MY_DIR
 
-./copy-file-from-source.sh "lib/concrete/item.js" "concrete/item.js" "parser"
-./copy-file-from-source.sh "lib/concrete/registry.js" "concrete/registry.js" "parser"
+function sync {
+    ./copy-file-from-source.sh "$1" "$2" "parser"
+}
 
-./copy-file-from-source.sh "lib/loaders/gke.js" "loaders/gke.js" "parser"
-./copy-file-from-source.sh "lib/loaders/k8s.js" "loaders/k8s.js" "parser"
-./copy-file-from-source.sh "lib/loaders/local.js" "loaders/local.js" "parser"
+sync "lib/concrete/item.js" "concrete/item.js"
+sync "lib/concrete/registry.js" "concrete/registry.js"
 
-./copy-folder.sh "lib/logic/helpers" "logic/helpers" "parser"
-./copy-folder.sh "lib/logic/parsers" "logic/parsers" "parser"
-./copy-folder.sh "lib/logic/polishers" "logic/polishers" "parser"
-./copy-folder.sh "lib/logic/scope" "logic/scope" "parser"
+sync "lib/loaders/gke.js" "loaders/gke.js"
+sync "lib/loaders/k8s.js" "loaders/k8s.js"
+sync "lib/loaders/local.js" "loaders/local.js"
 
-./copy-file-from-source.sh "lib/logic/item.js" "logic/item.js" "parser"
-./copy-file-from-source.sh "lib/logic/processor.js" "logic/processor.js" "parser"
-./copy-file-from-source.sh "lib/logic/properties-builder.js" "logic/properties-builder.js" "parser"
+sync "lib/logic/helpers" "logic/helpers"
+sync "lib/logic/parsers" "logic/parsers"
+sync "lib/logic/polishers" "logic/polishers"
+sync "lib/logic/scope" "logic/scope"
 
-./copy-file-from-source.sh "lib/parsers/api-groups.js" "parsers/api-groups.js" "parser"
-./copy-file-from-source.sh "lib/parsers/k8s.js" "parsers/k8s.js" "parser"
+sync "lib/logic/item.js" "logic/item.js"
+sync "lib/logic/processor.js" "logic/processor.js"
+sync "lib/logic/properties-builder.js" "logic/properties-builder.js"
 
-./copy-file-from-source.sh "lib/utils/debug-object-logger.js" "utils/debug-object-logger.js" "parser"
-./copy-file-from-source.sh "lib/utils/job-dampener.js" "utils/job-dampener.js" "parser"
-./copy-file-from-source.sh "lib/utils/name-helpers.js" "utils/name-helpers.js" "parser"
+sync "lib/parsers/api-groups.js" "parsers/api-groups.js"
+sync "lib/parsers/k8s.js" "parsers/k8s.js"
+
+sync "lib/utils/debug-object-logger.js" "utils/debug-object-logger.js"
+sync "lib/utils/job-dampener.js" "utils/job-dampener.js"
+sync "lib/utils/name-helpers.js" "utils/name-helpers.js"
