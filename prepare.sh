@@ -3,12 +3,12 @@ MY_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE
 MY_DIR="$(dirname $MY_PATH)"
 cd $MY_DIR
 
-cd src
+cd $MY_DIR/src
 rm -rf node_modules/
 npm install
 npm update kubevious-helpers kubevious-kubik websocket-subscription-server
 
-cd client
+cd $MY_DIR/client
 rm -rf node_modules/
 npm install
 npm install --save-dev
