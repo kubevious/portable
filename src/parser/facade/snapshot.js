@@ -1,5 +1,4 @@
 const _ = require('the-lodash');
-const crypto = require('crypto');
 
 class Snapshot
 {
@@ -46,8 +45,7 @@ class Snapshot
 
     addItem(item)
     {
-        var hash = this._makeHash(item);
-        this._items[hash] = item;
+        this._items[Object.keys(this._items).length + 1] = item
     }
 
     extractSnapshot()
@@ -87,17 +85,6 @@ class Snapshot
 
         return result;
     }
-
-    _makeHash(item)
-    {
-        var str = _.stableStringify(item);
-
-        const sha256 = crypto.createHash('sha256');
-        sha256.update(str);
-        var value = sha256.digest('hex');
-        return value;
-    }
-
 }
 
 module.exports = Snapshot;
