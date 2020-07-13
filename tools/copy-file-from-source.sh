@@ -12,7 +12,7 @@ SRC_FILE="../${REPO}.git/src/${SRC_FILE}"
 
 case $REPO in
 "ui")
-  DEST_FILE="src/client/${DEST_FILE}"
+  DEST_FILE="client/${DEST_FILE}"
   ;;
 "kubevious")
   DEST_FILE="src/${DEST_FILE}"
