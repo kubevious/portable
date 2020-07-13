@@ -6,6 +6,7 @@ const Registry = require('./registry/registry');
 const ClusterLeaderElector = require('./cluster/leader-elector')
 const DebugObjectLogger = require('./utils/debug-object-logger');
 const WebSocketServer = require('./websocket/server');
+const SnapshotProcessor = require('./snapshot-processor')
 
 const SERVER_PORT = 5001;
 
@@ -26,6 +27,8 @@ class Context
         this._debugObjectLogger = new DebugObjectLogger(this);
 
         this._websocket = new WebSocketServer(this);
+
+        this._snapshotProcessor = new SnapshotProcessor(this);
 
         this._server = null;
         this._k8sClient = null;
@@ -58,6 +61,10 @@ class Context
 
     get websocket() {
         return this._websocket;
+    }
+
+    get snapshotProcessor() {
+        return this._snapshotProcessor;
     }
 
     setupServer()

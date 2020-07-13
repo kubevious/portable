@@ -10,13 +10,9 @@ function sync {
 }
 
 sync "index.js" "index.js"
+sync "lib/snapshot-processor.js" "lib/snapshot-processor.js"
 
 sync "lib/cluster/leader-elector.js" "lib/cluster/leader-elector.js"
-
-sync "lib/processing/alert-count-processor.js" "lib/processing/alert-count-processor.js"
-sync "lib/processing/children-count-processor.js" "lib/processing/children-count-processor.js"
-sync "lib/processing/hierarchy-alert-count-processor.js" "lib/processing/hierarchy-alert-count-processor.js"
-sync "lib/processing/parser-alerts-preprocessor.js" "lib/processing/parser-alerts-preprocessor.js"
 
 sync "lib/registry/registry.js" "lib/registry/registry.js"
 sync "lib/search/engine.js" "lib/search/engine.js"
@@ -25,3 +21,8 @@ sync "lib/utils/name-helpers.js" "lib/utils/name-helpers.js"
 
 sync "lib/routers/api.js" "lib/routers/api.js"
 sync "lib/routers/top.js" "lib/routers/top.js"
+
+sync "lib/snapshot-processors/alert-count.js" "lib/snapshot-processors/alert-count.js"
+sync "lib/snapshot-processors/children-count.js" "lib/snapshot-processors/children-count.js"
+sync "lib/snapshot-processors/hierarchy-alert-count.js" "lib/snapshot-processors/hierarchy-alert-count.js"
+sync "lib/snapshot-processors/parser-alerts.js" "lib/snapshot-processors/parser-alerts.js"
