@@ -29,6 +29,13 @@ class DiagramService {
                 cb(result.data);
             })
     }
+
+    fetchContexts(cb) {
+        return this._client.get('/contexts')
+            .then(result => {
+                cb(result.data)
+            })
+    }
 }
 
 export default DiagramService

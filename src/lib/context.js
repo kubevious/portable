@@ -7,6 +7,7 @@ const ClusterLeaderElector = require('./cluster/leader-elector')
 const DebugObjectLogger = require('./utils/debug-object-logger');
 const WebSocketServer = require('./websocket/server');
 const SnapshotProcessor = require('./snapshot-processor')
+const ProviderEngine = require('./provider/engine')
 
 const SERVER_PORT = 5001;
 
@@ -29,6 +30,8 @@ class Context
         this._websocket = new WebSocketServer(this);
 
         this._snapshotProcessor = new SnapshotProcessor(this);
+
+        this._providerEngine = new ProviderEngine(this)
 
         this._server = null;
         this._k8sClient = null;
@@ -65,6 +68,10 @@ class Context
 
     get snapshotProcessor() {
         return this._snapshotProcessor;
+    }
+
+    get providerEngine() {
+        return this._providerEngine;
     }
 
     setupServer()
