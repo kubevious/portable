@@ -1,5 +1,6 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
+const { exec } = require('child_process')
 
 class ClusterEngine {
     constructor(context) {
@@ -14,7 +15,17 @@ class ClusterEngine {
     }
 
     activateCluster(context) {
-        this._logger.info('[activateCluster] context: ', context.name)
+        this.setContext(context).then(() => {
+            this._logger.info('[activateCluster] context: ', context.name)
+        })
+    }
+
+    setContext(context) {
+        const cmd = `kubectl config use-context ${context.name}`
+
+        return Promise.resolve(
+            exec(cmd)
+        )
     }
 
     parseConfig() {
