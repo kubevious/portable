@@ -48,10 +48,6 @@ module.exports = {
             }
             return context.searchEngine.search(req.query.criteria);
         })
-
-        router.get('/contexts', function (req, res) {
-            return context.clusterEngine.fetchContext()
-        })
     },
 
 }

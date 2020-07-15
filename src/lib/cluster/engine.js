@@ -1,7 +1,7 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 
-class ProviderEngine {
+class ClusterEngine {
     constructor(context) {
         this._context = context;
         this._logger = context.logger.sublogger('ProviderEngine');
@@ -26,4 +26,4 @@ class ProviderEngine {
     }
 }
 
-module.exports = ProviderEngine
+module.exports = ClusterEngine

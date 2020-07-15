@@ -7,7 +7,7 @@ class ContextScreen extends BaseComponent {
     constructor(props) {
         super(props);
 
-        this.registerService({ kind: 'diagram' })
+        this.registerService({ kind: 'clusters' })
 
         this.state = {
             contexts: [],
