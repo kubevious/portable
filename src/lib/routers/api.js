@@ -50,7 +50,7 @@ module.exports = {
         })
 
         router.get('/contexts', function (req, res) {
-            return context.providerEngine.fetchContext()
+            return context.clusterEngine.fetchContext()
         })
     },
 
