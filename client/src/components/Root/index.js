@@ -30,7 +30,6 @@ class Root extends BaseComponent {
         this.handleLayout = this.handleLayout.bind(this)
         this.handleChangeWindow = this.handleChangeWindow.bind(this)
         this.closeError = this.closeError.bind(this)
-        this.selectContext = this.selectContext.bind(this)
         this.handleOpenContext = this.handleOpenContext.bind(this)
 
         this.subscribeToSharedState('selected_dn',
@@ -96,11 +95,10 @@ class Root extends BaseComponent {
         this.subscribeToSharedState(['is_error', 'error'], ({ is_error, error }) => {
             this.setState({ error: error, isError: is_error })
         })
-    }
 
-    selectContext(context) {
-        this.setState({ context: context })
-        this.sharedState.set('context', context)
+        this.subscribeToSharedState('context', (context) => {
+            this.setState({ context: context })
+        })
     }
 
     handleOpenContext() {
@@ -131,7 +129,7 @@ class Root extends BaseComponent {
                         windows={windows}
                     />
 
-                    {!context && <ContextScreen selectContext={this.selectContext} />}
+                    {!context && <ContextScreen />}
 
                     <GoldenLayoutComponent
                         diagramSource={this.diagramSource}

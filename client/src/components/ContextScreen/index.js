@@ -20,6 +20,12 @@ class ContextScreen extends BaseComponent {
         })
     }
 
+    selectContext(item) {
+        this.sharedState.set('context', item.name)
+
+        this.service.activateContext(item, result => {})
+    }
+
     render() {
         const { contexts } = this.state
 
@@ -34,7 +40,7 @@ class ContextScreen extends BaseComponent {
                         <div
                             key={item.name}
                             className="context"
-                            onClick={() => this.props.selectContext(item.name)}
+                            onClick={() => this.selectContext(item)}
                         >
                             <img className="kubernetes-logo" src="/img/entities/kubernetes.svg" alt="kubernetes" />
                             {item.name}

@@ -13,6 +13,10 @@ class ClusterEngine {
         })
     }
 
+    activateCluster(context) {
+        this._logger.info('[activateCluster] context: ', context.name)
+    }
+
     parseConfig() {
         return new Promise((resolve, reject) => {
             try {
