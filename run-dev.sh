@@ -5,6 +5,6 @@ cd $MY_DIR
 
 export LOG_TO_FILE=true
 export NODE_ENV=development
-export KUBE_CONFIG_PATH=~/.kube/config
+export KUBECONFIG=~/.kube/config
 
 cd src && npm run dev

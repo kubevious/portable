@@ -10,5 +10,5 @@ docker run \
     -v ~/.config/doctl/config.yaml:/root/.config/doctl/config.yaml \
     -p 5001:5001 \
     -e NODE_ENV=development \
-    -e KUBE_CONFIG_PATH=/root/.kube/config \
+    -e KUBECONFIG=/root/.kube/config \
     kubevious/portable:dev-do

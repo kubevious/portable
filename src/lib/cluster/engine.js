@@ -31,7 +31,7 @@ class ClusterEngine {
     parseConfig() {
         return new Promise((resolve, reject) => {
             try {
-                const doc = yaml.safeLoad(fs.readFileSync(process.env.KUBE_CONFIG_PATH, 'utf8'));
+                const doc = yaml.safeLoad(fs.readFileSync(process.env.KUBECONFIG, 'utf8'));
                 resolve(doc)
             } catch (e) {
                 console.log(e);
