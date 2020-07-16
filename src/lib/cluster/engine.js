@@ -8,6 +8,7 @@ class ClusterEngine {
         this._logger = context.logger.sublogger('ProviderEngine');
         this._config = {};
         this._token = null;
+        this._caData = null;
     }
 
     fetchContext() {
@@ -18,10 +19,13 @@ class ClusterEngine {
 
     activateCluster(context) {
         const user = this._config.users.find(user => user.name === context.context.user)
+        this._caData = this._config.clusters.find(cluster => cluster.name === context.name).cluster['certificate-authority-data']
 
         this.setToken(user)
             .then((token) => {
                 this._token = token
+
+                this._context._facadeRegistry._setupSnapshots(this._token, this._caData)
             })
     }
 

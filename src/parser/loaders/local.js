@@ -9,11 +9,13 @@ const K8sLoader = require('./k8s');
 
 class LocalLoader 
 {
-    constructor(context)
+    constructor(context, token, caData)
     {
         this._context = context;
         this._logger = context.logger.sublogger("LocalLoader");
         this._loader = null;
+        this._token = token;
+        this._caData = caData;
 
         this.logger.info("Constructed");
     }
@@ -34,8 +36,8 @@ class LocalLoader
     {
         var endpoint = 'https://' + process.env.KUBERNETES_SERVICE_HOST + ':' + process.env.KUBERNETES_SERVICE_PORT_HTTPS;
         var k8sConfig = {
-            token: fs.readFileSync('/var/run/secrets/kubernetes.io/serviceaccount/token', 'utf8'),
-            caData: fs.readFileSync('/var/run/secrets/kubernetes.io/serviceaccount/ca.crt', 'utf8')
+            token: this._token ? this._token : fs.readFileSync('/var/run/secrets/kubernetes.io/serviceaccount/token', 'utf8'),
+            caData: this._caData ? this._caData : fs.readFileSync('/var/run/secrets/kubernetes.io/serviceaccount/ca.crt', 'utf8')
         };
 
         return Promise.resolve(K8sClient.connect(this._logger, endpoint, k8sConfig))

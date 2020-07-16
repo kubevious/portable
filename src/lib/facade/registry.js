@@ -10,15 +10,13 @@ class FacadeRegistry
 
         this._configMap = {};
         this._latestSnapshot = null;
-
-        this._setupSnapshots()
     }
 
     get logger() {
         return this._logger;
     }
 
-    _setupSnapshots() {
+    _setupSnapshots(token, caData) {
         const ParserContext = require('../../parser/context');
 
         const context = new ParserContext(this._logger, this._context);
@@ -29,6 +27,11 @@ class FacadeRegistry
         }
         const MockLoader = require('../../parser/mock/k8s-mock');
         var loader = new MockLoader(context, mockDirName);
+
+        // Possible change to fetch real data
+        // const LocalLoader = require('../../parser/loaders/local')
+        // const loader = new LocalLoader(context, token, caData)
+
         context.addLoader(loader);
 
         context.run();
