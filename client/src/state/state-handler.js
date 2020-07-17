@@ -19,7 +19,7 @@ class StateHandler {
         this.sharedState.set('is_error', false)
         this.sharedState.set('error', null)
         this.sharedState.set('diagram_expanded_dns', { 'root': true });
-        this.sharedState.set('context', null)
+        this.sharedState.set('cluster', null)
 
         this._handleDefaultParams()
         this._handleSelectedDnAutoExpandChange()

@@ -18,7 +18,8 @@ class Header extends BaseComponent {
 
         this.state = {
             showSettings: false,
-            isLoading: false
+            isLoading: false,
+            cluster: null
         }
 
         this.openAbout = this.openAbout.bind(this)
@@ -69,10 +70,14 @@ class Header extends BaseComponent {
             (is_loading) => {
                 this.setState({ isLoading: is_loading })
             })
+
+        this.subscribeToSharedState('cluster', (cluster) => {
+            this.setState({ cluster: cluster })
+        })
     }
 
     render() {
-        const { showSettings, isLoading } = this.state
+        const { showSettings, isLoading, cluster } = this.state
 
         return (
             <div className="header">
@@ -80,7 +85,10 @@ class Header extends BaseComponent {
                 <div className="loading-icon">
                     {isLoading && <FontAwesomeIcon icon={faSpinner} spin />}
                 </div>
-                <div id="history-info" className="history-info"/>
+                {cluster && <div className="cluster">
+                    {cluster}
+                    <button type="button" className="btn btn-cluster" onClick={this.props.handleOpenCluster}/>
+                </div>}
                 <div className="actions">
                     <a href="https://github.com/kubevious/kubevious/issues/new/choose" target="_blank"
                        className="btn btn-bug">
@@ -93,7 +101,6 @@ class Header extends BaseComponent {
                     <a href="https://github.com/kubevious/kubevious" target="_blank" className="btn btn-github">
                         <img src={githubImg} alt="github"/>
                     </a>
-                    <button id="btnHeaderContext" type="button" className="btn btn-context" onClick={this.props.handleOpenContext}/>
                     <button id="btnHeaderAbout" type="button" className="btn btn-about" onClick={this.openAbout}/>
                     <button id="btnHeaderSearch" type="button" className="btn btn-search" onClick={this.openSearch}/>
                     <button className="btn btn-settings" onMouseEnter={() => this.setState({ showSettings: true })}

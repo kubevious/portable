@@ -3,7 +3,7 @@ import BaseComponent from '../../HOC/BaseComponent';
 import './styles.scss'
 import { isEmptyArray } from '../../utils/util';
 
-class ContextScreen extends BaseComponent {
+class ClusterScreen extends BaseComponent {
     constructor(props) {
         super(props);
 
@@ -20,8 +20,8 @@ class ContextScreen extends BaseComponent {
         })
     }
 
-    selectContext(item) {
-        this.sharedState.set('context', item.name)
+    selectCluster(item) {
+        this.sharedState.set('cluster', item.name)
 
         this.service.activateCluster(item, result => {})
     }
@@ -30,17 +30,17 @@ class ContextScreen extends BaseComponent {
         const { clusters } = this.state
 
         return (
-            <div className="ContextScreen-container">
+            <div className="ClusterScreen-container">
                 <div className="title">
-                    Select context
+                    Select cluster
                 </div>
 
-                {!isEmptyArray(clusters) && <div className="contexts">
+                {!isEmptyArray(clusters) && <div className="clusters">
                     {clusters.map(item => (
                         <div
                             key={item.name}
-                            className="context"
-                            onClick={() => this.selectContext(item)}
+                            className="cluster"
+                            onClick={() => this.selectCluster(item)}
                         >
                             <img className="kubernetes-logo" src="/img/entities/kubernetes.svg" alt="kubernetes" />
                             {item.name}
@@ -52,4 +52,4 @@ class ContextScreen extends BaseComponent {
     }
 }
 
-export default ContextScreen
+export default ClusterScreen

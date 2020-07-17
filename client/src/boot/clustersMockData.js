@@ -1,4 +1,4 @@
-export const CONTEXTS = [
+export const CLUSTERS = [
     {
         name: 'Development',
     },

@@ -17,25 +17,19 @@
     height: 100%;
   }
 
-  .history-info {
-    text-align: center;
+  .cluster {
     margin-left: 20%;
-    display: block;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
     color: white;
+    font-weight: bold;
+    margin-top: 10px;
 
-    span {
-      display: inline-block;
-
-      &:before {
-        content: "";
-        float: left;
-        width: 24px;
-        height: 24px;
-        background: url('/img/alerts/warn.svg') left top;
-        margin: -3px 10px 0 0;
-      }
+    .btn-cluster {
+      width: 24px;
+      height: 24px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-image: url("/img/cluster.svg");
+      margin-left: 10px;
     }
   }
 
@@ -83,10 +77,6 @@
 
     .btn-about {
       background-image: url("/img/header-btns/about.svg");
-    }
-
-    .btn-context {
-      background-image: url("/img/header-btns/kubernetes.svg");
     }
 
     .btn-settings {

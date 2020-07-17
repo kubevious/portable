@@ -1,12 +1,12 @@
-import { CONTEXTS } from '../boot/contextsMockData';
+import { CLUSTERS } from '../boot/clustersMockData';
 
 class MockClustersService {
     constructor(sharedState) {
         this._sharedState = sharedState;
     }
 
-    fetchContexts(cb) {
-        cb(CONTEXTS)
+    fetchClusters(cb) {
+        cb(CLUSTERS)
     }
 }
 

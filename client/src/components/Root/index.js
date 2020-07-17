@@ -6,7 +6,7 @@ import Header from '../Header'
 import BaseComponent from '../../HOC/BaseComponent'
 import FieldsSaver from '../../utils/save-fields'
 import ErrorBox from '../ErrorBox';
-import ContextScreen from '../ContextScreen';
+import ClusterScreen from '../ClusterScreen';
 
 class Root extends BaseComponent {
     constructor(props) {
@@ -19,7 +19,7 @@ class Root extends BaseComponent {
             windows: [],
             isError: false,
             error: null,
-            context: null
+            cluster: null
         }
 
         this._fieldsSaver = new FieldsSaver('Diagram')
@@ -30,7 +30,7 @@ class Root extends BaseComponent {
         this.handleLayout = this.handleLayout.bind(this)
         this.handleChangeWindow = this.handleChangeWindow.bind(this)
         this.closeError = this.closeError.bind(this)
-        this.handleOpenContext = this.handleOpenContext.bind(this)
+        this.handleOpenCluster = this.handleOpenCluster.bind(this)
 
         this.subscribeToSharedState('selected_dn',
             (selected_dn) => {
@@ -96,18 +96,18 @@ class Root extends BaseComponent {
             this.setState({ error: error, isError: is_error })
         })
 
-        this.subscribeToSharedState('context', (context) => {
-            this.setState({ context: context })
+        this.subscribeToSharedState('cluster', (cluster) => {
+            this.setState({ cluster: cluster })
         })
     }
 
-    handleOpenContext() {
-        this.setState({ context: null })
-        this.sharedState.set('context', null)
+    handleOpenCluster() {
+        this.setState({ cluster: null })
+        this.sharedState.set('cluster', null)
     }
 
     render() {
-        const { showPopup, popupContent, windows, isError, error, context } = this.state
+        const { showPopup, popupContent, windows, isError, error, cluster } = this.state
 
         return (
             <>
@@ -125,11 +125,11 @@ class Root extends BaseComponent {
                         handlePopupContent={this.handlePopupContent}
                         handleClosePopup={this.handleClosePopup}
                         handleChangeWindow={this.handleChangeWindow}
-                        handleOpenContext={this.handleOpenContext}
+                        handleOpenCluster={this.handleOpenCluster}
                         windows={windows}
                     />
 
-                    {!context && <ContextScreen />}
+                    {!cluster && <ClusterScreen />}
 
                     <GoldenLayoutComponent
                         diagramSource={this.diagramSource}
