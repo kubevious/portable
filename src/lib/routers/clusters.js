@@ -2,12 +2,16 @@ module.exports = {
     url: '/api/clusters',
 
     setup: ({ router, logger, context, reportUserError }) => {
-        router.get('/contexts', function (req, res) {
-            return context.clusterEngine.fetchContext()
+        router.get('/', function (req, res) {
+            return context.clusterEngine.fetchList();
         })
 
-        router.post('/activate', function (req, res) {
-            return context.clusterEngine.activateCluster(req.body)
+        router.get('/active', function (req, res) {
+            return context.clusterEngine.getActiveCluster();
+        })
+
+        router.post('/active', function (req, res) {
+            return context.clusterEngine.setActiveCluster(req.body.name);
         })
     },
 }

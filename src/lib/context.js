@@ -8,6 +8,7 @@ const DebugObjectLogger = require('./utils/debug-object-logger');
 const WebSocketServer = require('./websocket/server');
 const SnapshotProcessor = require('./snapshot-processor')
 const ClusterEngine = require('./cluster/engine')
+const ParserContext = require('../parser/context');
 
 const SERVER_PORT = 5001;
 
@@ -31,7 +32,9 @@ class Context
 
         this._snapshotProcessor = new SnapshotProcessor(this);
 
-        this._clusterEngine = new ClusterEngine(this)
+        this._clusterEngine = new ClusterEngine(this);
+
+        this._parserContext = new ParserContext(this._logger, this);
 
         this._server = null;
         this._k8sClient = null;
@@ -40,6 +43,10 @@ class Context
 
     get logger() {
         return this._logger;
+    }
+
+    get parserContext() {
+        return this._parserContext;
     }
 
     get tracker() {
@@ -101,6 +108,7 @@ class Context
         }
 
         return Promise.resolve()
+            .then(() => this._clusterEngine.init())
             .then(() => this._runServer())
             .then(() => this._setupWebSocket())
             .catch(reason => {

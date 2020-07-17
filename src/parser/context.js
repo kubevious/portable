@@ -11,6 +11,8 @@ const FacadeRegistry = require('./facade/registry');
 const LogicProcessor = require('./logic/processor');
 const DebugObjectLogger = require('./utils/debug-object-logger');
 
+const RemoteLoader = require('./loaders/remote');
+
 class Context
 {
     constructor(logger, appContext)
@@ -64,7 +66,27 @@ class Context
         return this._appContext
     }
 
-    addLoader(loader)
+    stopLoaders()
+    {
+        this._logger.debug("[stopLoaders]");
+        this._areLoadersReady = false;
+        this._k8sClient = null;
+        for(var loader of this._loaders)
+        {
+            // loader.stop();
+        }
+        this._loaders = [];
+    }
+
+    activateLoader(config)
+    {
+        this._logger.debug("[activateLoader]", config);
+        var loader = new RemoteLoader(this, config);
+        this._addLoader(loader);
+        this._run();
+    }
+
+    _addLoader(loader)
     {
         var loaderInfo = {
             loader: loader,
@@ -84,7 +106,7 @@ class Context
         this._k8sClient = client;
     }
 
-    run()
+    _run()
     {
         return Promise.resolve()
             .then(() => this._processLoaders())
@@ -92,7 +114,6 @@ class Context
                 console.log("***** ERROR *****");
                 console.log(reason);
                 this.logger.error(reason);
-                process.exit(1);
             });
     }
 

@@ -1,61 +1,89 @@
 const yaml = require('js-yaml');
-const fs = require('fs');
+const _ = require('the-lodash');
+const fs = require('fs').promises;
 const { exec } = require('child_process')
 
-class ClusterEngine {
+class ClusterEngine
+{
     constructor(context) {
         this._context = context;
-        this._logger = context.logger.sublogger('ProviderEngine');
-        this._config = {};
+        this._logger = context.logger.sublogger('ClusterEngine');
         this._token = null;
         this._caData = null;
+
+        this._clustersDict = {};
+        this._clustersList = [];
+
+        this._selectedClusterName = null;
+        this._selectedClusterConfig = null;
     }
 
-    fetchContext() {
-        return this.parseConfig().then(result => {
-            return result.contexts
-        })
+    get logger() {
+        return this._logger;
     }
 
-    activateCluster(context) {
-        const user = this._config.users.find(user => user.name === context.context.user)
-        this._caData = this._config.clusters.find(cluster => cluster.name === context.name).cluster['certificate-authority-data']
+    init()
+    {
+        return this._loadConfigFile(process.env.KUBECONFIG)
+            .then(config => {
+                config = config || {};
+                config.contexts = config.contexts || [];
+                config.clusters = config.clusters || [];
+                config.users = config.users || [];
 
-        this.setToken(user)
-            .then((token) => {
-                this._token = token
+                var usersDict = _.makeDict(config.users, x => x.name, x => x.user);
+                var clustersDict = _.makeDict(config.clusters, x => x.name, x => x.cluster);
 
-                this._context._facadeRegistry._setupSnapshots(this._token, this._caData)
+                this._clustersDict = _.makeDict(config.contexts, x => x.name, x => ({
+                    name: x.name,
+                    cluster: clustersDict[x.context.cluster] || null,
+                    user: usersDict[x.context.user] || null,
+                }));
+
+                this._clustersList = _.values(this._clustersDict).map(x => ({
+                    name: x.name
+                }));
+                this._clustersList = _.orderBy(this._clustersList, x => x.name);
+            });
+    }
+
+    _loadConfigFile(fileName)
+    {
+        return fs.readFile(fileName, 'utf8')
+            .then(content => {
+                const doc = yaml.safeLoad(content);
+                return doc;
             })
+            .catch(reason => {
+                this.logger.error('Failed to load %s. Details: ', fileName, reason);
+                return null;
+            });
     }
 
-    setToken(user) {
-        return new Promise((resolve, reject) => {
-            if (user.user.token) {
-                resolve(user.user.token)
-            } else {
-                exec(this.generateCommand(user.user.exec), (error, stdout, stderr) => {
-                    resolve(JSON.parse(stdout).status.token)
-                })
-            }
-        })
+    fetchList() {
+        return this._clustersList;
     }
 
-    parseConfig() {
-        return new Promise((resolve, reject) => {
-            try {
-                const doc = yaml.safeLoad(fs.readFileSync(process.env.KUBECONFIG, 'utf8'));
-                this._config = doc
-                resolve(doc)
-            } catch (e) {
-                console.log(e);
-                reject(e)
-            }
-        })
+    getActiveCluster() {
+        return {
+            name: this._selectedClusterName
+        };
     }
 
-    generateCommand(params) {
-        return params.command + ' ' + params.args.join(' ')
+    setActiveCluster(clusterName) {
+        if (this._selectedClusterName == clusterName) {
+            return;
+        }
+        this._selectedClusterName = clusterName;
+        this._selectedClusterConfig = this._clustersDict[clusterName] || null;
+
+        this._context.parserContext.stopLoaders();
+
+        if (!this._selectedClusterConfig) {
+            return;
+        }
+
+        return this._context.parserContext.activateLoader(this._selectedClusterConfig);
     }
 }
 

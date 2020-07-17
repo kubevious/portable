@@ -16,27 +16,6 @@ class FacadeRegistry
         return this._logger;
     }
 
-    _setupSnapshots(token, caData) {
-        const ParserContext = require('../../parser/context');
-
-        const context = new ParserContext(this._logger, this._context);
-        var mockDirName = 'data';
-        var myArgs = process.argv.slice(2);
-        if (myArgs.length > 0) {
-            mockDirName = myArgs[0];
-        }
-        const MockLoader = require('../../parser/mock/k8s-mock');
-        var loader = new MockLoader(context, mockDirName);
-
-        // Possible change to fetch real data
-        // const LocalLoader = require('../../parser/loaders/local')
-        // const loader = new LocalLoader(context, token, caData)
-
-        context.addLoader(loader);
-
-        context.run();
-    }
-
     acceptCurrentSnapshot(snapshotInfo)
     {
         this._latestSnapshot = snapshotInfo;

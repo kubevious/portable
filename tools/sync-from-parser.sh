@@ -10,9 +10,7 @@ function sync {
 sync "lib/concrete/item.js" "concrete/item.js"
 sync "lib/concrete/registry.js" "concrete/registry.js"
 
-sync "lib/loaders/gke.js" "loaders/gke.js"
 sync "lib/loaders/k8s.js" "loaders/k8s.js"
-sync "lib/loaders/local.js" "loaders/local.js"
 
 sync "lib/logic/helpers" "logic/helpers"
 sync "lib/logic/parsers" "logic/parsers"

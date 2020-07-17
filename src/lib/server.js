@@ -36,13 +36,11 @@ class Server
         this._loadRouters();
 
         this._app.use((req, res, next) => {
-            const error = new Error('Not found')
-            const reason = {
-                message: error.message,
-                stack: error.stack,
-                status: 404,
+            const body = {
+                message: 'Not Found',
+                status: 404
             }
-            next(reason);
+            res.status(body.status).json(body);
         });
 
         this._app.use((error, req, res, next) => {
