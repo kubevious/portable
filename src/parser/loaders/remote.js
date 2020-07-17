@@ -33,7 +33,7 @@ class RemoteLoader
         var k8sConfig = {
             server: null,
             token: null,
-            caData: null
+            httpAgent: {}
         };
 
         return Promise.resolve()
@@ -43,15 +43,19 @@ class RemoteLoader
             })
             .then(() => this._fetchCAData())
             .then(result => {
-                k8sConfig.caData = result;
+                if (result) {
+                    k8sConfig.httpAgent.ca = result;
+                }
             })
             .then(() => this._fetchToken())
             .then(result => {
-                k8sConfig.token = result;
+                if (result) {
+                    k8sConfig.token = result;
+                }
             })
             .then(() => {
                 this.logger.info("[run] Connecting to:", k8sConfig);
-                return K8sClient.connect(this._logger, null, k8sConfig)
+                return K8sClient.connect(this._logger, k8sConfig)
             })
             .then(client => {
                 var info = {
