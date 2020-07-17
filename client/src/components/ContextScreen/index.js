@@ -10,24 +10,24 @@ class ContextScreen extends BaseComponent {
         this.registerService({ kind: 'clusters' })
 
         this.state = {
-            contexts: [],
+            clusters: [],
         }
     }
 
     componentDidMount() {
-        this.service.fetchContexts(result => {
-            this.setState({ contexts: result })
+        this.service.fetchClusters(result => {
+            this.setState({ clusters: result })
         })
     }
 
     selectContext(item) {
         this.sharedState.set('context', item.name)
 
-        this.service.activateContext(item, result => {})
+        this.service.activateCluster(item, result => {})
     }
 
     render() {
-        const { contexts } = this.state
+        const { clusters } = this.state
 
         return (
             <div className="ContextScreen-container">
@@ -35,8 +35,8 @@ class ContextScreen extends BaseComponent {
                     Select context
                 </div>
 
-                {!isEmptyArray(contexts) && <div className="contexts">
-                    {contexts.map(item => (
+                {!isEmptyArray(clusters) && <div className="contexts">
+                    {clusters.map(item => (
                         <div
                             key={item.name}
                             className="context"

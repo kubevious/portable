@@ -3,15 +3,15 @@ class ClustersService {
         this._client = client;
     }
 
-    fetchContexts(cb) {
-        return this._client.get('/contexts')
+    fetchClusters(cb) {
+        return this._client.get('/')
             .then(result => {
                 cb(result.data)
             })
     }
 
-    activateContext(data, cb) {
-        return this._client.post('/activate', data)
+    activateCluster(data, cb) {
+        return this._client.post('/active', data)
             .then(result => {
                 cb(result.data)
             })
