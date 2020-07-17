@@ -15,7 +15,6 @@ class ClusterEngine
         this._clustersList = [];
 
         this._selectedClusterName = null;
-        this._selectedClusterKind = null;
         this._selectedClusterConfig = null;
     }
 
@@ -35,18 +34,55 @@ class ClusterEngine
                 var usersDict = _.makeDict(config.users, x => x.name, x => x.user);
                 var clustersDict = _.makeDict(config.clusters, x => x.name, x => x.cluster);
 
-                this._clustersDict = _.makeDict(config.contexts, x => x.name, x => ({
-                    name: x.name,
-                    cluster: clustersDict[x.context.cluster] || null,
-                    user: usersDict[x.context.user] || null,
-                }));
+                this._clustersDict = _.makeDict(config.contexts, x => x.name, x => {
+                    return this._buildClusterConfig(x, usersDict, clustersDict);
+                });
 
                 this._clustersList = _.values(this._clustersDict).map(x => ({
                     name: x.name,
-                    kind: x.kind ? x.kind : 'k8s'
+                    kind: x.kind
                 }));
                 this._clustersList = _.orderBy(this._clustersList, x => x.name);
             });
+    }
+
+    _buildClusterConfig(contextConfig, usersDict, clustersDict)
+    {
+        var config = {
+            name: contextConfig.name,
+            cluster: clustersDict[contextConfig.context.cluster] || null,
+            user: usersDict[contextConfig.context.user] || null,
+        };
+        config.kind = this._determineKind(config);
+        return config;
+    }
+
+    _determineKind(config)
+    {
+        if (config.name == 'docker-for-desktop') {
+            return 'docker';
+        }
+        if (config.name == 'minikube') {
+            return 'minikube';
+        }
+        if (config.user)
+        {
+            if (config.user['auth-provider'])
+            {
+                if (config.user['auth-provider']['name'] == 'gcp')
+                {
+                    return 'gcp';
+                }
+            }
+            if (config.user['exec'])
+            {
+                if (config.user['exec']['command'] == 'doctl')
+                {
+                    return 'do';
+                }
+            }
+        }
+        return 'k8s';
     }
 
     _loadConfigFile(fileName)
@@ -67,10 +103,13 @@ class ClusterEngine
     }
 
     getActiveCluster() {
-        return {
-            name: this._selectedClusterName,
-            kind: this._selectedClusterKind
+        var info = {
+            name: this._selectedClusterName
         };
+        if (this._selectedClusterConfig) {
+            info.kind = this._selectedClusterConfig.kind;
+        }
+        return info;
     }
 
     setActiveCluster(clusterName) {
@@ -78,7 +117,6 @@ class ClusterEngine
             return;
         }
         this._selectedClusterName = clusterName;
-        this._selectedClusterKind = this._clustersList.find(cluster => cluster.name === clusterName).kind
         this._selectedClusterConfig = this._clustersDict[clusterName] || null;
 
         this._context.parserContext.stopLoaders();
