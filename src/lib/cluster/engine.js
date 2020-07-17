@@ -15,6 +15,7 @@ class ClusterEngine
         this._clustersList = [];
 
         this._selectedClusterName = null;
+        this._selectedClusterKind = null;
         this._selectedClusterConfig = null;
     }
 
@@ -41,7 +42,8 @@ class ClusterEngine
                 }));
 
                 this._clustersList = _.values(this._clustersDict).map(x => ({
-                    name: x.name
+                    name: x.name,
+                    kind: x.kind ? x.kind : 'k8s'
                 }));
                 this._clustersList = _.orderBy(this._clustersList, x => x.name);
             });
@@ -66,7 +68,8 @@ class ClusterEngine
 
     getActiveCluster() {
         return {
-            name: this._selectedClusterName
+            name: this._selectedClusterName,
+            kind: this._selectedClusterKind
         };
     }
 
@@ -75,6 +78,7 @@ class ClusterEngine
             return;
         }
         this._selectedClusterName = clusterName;
+        this._selectedClusterKind = this._clustersList.find(cluster => cluster.name === clusterName).kind
         this._selectedClusterConfig = this._clustersDict[clusterName] || null;
 
         this._context.parserContext.stopLoaders();
