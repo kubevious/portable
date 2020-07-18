@@ -26,6 +26,7 @@ RUN npm ci --only=production
 FROM node:12-alpine
 WORKDIR /app
 ENV NODE_ENV production
+ENV KUBECONFIG /root/.kube/config
 COPY --from=backend-build /app .
 COPY src/ ./
 COPY --from=react-build /app/build ./static

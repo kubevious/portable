@@ -1,7 +1,11 @@
 const yaml = require('js-yaml');
 const _ = require('the-lodash');
+const Promise = require('the-promise');
 const fs = require('fs').promises;
-const { exec } = require('child_process')
+const Path = require('path');
+const ClusterResolver = require('./resolver');
+const { exec } = require('child_process');
+const { resolve } = require('path');
 
 class ClusterEngine
 {
@@ -24,7 +28,8 @@ class ClusterEngine
 
     init()
     {
-        return this._loadConfigFile(process.env.KUBECONFIG)
+        var configFilePath = process.env.KUBECONFIG || '~/.kube/config';
+        return this._loadConfigFile(configFilePath)
             .then(config => {
                 config = config || {};
                 config.contexts = config.contexts || [];
@@ -37,13 +42,19 @@ class ClusterEngine
                 this._clustersDict = _.makeDict(config.contexts, x => x.name, x => {
                     return this._buildClusterConfig(x, usersDict, clustersDict);
                 });
-
+            })
+            .then(() => {
+                return Promise.serial(_.values(this._clustersDict), x => this._processCluster(x))
+            })
+            .then(() => {
                 this._clustersList = _.values(this._clustersDict).map(x => ({
                     name: x.name,
-                    kind: x.kind
+                    kind: x.kind,
+                    ready: x.ready
                 }));
                 this._clustersList = _.orderBy(this._clustersList, x => x.name);
-            });
+            })
+            ;
     }
 
     _buildClusterConfig(contextConfig, usersDict, clustersDict)
@@ -55,6 +66,16 @@ class ClusterEngine
         };
         config.kind = this._determineKind(config);
         return config;
+    }
+
+    _processCluster(clusterConfig)
+    {
+        this.logger.info("[_processCluster] ", clusterConfig)
+        var resolver = new ClusterResolver(this.logger, clusterConfig);
+        return resolver.resolve()
+            .then(() => {
+                this.logger.info("[_processCluster] PostResolve: ", clusterConfig)
+            });
     }
 
     _determineKind(config)
@@ -100,6 +121,50 @@ class ClusterEngine
 
     fetchList() {
         return this._clustersList;
+    }
+
+    fetchDetails(name)
+    {
+        var clusterConfig = this._clustersDict[name];
+        if (!clusterConfig) {
+            return null;
+        }
+
+        var details = {
+            name: clusterConfig.name,
+            kind: clusterConfig.kind,
+            ready: clusterConfig.ready,
+            messages: clusterConfig.messages
+        }
+
+        if (!clusterConfig.ready)
+        {
+            details.runCommand = this._generateRunCommand(clusterConfig);
+        }
+
+        return details;
+    }
+
+    _generateRunCommand(clusterConfig)
+    {
+        var mappings = {
+            '~/.kube/config': '/root/.kube/config'
+        }
+
+        mappings = _.defaults(mappings, clusterConfig.fileMappings);
+
+        var cmd =
+            "docker run --rm -it \\\n" + 
+            "  -p 5001:5001 \\\n";
+
+        for(var x of _.keys(mappings))
+        {
+            cmd += "  -v " + x + ":" + mappings[x] + " \\\n";
+        }
+
+        cmd += "  kubevious/portable";
+
+        return cmd;
     }
 
     getActiveCluster() {

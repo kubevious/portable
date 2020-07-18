@@ -160,6 +160,10 @@ class RemoteLoader
         {
             k8sConfig.httpAgent.rejectUnauthorized = false;
         }
+
+        if (this._config.hostOverride) {
+            k8sConfig.httpAgent.servername = this._config.hostOverride;
+        }
     }
 
     // setToken(user) {

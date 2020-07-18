@@ -34,6 +34,7 @@ RUN curl -L https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VER
 
 WORKDIR /app
 ENV NODE_ENV production
+ENV KUBECONFIG /root/.kube/config
 COPY --from=backend-build /app .
 COPY src/ ./
 COPY --from=react-build /app/build ./static
