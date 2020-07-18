@@ -10,11 +10,20 @@ class ClusterResolver
         this._logger = logger;
         this._config = config;
 
-        this._locations = [
+        this._dataLocations = [
             "cluster['certificate-authority']",
             "user['client-certificate']",
             "user['client-key']"
         ]
+        this._toolLocations = [
+            "user.exec.command"
+        ]
+
+        this._toolConfigs = {
+            doctl: {
+                '/root/.config/doctl/config.yaml': '$HOME/Library/Application Support/doctl/config.yaml'
+            }
+        }
 
         this._isRunningOnHost = (process.env.KUBEVIOUS_ON_HOST == 'true');
     }
@@ -40,23 +49,24 @@ class ClusterResolver
                 }
             })
             .then(() => {
-                return Promise.serial(this._locations, x => this._registerFile(x));
+                return Promise.serial(this._dataLocations, x => this._registerDataFile(x));
+            })
+            .then(() => {
+                return Promise.serial(this._toolLocations, x => this._registerTool(x));
             })
     }
 
-    _registerFile(location)
+    _registerDataFile(location)
     {
-        this.logger.info('[_registerFile] probing: %s', location);
         var srcFilePath = _.get(this._config, location);
-        this.logger.info('[_registerFile] probing: %s = %s', location, srcFilePath);
+        this.logger.info('[_registerFile] probe: %s => %s', location, srcFilePath);
 
         if (!srcFilePath) {
             return;
         }
 
-        var filePath = this._mapFile(srcFilePath);
+        var filePath = this._mapFile(srcFilePath, '/data');
         this._config.fileMappings[srcFilePath] = filePath;
-
 
         _.set(this._config, location, filePath);
 
@@ -67,12 +77,55 @@ class ClusterResolver
         }
     }
 
-    _mapFile(srcFilePath)
+    _registerTool(location)
+    {
+        var srcFilePath = _.get(this._config, location);
+        this.logger.info('[_registerTool] probe: %s => %s', location, srcFilePath);
+
+        var toolName = _.get(this._config, location);
+        if (!toolName) {
+            return;
+        }
+
+        if (this._isRunningOnHost) {
+            return;
+        }
+
+        var filePath = this._mapFile(toolName, '/tools');
+        var exists = fs.existsSync(filePath)
+        if (!exists) {
+            this._config.ready = false;
+            this._config.messages.push('Tool not found: "' + toolName + '"');
+        }
+
+        return this._valideToolConfig(toolName);
+    }
+
+    _valideToolConfig(toolName)
+    {
+        var toolConfig = this._toolConfigs[toolName];
+        if (!toolConfig) {
+            return;
+        }
+
+        for(var configPath of _.keys(toolConfig) )
+        {
+            this._config.fileMappings[toolConfig[configPath]] = configPath;
+
+            var exists = fs.existsSync(configPath)
+            if (!exists) {
+                this._config.ready = false;
+                this._config.messages.push(toolName + ' config not found: "' + configPath + '"');
+            }
+        }
+    }
+
+    _mapFile(srcFilePath, rootDir)
     {
         if (this._isRunningOnHost) {
             return srcFilePath;
         }
-        var filePath = Path.join('/data/', srcFilePath);
+        var filePath = Path.join(rootDir, srcFilePath);
         return filePath;
     }
 

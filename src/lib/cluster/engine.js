@@ -157,7 +157,11 @@ class ClusterEngine
 
         for(var x of _.keys(mappings))
         {
-            cmd += "  -v " + x + ":" + mappings[x] + " \\\n";
+            var binding =  x + ":" + mappings[x];
+            if (binding.includes(' ')) {
+                binding = "\"" + binding + "\"";
+            }
+            cmd += "  -v " + binding + " \\\n";
         }
 
         cmd += "  kubevious/portable";
