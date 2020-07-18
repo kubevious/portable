@@ -4,8 +4,6 @@ const Promise = require('the-promise');
 const fs = require('fs').promises;
 const Path = require('path');
 const ClusterResolver = require('./resolver');
-const { exec } = require('child_process');
-const { resolve } = require('path');
 
 class ClusterEngine
 {

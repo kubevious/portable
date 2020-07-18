@@ -3,6 +3,7 @@ const K8sClient = require('k8s-super-client');
 const K8sLoader = require('./k8s');
 const fs = require('fs').promises;
 const base64 = require("base-64");
+const { exec } = require('child_process');
 
 class RemoteLoader 
 {
@@ -111,7 +112,18 @@ class RemoteLoader
 
     _fetchToken()
     {
-        return this._config.user['token'];
+        if (this._config.user.token) {
+            return this._config.user.token;
+        }
+
+        if (this._config.user.exec.command) {
+            return this._executeCommand(this._config.user.exec.command,
+                                        this._config.user.exec.args)
+                .then(result => {
+                    var doc = JSON.parse(result);
+                    return doc.status.token;
+                });
+        }
     }
 
     _fetchClientCertificate()
@@ -166,6 +178,23 @@ class RemoteLoader
         }
     }
 
+    _executeCommand(program, args)
+    {
+        var cmd = program + ' ' + args.join(' ');
+        this.logger.info('[_executeCommand] running: %s', cmd)
+        return new Promise((resolve, reject) => {
+            exec(cmd, (error, stdout, stderr) => {
+                if (error) {
+                    this.logger.error('[_executeCommand] failed: ', error);
+                    reject(error);
+                } else {
+                    this.logger.info('[_executeCommand] result: ', stdout);
+                    resolve(stdout)
+                }
+            })
+        })
+    }
+
     // setToken(user) {
     //     return new Promise((resolve, reject) => {
     //         if (user.user.token) {
@@ -181,6 +210,8 @@ class RemoteLoader
     // generateCommand(params) {
     //     return params.command + ' ' + params.args.join(' ')
     // }
+
+
 }
 
 module.exports = RemoteLoader;
