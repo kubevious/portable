@@ -24,8 +24,13 @@ RUN npm ci --only=production
 ###############################################################################
 # Step 3 : Runner Image
 FROM node:12-alpine
+
 ENV PATH="/tools:${PATH}"
 WORKDIR /tools
+
+RUN apk add --update python curl which bash
+RUN curl -sSL https://sdk.cloud.google.com | bash
+RUN ln -s /root/google-cloud-sdk/bin/gcloud /tools/
 
 ENV DOCTL_VERSION=1.45.1
 RUN apk add --no-cache curl

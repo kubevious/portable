@@ -16,7 +16,8 @@ class ClusterResolver
             "user['client-key']"
         ]
         this._toolLocations = [
-            "user.exec.command"
+            "user.exec.command",
+            "user['auth-provider'].config['cmd-path']",
         ]
 
         this._toolConfigs = {
@@ -79,13 +80,14 @@ class ClusterResolver
 
     _registerTool(location)
     {
-        var srcFilePath = _.get(this._config, location);
-        this.logger.info('[_registerTool] probe: %s => %s', location, srcFilePath);
-
-        var toolName = _.get(this._config, location);
-        if (!toolName) {
+        var toolPath = _.get(this._config, location);
+        this.logger.info('[_registerTool] probe: %s => %s', location, toolPath);
+        if (!toolPath) {
             return;
         }
+
+        var toolName = Path.basename(toolPath);
+        this.logger.info('[_registerTool] probe: %s => %s', location, toolName);
 
         if (this._isRunningOnHost) {
             return;

@@ -116,13 +116,15 @@ class RemoteLoader
             return this._config.user.token;
         }
 
-        if (this._config.user.exec.command) {
-            return this._executeCommand(this._config.user.exec.command,
-                                        this._config.user.exec.args)
-                .then(result => {
-                    var doc = JSON.parse(result);
-                    return doc.status.token;
-                });
+        if (this._config.user.exec) {
+            if (this._config.user.exec.command) {
+                return this._executeCommand(this._config.user.exec.command,
+                                            this._config.user.exec.args)
+                    .then(result => {
+                        var doc = JSON.parse(result);
+                        return doc.status.token;
+                    });
+            }
         }
     }
 
