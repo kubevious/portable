@@ -6,7 +6,7 @@ module.exports = {
             return context.clusterEngine.fetchList();
         })
 
-        router.get('/:name', function (req, res) {
+        router.get('/info/:name', function (req, res) {
             return context.clusterEngine.fetchDetails(req.params.name);
         })
 

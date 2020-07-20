@@ -16,7 +16,6 @@ class ClusterEngine
         this._clustersDict = {};
         this._clustersList = [];
 
-        this._selectedClusterName = null;
         this._selectedClusterConfig = null;
     }
 
@@ -170,28 +169,35 @@ class ClusterEngine
     }
 
     getActiveCluster() {
-        var info = {
-            name: this._selectedClusterName
-        };
         if (this._selectedClusterConfig) {
-            info.kind = this._selectedClusterConfig.kind;
+            return {
+                name: this._selectedClusterConfig.name,
+                kind: this._selectedClusterConfig.kind
+            }
         }
-        return info;
+        return null;
     }
 
     setActiveCluster(clusterName) {
-        if (this._selectedClusterName == clusterName) {
-            return;
+        var config = this._clustersDict[clusterName] || null;
+        if (!config) {
+            return {
+                success: false,
+                messages: [
+                    "Unknown cluster: " + clusterName
+                ]
+            };
         }
-        this._selectedClusterName = clusterName;
-        this._selectedClusterConfig = this._clustersDict[clusterName] || null;
+        if (!config.ready) {
+            return {
+                success: false,
+                messages: config.messages,
+                runCommand: this._generateRunCommand(config)
+            };
+        }
 
+        this._selectedClusterConfig = config;
         this._context.parserContext.stopLoaders();
-
-        if (!this._selectedClusterConfig) {
-            return;
-        }
-
         return this._context.parserContext.activateLoader(this._selectedClusterConfig);
     }
 }

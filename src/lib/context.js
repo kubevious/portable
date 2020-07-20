@@ -3,7 +3,6 @@ const ProcessingTracker = require("kubevious-helpers").ProcessingTracker;
 const FacadeRegistry = require('./facade/registry');
 const SearchEngine = require('./search/engine');
 const Registry = require('./registry/registry');
-const ClusterLeaderElector = require('./cluster/leader-elector')
 const DebugObjectLogger = require('./utils/debug-object-logger');
 const WebSocketServer = require('./websocket/server');
 const SnapshotProcessor = require('./snapshot-processor')
@@ -37,8 +36,6 @@ class Context
         this._parserContext = new ParserContext(this._logger, this);
 
         this._server = null;
-        this._k8sClient = null;
-        this._clusterLeaderElector = null;
     }
 
     get logger() {
@@ -89,22 +86,17 @@ class Context
 
     setupK8sClient(client)
     {
-        this._k8sClient = client;
-        if (this._k8sClient) 
-        {
-            this._clusterLeaderElector = new ClusterLeaderElector(this, this._k8sClient);
-        }
     }
 
     run()
     {
         if (process.env.NODE_ENV === 'development')
         {
-            this.tracker.enablePeriodicDebugOutput(5);
+            this.tracker.enablePeriodicDebugOutput(30);
         }
         else
         {
-            this.tracker.enablePeriodicDebugOutput(10);
+            this.tracker.enablePeriodicDebugOutput(60);
         }
 
         return Promise.resolve()
@@ -112,8 +104,6 @@ class Context
             .then(() => this._runServer())
             .then(() => this._setupWebSocket())
             .catch(reason => {
-                console.log("***** ERROR *****");
-                console.log(reason);
                 this.logger.error(reason);
                 process.exit(1);
             });

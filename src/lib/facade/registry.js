@@ -54,7 +54,7 @@ class FacadeRegistry
                     this._isProcessing = false;
                 });
 
-        }, 5000);
+        }, 1000);
     }
 
     _processCurrentSnapshot(snapshotInfo)

@@ -12,8 +12,6 @@ function sync {
 sync "index.js" "index.js"
 sync "lib/snapshot-processor.js" "lib/snapshot-processor.js"
 
-sync "lib/cluster/leader-elector.js" "lib/cluster/leader-elector.js"
-
 sync "lib/registry/registry.js" "lib/registry/registry.js"
 sync "lib/search/engine.js" "lib/search/engine.js"
 sync "lib/utils/debug-object-logger.js" "lib/utils/debug-object-logger.js"

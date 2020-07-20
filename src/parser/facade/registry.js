@@ -71,17 +71,9 @@ class FacadeRegistry
     {
         this._logger.info("[_handleConcreteRegistryChange] BEGIN");
 
-        if (this._context.areLoadersReady) {
-            this._context.logicProcessor.process();
-        }
+        this._context.logicProcessor.process();
 
         this._logger.info("[_handleConcreteRegistryChange] END");
-    }
-
-    handleAreLoadersReadyChange()
-    {
-        this._logger.info("[handleAreLoadersReadyChange] ");
-        this._handleConcreteRegistryChange();
     }
 }
 

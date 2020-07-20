@@ -19,7 +19,7 @@ class Context
     {
         this._logger = logger.sublogger("ParserContext");
         this._appContext = appContext
-        this._loaders = [];
+        this._loaderInfo = null;
         this._concreteRegistry = new ConcreteRegistry(this);
         this._k8sParser = new K8sParser(this);
         this._logicProcessor = new LogicProcessor(this);
@@ -27,8 +27,6 @@ class Context
         this._facadeRegistry = new FacadeRegistry(this);
 
         this._debugObjectLogger = new DebugObjectLogger(this);
-
-        this._areLoadersReady = false;
 
         this._server = null;
         this._k8sClient = null;
@@ -54,10 +52,6 @@ class Context
         return this._logicProcessor;
     }
 
-    get areLoadersReady() {
-        return this._areLoadersReady;
-    }
-
     get debugObjectLogger() {
         return this._debugObjectLogger;
     }
@@ -69,36 +63,45 @@ class Context
     stopLoaders()
     {
         this._logger.debug("[stopLoaders]");
-        this._areLoadersReady = false;
         this._k8sClient = null;
-        for(var loader of this._loaders)
-        {
-            // loader.stop();
+        if (this._loaderInfo) {
+            // this._loaderInfo.loader.stop();
+            this._loaderInfo = null;
         }
-        this._loaders = [];
     }
 
     activateLoader(config)
     {
         this._logger.debug("[activateLoader]", config);
         var loader = new RemoteLoader(this, config);
-        this._addLoader(loader);
-        this._run();
-    }
 
-    _addLoader(loader)
-    {
-        var loaderInfo = {
-            loader: loader,
-            isReady: false,
-            readyHandler: (value) => {
-                loaderInfo.isReady = value;
-                this._logger.debug("[readyHandler] %s", value);
-                this._checkLoadersReady();
-            }
+        this._loaderInfo = {
+            loader: loader
         }
-        loader.setupReadyHandler(loaderInfo.readyHandler);
-        this._loaders.push(loaderInfo);
+
+        return Promise.resolve()
+            .then(() => this._loaderInfo.loader.run())
+            .then(() => {
+                return {
+                    success: true
+                };
+            })
+            .catch(reason => {
+                this.logger.error(reason);
+                var messages = ['Unknown'];
+                if (reason) {
+                    if (reason.messages) {
+                        messages = reason.messages;
+                    }
+                    if (reason.message) {
+                        messages = [ reason.message ];
+                    }
+                }
+                return {
+                    success: false,
+                    messages: messages
+                }
+            });
     }
 
     setupK8sClient(client)
@@ -106,48 +109,6 @@ class Context
         this._k8sClient = client;
     }
 
-    _run()
-    {
-        return Promise.resolve()
-            .then(() => this._processLoaders())
-            .catch(reason => {
-                console.log("***** ERROR *****");
-                console.log(reason);
-                this.logger.error(reason);
-            });
-    }
-
-    _processLoaders()
-    {
-        return Promise.serial(this._loaders, x => {
-            return x.loader.run();
-        });
-    }
-
-    _checkLoadersReady()
-    {
-        var areLoadersReady = this._calculateLoadersReady();
-        if (areLoadersReady != this._areLoadersReady) {
-            this._areLoadersReady = areLoadersReady;
-            this.logger.info("[_checkLoadersReady] areLoadersReady: %s", areLoadersReady);
-
-            if (this._areLoadersReady)
-            {
-                this.facadeRegistry.handleAreLoadersReadyChange();
-            }
-        }
-    }
-
-    _calculateLoadersReady()
-    {
-        for(var loader of this._loaders)
-        {
-            if (!loader.isReady) {
-                return false;
-            }
-        }
-        return true;
-    }
 }
 
 module.exports = Context;

@@ -15,6 +15,7 @@ class RemoteLoader
         this._logger = context.logger.sublogger("RemoteLoader");
         this._loader = null;
         this._config = config;
+        this._errorMessages = [];
 
         this.logger.info("Constructed");
     }
@@ -23,17 +24,15 @@ class RemoteLoader
         return this._logger;
     }
 
-    setupReadyHandler(handler)
-    {
-        this._readyHandler = handler;
-        if (this._loader) {
-            this._loader.setupReadyHandler(this._readyHandler);
-        }
+    get errorMessages() {
+        return this._errorMessages;
     }
-    
+
     run()
     {
         this.logger.info("[run] ", this._config);
+
+        this._errorMessages = [];
 
         var k8sConfig = {
             server: null,
@@ -73,6 +72,19 @@ class RemoteLoader
             })
             .then(() => this._finalizeSetup(k8sConfig))
             .then(() => {
+                if (this._errorMessages.length > 0) {
+                    throw {
+                        messages: this._errorMessages
+                    }
+                }
+                return this._tryConnect(k8sConfig);
+            })
+    }
+
+    _tryConnect(k8sConfig)
+    {
+        return Promise.resolve()
+            .then(() => {
                 this.logger.info("[run] Connecting to:", k8sConfig);
                 return K8sClient.connect(this._logger, k8sConfig)
             })
@@ -81,7 +93,6 @@ class RemoteLoader
                     infra: "local"
                 }
                 this._loader = new K8sLoader(this._context, client, info);
-                this._loader.setupReadyHandler(this._readyHandler);
                 return this._loader.run();
             })
     }
@@ -188,6 +199,7 @@ class RemoteLoader
         return fs.readFile(filePath, 'utf8')
             .catch(reason => {
                 this.logger.error('Failed to load from: %s. Details: ', filePath, reason);
+                this._errorMessages.push('Failed to load from: ' + filePath);
                 return null;
             });
     }
