@@ -42,7 +42,7 @@ class ClusterScreen extends BaseComponent {
                             className="cluster"
                             onClick={() => this.selectCluster(item)}
                         >
-                            <img className="kubernetes-logo" src="/img/entities/kubernetes.svg" alt="kubernetes" />
+                            <img className="kubernetes-logo" src={`/img/clusters/${item.kind}.svg`} alt={item.kind} />
                             {item.name}
                         </div>
                     ))}
