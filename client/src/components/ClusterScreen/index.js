@@ -42,7 +42,7 @@ class ClusterScreen extends BaseComponent {
         return (
             <div className="ClusterScreen-container">
                 <div className={cx('title', {'error': error})}>
-                    {error ? 'Error occurred' : 'Select cluster'}
+                    {error ? 'Error Connecting to Cluster' : 'Select cluster'}
                 </div>
 
                 {!isEmptyArray(clusters) && !error && <div className="clusters">
@@ -68,11 +68,10 @@ class ClusterScreen extends BaseComponent {
                     </div>}
 
                     {error.runCommand && <div>
-                        Your run with
+                        Please try running Kubevious Portable using following command:
                         <pre>
                             {error.runCommand}
                         </pre>
-                        Please try using different volume mapping values
                     </div>}
 
                     <button className="back-btn" onClick={() => this.backToList()}>Back to list</button>

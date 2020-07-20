@@ -76,8 +76,7 @@ class ClusterResolver
 
         var exists = fs.existsSync(filePath)
         if (!exists) {
-            this._config.ready = false;
-            this._config.messages.push('"' + filePath + '" not found.');
+            this._reportError('"' + filePath + '" not found.');
         }
     }
 
@@ -99,8 +98,7 @@ class ClusterResolver
         var filePath = this._mapFile(toolName, '/tools');
         var exists = fs.existsSync(filePath)
         if (!exists) {
-            this._config.ready = false;
-            this._config.messages.push('Tool not found: "' + toolName + '"');
+            this._reportError('Tool not found: "' + toolName + '"');
         }
 
         return this._valideToolConfig(toolName);
@@ -119,8 +117,7 @@ class ClusterResolver
 
             var exists = fs.existsSync(configPath)
             if (!exists) {
-                this._config.ready = false;
-                this._config.messages.push(toolName + ' config not found: "' + configPath + '"');
+                this._reportError(toolName + ' config not found: "' + configPath + '"');
             }
         }
     }
@@ -134,6 +131,14 @@ class ClusterResolver
         return filePath;
     }
 
+    _reportError(msg)
+    {
+        this._config.ready = false;
+        if (this._config.messages.length == 0) {
+            this._config.messages.push('Some configuration files or tools were not found.');
+        }
+        this._config.messages.push(msg);
+    }
 }
 
 module.exports = ClusterResolver;
