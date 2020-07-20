@@ -2,6 +2,7 @@ import React from 'react'
 import BaseComponent from '../../HOC/BaseComponent';
 import './styles.scss'
 import { isEmptyArray } from '../../utils/util';
+import cx from 'classnames'
 
 class ClusterScreen extends BaseComponent {
     constructor(props) {
@@ -11,6 +12,7 @@ class ClusterScreen extends BaseComponent {
 
         this.state = {
             clusters: [],
+            error: null,
         }
     }
 
@@ -21,21 +23,29 @@ class ClusterScreen extends BaseComponent {
     }
 
     selectCluster(item) {
-        this.sharedState.set('selected_cluster', item.name)
+        this.service.activateCluster(item, result => {
+            if (result.success) {
+                this.sharedState.set('selected_cluster', item)
+            } else {
+                this.setState({ error: { messages: result.messages, runCommand: result.runCommand } })
+            }
+        })
+    }
 
-        this.service.activateCluster(item, result => {})
+    backToList() {
+        this.setState({ error: null })
     }
 
     render() {
-        const { clusters } = this.state
+        const { clusters, error } = this.state
 
         return (
             <div className="ClusterScreen-container">
-                <div className="title">
-                    Select cluster
+                <div className={cx('title', {'error': error})}>
+                    {error ? 'Error occurred' : 'Select cluster'}
                 </div>
 
-                {!isEmptyArray(clusters) && <div className="clusters">
+                {!isEmptyArray(clusters) && !error && <div className="clusters">
                     {clusters.map(item => (
                         <div
                             key={item.name}
@@ -46,6 +56,26 @@ class ClusterScreen extends BaseComponent {
                             {item.name}
                         </div>
                     ))}
+                </div>}
+
+                {error && <div className="error-box">
+                    {!isEmptyArray(error.messages) && <div className="error-messages">
+                        {error.messages.map(msg => (
+                            <div className="message">
+                                {msg}
+                            </div>
+                        ))}
+                    </div>}
+
+                    {error.runCommand && <div>
+                        Your run with
+                        <pre>
+                            {error.runCommand}
+                        </pre>
+                        Please try using different volume mapping values
+                    </div>}
+
+                    <button className="back-btn" onClick={() => this.backToList()}>Back to list</button>
                 </div>}
             </div>
         )
