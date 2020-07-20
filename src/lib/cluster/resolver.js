@@ -23,6 +23,9 @@ class ClusterResolver
         this._toolConfigs = {
             doctl: {
                 '/root/.config/doctl/config.yaml': '$HOME/Library/Application Support/doctl/config.yaml'
+            },
+            gcloud: {
+                '/root/.config/gcloud': '$HOME/.config/gcloud'
             }
         }
 

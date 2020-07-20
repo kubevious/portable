@@ -1,7 +1,9 @@
 const Promise = require('the-promise');
+const _ = require("the-lodash");
 const K8sClient = require('k8s-super-client');
 const K8sLoader = require('./k8s');
 const fs = require('fs').promises;
+const Path = require('path');
 const base64 = require("base-64");
 const { exec } = require('child_process');
 
@@ -118,12 +120,34 @@ class RemoteLoader
 
         if (this._config.user.exec) {
             if (this._config.user.exec.command) {
-                return this._executeCommand(this._config.user.exec.command,
-                                            this._config.user.exec.args)
+                return this._executeTool(this._config.user.exec.command,
+                                         this._config.user.exec.args)
                     .then(result => {
                         var doc = JSON.parse(result);
                         return doc.status.token;
                     });
+            }
+        }
+
+        if (this._config.user['auth-provider']) {
+            if (this._config.user['auth-provider']['config']) {
+                var authConfig = this._config.user['auth-provider']['config']
+                if (authConfig['cmd-path'])
+                {
+                    return this._executeTool(authConfig['cmd-path'],
+                                             authConfig['cmd-args'])
+                        .then(result => {
+                            var doc = JSON.parse(result);
+                            var tokenKey = authConfig['token-key'];
+                            tokenKey = _.trim(tokenKey, "{}.");
+                            var token = _.get(doc, tokenKey);
+                            return token;
+                        });
+                }
+
+                if (authConfig['access-token']) {
+                    return authConfig['access-token'];
+                }
             }
         }
     }
@@ -180,9 +204,21 @@ class RemoteLoader
         }
     }
 
+    _executeTool(toolPath, args)
+    {
+        var toolName = Path.basename(toolPath);
+        return this._executeCommand(toolName, args);
+    }
+
     _executeCommand(program, args)
     {
-        var cmd = program + ' ' + args.join(' ');
+        if (_.isArray(args)) {
+            args = args.join(' ');
+        }
+        var cmd = program;
+        if (args && (args.length > 0)) {
+            cmd = program + ' ' + args;
+        }
         this.logger.info('[_executeCommand] running: %s', cmd)
         return new Promise((resolve, reject) => {
             exec(cmd, (error, stdout, stderr) => {

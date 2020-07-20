@@ -30,6 +30,7 @@ WORKDIR /tools
 
 RUN apk add --update python curl which bash
 RUN curl -sSL https://sdk.cloud.google.com | bash
+RUN rm -rf /root/.config/gcloud
 RUN ln -s /root/google-cloud-sdk/bin/gcloud /tools/
 
 ENV DOCTL_VERSION=1.45.1

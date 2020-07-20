@@ -5,7 +5,7 @@ cd $MY_DIR
 
 docker run --rm -it \
     -p 5001:5001 \
-    -v ~/.kube/config:/root/.kube/config \
-    -v ~/.config/doctl/config.yaml:/root/.config/doctl/config.yaml \
-    -e NODE_ENV=development \
+    -v $HOME/.kube/config:/root/.kube/config \
+    -v $HOME/.config/gcloud:/root/.config/gcloud \
+    -v $HOME/.config/doctl/config.yaml:/root/.config/doctl/config.yaml \
     kubevious/portable:dev
