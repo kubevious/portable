@@ -197,6 +197,9 @@ class ClusterEngine
         }
 
         this._selectedClusterConfig = config;
+        
+        this._context.websocket.update({ kind: 'active-cluster' }, this.getActiveCluster());
+        
         this._context.parserContext.stopLoaders();
         return this._context.parserContext.activateLoader(this._selectedClusterConfig);
     }

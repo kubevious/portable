@@ -1,6 +1,10 @@
 class ClustersService {
-    constructor(client) {
+    constructor(client, sharedState, socketService) {
         this._client = client;
+        this.sharedState = sharedState;
+        socketService._subscribe({ kind: 'active-cluster' }, (value) => {
+            this.sharedState.set('selected_cluster', value);
+        }) 
     }
 
     fetchClusters(cb) {

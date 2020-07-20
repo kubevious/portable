@@ -16,7 +16,7 @@ class RootApiService extends BaseRootApiService {
             return new WebSocketService(sharedState);
         });
 
-        this.registerService({ kind: 'diagram' }, ({ info }) => {
+        this.registerService({ kind: 'diagram' }, () => {
             var client = new BackendClient('/api', sharedState);
             return new DiagramService(client);
         });
@@ -28,7 +28,7 @@ class RootApiService extends BaseRootApiService {
 
         this.registerService({ kind: 'clusters' }, () => {
             var client = new BackendClient('/api/clusters', sharedState)
-            return new ClustersService(client)
+            return new ClustersService(client, sharedState, this.socketService())
         });
     }
 
