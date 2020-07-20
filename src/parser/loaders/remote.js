@@ -81,6 +81,14 @@ class RemoteLoader
             })
     }
 
+    stop()
+    {
+        if (this._loader) {
+            this._loader.stop();
+            this._loader = null;
+        }
+    }
+
     _tryConnect(k8sConfig)
     {
         return Promise.resolve()

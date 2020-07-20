@@ -27,6 +27,13 @@ class K8sLoader
         return this._logger;
     }
 
+    stop()
+    {
+        if (this._client) {
+            this._client.close();
+        }
+    }
+    
     _setupApiTargets()
     {
         for(var targetAccessor of this._getTargets())

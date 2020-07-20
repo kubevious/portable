@@ -31,6 +31,13 @@ class ConcreteRegistry
         return _.values(this._items);
     }
 
+    reset()
+    {
+        this._items = {};
+        this._itemIndex = {};
+        this._triggerChange();
+    }
+
     add(id, obj, indexBy)
     {
         this.logger.verbose("[add] ", id);

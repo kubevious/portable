@@ -71,7 +71,8 @@ class Context
         this._logger.debug("[stopLoaders]");
         this._k8sClient = null;
         if (this._loaderInfo) {
-            // this._loaderInfo.loader.stop();
+            this._loaderInfo.loader.stop();
+            this.concreteRegistry.reset();
             this._loaderInfo = null;
         }
     }
