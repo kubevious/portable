@@ -101,6 +101,7 @@ class Context
 
         return Promise.resolve()
             .then(() => this._clusterEngine.init())
+            .then(() => this.parserContext.init())
             .then(() => this._runServer())
             .then(() => this._setupWebSocket())
             .catch(reason => {

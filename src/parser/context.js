@@ -28,7 +28,6 @@ class Context
 
         this._debugObjectLogger = new DebugObjectLogger(this);
 
-        this._server = null;
         this._k8sClient = null;
     }
 
@@ -58,6 +57,13 @@ class Context
 
     get appContext() {
         return this._appContext
+    }
+
+    init()
+    {
+        return Promise.resolve()
+            .then(() => this.facadeRegistry.init())
+            ;
     }
 
     stopLoaders()

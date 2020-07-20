@@ -10,12 +10,15 @@ class FacadeRegistry
         this._context = context;
         this._logger = context.logger.sublogger("ParserFacadeRegistry");
         this._jobDampener = new JobDampener(this._logger.sublogger("FacadeDampener"), this._processItems.bind(this));
-
-        this._context.concreteRegistry.onChanged(this._handleConcreteRegistryChange.bind(this));
     }
 
     get logger() {
         return this._logger;
+    }
+
+    init()
+    {
+        this._context.concreteRegistry.onChanged(this._handleConcreteRegistryChange.bind(this));
     }
 
     acceptLogicItems(items)
