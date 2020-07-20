@@ -157,9 +157,6 @@ class ClusterEngine
         for(var x of _.keys(mappings))
         {
             var binding =  x + ":" + mappings[x];
-            if (binding.includes(' ')) {
-                binding = "\"" + binding + "\"";
-            }
             cmd += "  -v " + binding + " \\\n";
         }
 
