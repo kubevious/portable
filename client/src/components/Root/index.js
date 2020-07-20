@@ -96,14 +96,14 @@ class Root extends BaseComponent {
             this.setState({ error: error, isError: is_error })
         })
 
-        this.subscribeToSharedState('cluster', (cluster) => {
-            this.setState({ cluster: cluster })
+        this.subscribeToSharedState('selected_cluster', (selected_cluster) => {
+            this.setState({ cluster: selected_cluster })
         })
     }
 
     handleOpenCluster() {
         this.setState({ cluster: null })
-        this.sharedState.set('cluster', null)
+        this.sharedState.set('selected_cluster', null)
     }
 
     render() {

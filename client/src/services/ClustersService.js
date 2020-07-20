@@ -4,7 +4,7 @@ class ClustersService {
         this.sharedState = sharedState;
         socketService._subscribe({ kind: 'active-cluster' }, (value) => {
             this.sharedState.set('selected_cluster', value);
-        }) 
+        })
     }
 
     fetchClusters(cb) {

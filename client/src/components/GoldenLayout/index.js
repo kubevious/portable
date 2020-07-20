@@ -18,8 +18,8 @@ class GoldenLayoutComponent extends BaseComponent {
     }
 
     componentDidMount() {
-        this.subscribeToSharedState('cluster', (cluster) => {
-            if (cluster && isEmptyArray(this._components)) {
+        this.subscribeToSharedState('selected_cluster', (selected_cluster) => {
+            if (selected_cluster && isEmptyArray(this._components)) {
                 new RegisterComponents(this)
                 this._activateLayout()
             }

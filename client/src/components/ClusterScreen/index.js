@@ -21,7 +21,7 @@ class ClusterScreen extends BaseComponent {
     }
 
     selectCluster(item) {
-        this.sharedState.set('cluster', item.name)
+        this.sharedState.set('selected_cluster', item.name)
 
         this.service.activateCluster(item, result => {})
     }

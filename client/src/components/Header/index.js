@@ -71,8 +71,9 @@ class Header extends BaseComponent {
                 this.setState({ isLoading: is_loading })
             })
 
-        this.subscribeToSharedState('cluster', (cluster) => {
-            this.setState({ cluster: cluster })
+        this.subscribeToSharedState('selected_cluster', (selected_cluster) => {
+            console.log('selected_cluster', selected_cluster)
+            this.setState({ cluster: selected_cluster })
         })
     }
 
@@ -86,7 +87,7 @@ class Header extends BaseComponent {
                     {isLoading && <FontAwesomeIcon icon={faSpinner} spin />}
                 </div>
                 {cluster && <div className="cluster">
-                    {cluster}
+                    {cluster.name}
                     <button type="button" className="btn btn-cluster" onClick={this.props.handleOpenCluster}/>
                 </div>}
                 <div className="actions">
