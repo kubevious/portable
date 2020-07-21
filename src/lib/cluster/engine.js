@@ -83,6 +83,7 @@ class ClusterEngine
         if (config.name == 'minikube') {
             return 'minikube';
         }
+
         if (config.user)
         {
             if (config.user['auth-provider'])
@@ -97,6 +98,10 @@ class ClusterEngine
                 if (config.user['exec']['command'] == 'doctl')
                 {
                     return 'do';
+                }
+
+                if (config.user['exec']['command'] == 'aws') {
+                    return 'aws'
                 }
             }
         }
