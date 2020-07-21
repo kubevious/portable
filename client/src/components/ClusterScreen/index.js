@@ -70,7 +70,7 @@ class ClusterScreen extends BaseComponent {
                     {error.runCommand && <div>
                         Please try running Kubevious Portable using following command:
                         <pre>
-                            {error.runCommand}
+                            {error.runCommand["Mac OS X"]}
                         </pre>
                     </div>}
 

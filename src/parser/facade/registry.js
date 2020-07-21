@@ -74,9 +74,14 @@ class FacadeRegistry
     {
         this._logger.info("[_handleConcreteRegistryChange] BEGIN");
 
-        this._context.logicProcessor.process();
+        return this._context.logicProcessor.process()
+            .then(() => {
+                this._logger.info("[_handleConcreteRegistryChange] END");
+            })
+            .catch(reason => {
+                this._logger.error("[_handleConcreteRegistryChange] Failed: ", reason);
+            })
 
-        this._logger.info("[_handleConcreteRegistryChange] END");
     }
 }
 

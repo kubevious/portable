@@ -3,6 +3,12 @@ const fs = require('fs');
 const Path = require('path');
 const _ = require('the-lodash');
 
+const OS_DEFAULT = 'default';
+const OS_MAC = 'Mac OS X';
+const OS_LINUX = 'Linux';
+const OS_WIN = 'Windows';
+const OS_LIST = [ OS_MAC, OS_LINUX, OS_WIN ];
+
 class ClusterResolver
 {
     constructor(logger, config)
@@ -22,10 +28,15 @@ class ClusterResolver
 
         this._toolConfigs = {
             doctl: {
-                '/root/.config/doctl/config.yaml': '~/Library/Application\\ Support/doctl/config.yaml'
+                '/root/.config/doctl/config.yaml': {
+                    [OS_DEFAULT]: '~/.config/doctl/config.yaml',
+                    [OS_MAC]: '~/Library/Application\\ Support/doctl/config.yaml'
+                } 
             },
             gcloud: {
-                '/root/.config/gcloud': '~/.config/gcloud'
+                '/root/.config/gcloud': {
+                    [OS_DEFAULT]: '~/.config/gcloud'
+                }
             }
         }
 
@@ -70,7 +81,9 @@ class ClusterResolver
         }
 
         var filePath = this._mapFile(srcFilePath, '/data');
-        this._config.fileMappings[srcFilePath] = filePath;
+        this._config.fileMappings[filePath] = {
+            [OS_DEFAULT]: srcFilePath
+        };
 
         _.set(this._config, location, filePath);
 
@@ -113,7 +126,7 @@ class ClusterResolver
 
         for(var configPath of _.keys(toolConfig) )
         {
-            this._config.fileMappings[toolConfig[configPath]] = configPath;
+            this._config.fileMappings[configPath] = toolConfig[configPath];
 
             var exists = fs.existsSync(configPath)
             if (!exists) {
@@ -142,3 +155,6 @@ class ClusterResolver
 }
 
 module.exports = ClusterResolver;
+
+module.exports.OS_DEFAULT = OS_DEFAULT;
+module.exports.OS_LIST = OS_LIST;

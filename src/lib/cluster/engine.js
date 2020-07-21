@@ -145,23 +145,51 @@ class ClusterEngine
     _generateRunCommand(clusterConfig)
     {
         var mappings = {
-            '~/.kube/config': '/root/.kube/config'
+            '/root/.kube/config': {
+                [ClusterResolver.OS_DEFAULT]: '~/.kube/config'
+            } 
         }
+
+        this.logger.info("[_generateRunCommand] FileMappings: ", clusterConfig.fileMappings);
 
         mappings = _.defaults(mappings, clusterConfig.fileMappings);
 
+        this.logger.info("[_generateRunCommand] Combined Mappings: ", mappings);
+
+        var commands = {
+
+        };
+
+        for(var x of ClusterResolver.OS_LIST)
+        {
+            commands[x] = this._generateRunCommandForOS(x, mappings);
+        }
+
+        this.logger.info("[_generateRunCommand] Commands: ", commands);
+
+        return commands;
+    }
+
+    _generateRunCommandForOS(os, mappings)
+    {
         var cmd =
             "docker run --rm -it \\\n" + 
             "  -p 5001:5001 \\\n";
 
         for(var x of _.keys(mappings))
         {
-            var binding =  x + ":" + mappings[x];
-            cmd += "  -v " + binding + " \\\n";
+            var sourcePath = mappings[x][os];
+            if (!sourcePath) {
+                sourcePath = mappings[x][ClusterResolver.OS_DEFAULT];
+            }
+            if (sourcePath)
+            {
+                var binding =  sourcePath + ":" + x;
+                cmd += "  -v " + binding + " \\\n";
+            }
         }
 
         cmd += "  kubevious/portable";
-
         return cmd;
     }
 
