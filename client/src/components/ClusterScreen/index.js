@@ -14,6 +14,7 @@ class ClusterScreen extends BaseComponent {
             clusters: [],
             error: null,
             commandOs: null,
+            selectedCluster: null
         }
     }
 
@@ -21,11 +22,16 @@ class ClusterScreen extends BaseComponent {
         this.service.fetchClusters(result => {
             this.setState({ clusters: result })
         })
+
+        this.subscribeToSharedState('selected_cluster', (selected_cluster) => {
+            this.setState({ selectedCluster: selected_cluster })
+        })
     }
 
     selectCluster(item) {
         this.service.activateCluster(item, result => {
             if (result.success) {
+                this.props.handleCloseClusters()
                 this.sharedState.set('selected_cluster', item)
             } else {
                 this.setState({
@@ -41,7 +47,7 @@ class ClusterScreen extends BaseComponent {
     }
 
     render() {
-        const { clusters, error, commandOs } = this.state
+        const { clusters, error, commandOs, selectedCluster } = this.state
 
         return (
             <div className="ClusterScreen-container">
@@ -49,11 +55,15 @@ class ClusterScreen extends BaseComponent {
                     {error ? 'Error Connecting to Cluster' : 'Select cluster'}
                 </div>
 
+                <div className="close-clusters" onClick={() => this.props.handleCloseClusters()}>
+                    x
+                </div>
+
                 {!isEmptyArray(clusters) && !error && <div className="clusters">
                     {clusters.map(item => (
                         <div
                             key={item.name}
-                            className="cluster"
+                            className={cx('cluster', { 'selected': selectedCluster && selectedCluster.name === item.name })}
                             onClick={() => this.selectCluster(item)}
                         >
                             <img className="kubernetes-logo" src={`/img/clusters/${item.kind}.svg`} alt={item.kind} />
