@@ -5,6 +5,8 @@ While Kubevious operates inside the cluster and provides UI and configuration va
 
 Compared with Kubevious, Kubevious Portable is not equipped with [Time Machine](https://github.com/kubevious/kubevious/blob/master/docs/rules-engine.md#rules-engine) and [Rules Engine](https://youtu.be/Zb5ZIJEHONU). Those capabilities require significant processing and are not able to be executed within the Portable version. If required, consider installing full operation [here](https://kubevious.io).
 
+![Kubevious Portable Preview](https://raw.githubusercontent.com/kubevious/media/master/portable/portable-view.png)
+
 # Running Kubevious Portable
 ```sh
 docker run --rm -it \
@@ -12,6 +14,8 @@ docker run --rm -it \
   -v ~/.kube/config:/root/.kube/config \
   kubevious/portable
 ```
+
+![Running Kubevious Portable](https://raw.githubusercontent.com/kubevious/media/master/portable/portable-run-script.png)
 
 ## Running Kubevious Portable for Minikube
 ```sh
@@ -55,3 +59,10 @@ docker run --rm -it \
   -v ~/.config/doctl/config.yaml:/root/.config/doctl/config.yaml \
   kubevious/portable
 ```
+
+## Operating Instructions
+
+Upon startup Kubevious Portable lists contexts from **~/.kube/config** file. The only big difference from full version of Kubevious is the choice of cluster that has to be made upon launch. Users can change cluster selection afterwards.
+
+![Selecting Cluster in Kubevious Portable](https://raw.githubusercontent.com/kubevious/media/master/portable/portable-cluster-select.png)
+
