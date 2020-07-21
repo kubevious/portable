@@ -32,6 +32,17 @@
     }
   }
 
+  .close-clusters {
+    position: absolute;
+    top: 5px;
+    right: 25px;
+    font-size: 30px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   .clusters {
     .cluster {
       width: 100%;
@@ -40,6 +51,10 @@
       border: 1px solid #666;
       cursor: pointer;
       justify-content: space-between;
+
+      &.selected {
+        background: #35373E;
+      }
 
       .kubernetes-logo {
         width: 35px;

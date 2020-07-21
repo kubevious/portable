@@ -19,7 +19,8 @@ class Root extends BaseComponent {
             windows: [],
             isError: false,
             error: null,
-            cluster: null
+            cluster: null,
+            showClustersPopup: true
         }
 
         this._fieldsSaver = new FieldsSaver('Diagram')
@@ -31,6 +32,7 @@ class Root extends BaseComponent {
         this.handleChangeWindow = this.handleChangeWindow.bind(this)
         this.closeError = this.closeError.bind(this)
         this.handleOpenCluster = this.handleOpenCluster.bind(this)
+        this.handleCloseClusters = this.handleCloseClusters.bind(this)
 
         this.subscribeToSharedState('selected_dn',
             (selected_dn) => {
@@ -102,12 +104,15 @@ class Root extends BaseComponent {
     }
 
     handleOpenCluster() {
-        this.setState({ cluster: null })
-        this.sharedState.set('selected_cluster', null)
+        this.setState({ showClustersPopup: true })
+    }
+
+    handleCloseClusters() {
+        this.setState({ showClustersPopup: false })
     }
 
     render() {
-        const { showPopup, popupContent, windows, isError, error, cluster } = this.state
+        const { showPopup, popupContent, windows, isError, error, cluster, showClustersPopup } = this.state
 
         return (
             <>
@@ -129,7 +134,7 @@ class Root extends BaseComponent {
                         windows={windows}
                     />
 
-                    {!cluster && <ClusterScreen />}
+                    {showClustersPopup && <ClusterScreen handleCloseClusters={this.handleCloseClusters} />}
 
                     <GoldenLayoutComponent
                         diagramSource={this.diagramSource}
