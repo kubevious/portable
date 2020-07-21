@@ -79,11 +79,9 @@ sync "src/BaseRootApiService.js" "src/BaseRootApiService.js"
 
 # Copying services
 sync "src/services/BackendClient.js" "src/services/BackendClient.js"
-sync "src/services/MiscService.js" "src/services/MiscService.js"
 # Finish copying services
 
 # Copying services-mock
-sync "src/services-mock/MockMiscService.js" "src/services-mock/MockMiscService.js"
 sync "src/services-mock/MockWebSocketService.js" "src/services-mock/MockWebSocketService.js"
 # Finish copying services-mock
 
