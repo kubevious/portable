@@ -1,7 +1,7 @@
 import React from 'react'
 import BaseComponent from '../../HOC/BaseComponent';
 import './styles.scss'
-import { isEmptyArray } from '../../utils/util';
+import { isEmptyArray, isEmptyObject } from '../../utils/util';
 import cx from 'classnames'
 
 class ClusterScreen extends BaseComponent {
@@ -13,6 +13,7 @@ class ClusterScreen extends BaseComponent {
         this.state = {
             clusters: [],
             error: null,
+            commandOs: null,
         }
     }
 
@@ -27,7 +28,10 @@ class ClusterScreen extends BaseComponent {
             if (result.success) {
                 this.sharedState.set('selected_cluster', item)
             } else {
-                this.setState({ error: { messages: result.messages, runCommand: result.runCommand } })
+                this.setState({
+                    error: { messages: result.messages, runCommand: result.runCommand },
+                    commandOs: 'Linux',
+                })
             }
         })
     }
@@ -37,11 +41,11 @@ class ClusterScreen extends BaseComponent {
     }
 
     render() {
-        const { clusters, error } = this.state
+        const { clusters, error, commandOs } = this.state
 
         return (
             <div className="ClusterScreen-container">
-                <div className={cx('title', {'error': error})}>
+                <div className={cx('title', { 'error': error })}>
                     {error ? 'Error Connecting to Cluster' : 'Select cluster'}
                 </div>
 
@@ -67,11 +71,34 @@ class ClusterScreen extends BaseComponent {
                         ))}
                     </div>}
 
-                    {error.runCommand && <div>
+                    {!isEmptyObject(error.runCommand) && <div>
                         Please try running Kubevious Portable using following command:
-                        <pre>
-                            {error.runCommand}
-                        </pre>
+                        <div className="commands">
+                            <div className="os-tabs">
+                                <div
+                                    className={cx('tab', { 'selected': commandOs === 'Linux' })}
+                                    onClick={() => this.setState({ commandOs: 'Linux' })}
+                                >
+                                    Linux
+                                </div>
+                                <div
+                                    className={cx('tab', { 'selected': commandOs === 'Windows' })}
+                                    onClick={() => this.setState({ commandOs: 'Windows' })}
+                                >
+                                    Windows
+                                </div>
+                                <div
+                                    className={cx('tab', { 'selected': commandOs === 'Mac OS X' })}
+                                    onClick={() => this.setState({ commandOs: 'Mac OS X' })}
+                                >
+                                    Mac OS
+                                </div>
+                            </div>
+
+                            <pre className="command-box">
+                                {error.runCommand[commandOs]}
+                            </pre>
+                        </div>
                     </div>}
 
                     <button className="back-btn" onClick={() => this.backToList()}>Back to list</button>

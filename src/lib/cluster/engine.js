@@ -144,28 +144,53 @@ class ClusterEngine
 
     _generateRunCommand(clusterConfig)
     {
-        var mappings = {
-            '~/.kube/config': '/root/.kube/config'
-        }
+        let commands = {}
+        const systems = ['Mac OS X', 'Linux', 'Windows']
 
-        mappings = _.defaults(mappings, clusterConfig.fileMappings);
+        systems.map((os) => {
+            var mappings = this._generateMappings(os)
 
-        var cmd =
-            "docker run --rm -it \\\n" + 
-            "  -p 5001:5001 \\\n";
+            mappings = _.defaults(mappings, clusterConfig.fileMappings);
 
-        for(var x of _.keys(mappings))
-        {
-            var binding =  x + ":" + mappings[x];
-            if (binding.includes(' ')) {
-                binding = "\"" + binding + "\"";
+            var cmd =
+                'docker run --rm -it \\\n' +
+                '  -p 5001:5001 \\\n';
+
+            for (var x of _.keys(mappings)) {
+                var binding = x + ':' + mappings[x];
+                if (binding.includes(' ')) {
+                    binding = '"' + binding + '"';
+                }
+                cmd += '  -v ' + binding + ' \\\n';
             }
-            cmd += "  -v " + binding + " \\\n";
+
+            cmd += '  kubevious/portable';
+
+            commands[os] = cmd
+        })
+
+        return commands;
+    }
+
+    _generateMappings(os)
+    {
+        switch (os) {
+            case 'Mac OS X':
+                return {
+                    '~/.kube/config': '/root/.kube/config',
+                    '~/Library/Application\\ Support/doctl/config.yaml': '/root/.config/doctl/config.yaml',
+                }
+            case 'Linux':
+                return {
+                    '~/.kube/config': '/root/.kube/config',
+                    '~/.config/doctl/config.yaml': '/root/.config/doctl/config.yaml',
+                }
+            case 'Windows':
+                return {
+                    '~/.kube/config': '/root/.kube/config',
+                    '~/.config/doctl/config.yaml': '/root/.config/doctl/config.yaml',
+                }
         }
-
-        cmd += "  kubevious/portable";
-
-        return cmd;
     }
 
     getActiveCluster() {
@@ -197,9 +222,9 @@ class ClusterEngine
         }
 
         this._selectedClusterConfig = config;
-        
+
         this._context.websocket.update({ kind: 'active-cluster' }, this.getActiveCluster());
-        
+
         this._context.parserContext.stopLoaders();
         return this._context.parserContext.activateLoader(this._selectedClusterConfig);
     }
