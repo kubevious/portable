@@ -57,9 +57,11 @@
       }
 
       .kubernetes-logo {
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
         margin-right: 10px;
+        background: white;
+        padding: 2px;
       }
 
       &:hover {
