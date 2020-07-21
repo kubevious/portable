@@ -60,11 +60,36 @@
       margin-bottom: 20px;
     }
 
-    pre {
-      border: 1px solid #666;
-      padding: 10px;
-      color: white;
-      margin: 20px 0;
+    .commands {
+      margin-top: 20px;
+
+      .os-tabs {
+        display: flex;
+
+        .tab {
+          padding: 5px 20px;
+          color: #737888;
+
+          &.selected {
+            color: white;
+            border: 1px solid #666;
+            border-bottom: none;
+            margin-bottom: -1px;
+            background: #35373f;
+          }
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .command-box {
+        border: 1px solid #666;
+        padding: 10px;
+        color: white;
+        background: #35373f;
+      }
     }
 
     .back-btn {
