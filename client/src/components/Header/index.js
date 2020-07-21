@@ -1,4 +1,4 @@
-import React  from 'react'
+import React from 'react'
 import bugImg from '../../assets/header-btns/bug.svg'
 import slackImg from '../../assets/header-btns/slack.svg'
 import githubImg from '../../assets/header-btns/github.svg'
@@ -19,7 +19,7 @@ class Header extends BaseComponent {
         this.state = {
             showSettings: false,
             isLoading: false,
-            cluster: null
+            cluster: null,
         }
 
         this.openAbout = this.openAbout.bind(this)
@@ -31,13 +31,13 @@ class Header extends BaseComponent {
     openAbout() {
         this.props.handleShowPopup()
         this.service.fetchAbout(result => {
-            this.props.handlePopupContent(<About result={result}/>)
+            this.props.handlePopupContent(<About result={result} />)
         })
     }
 
     openSearch() {
         this.props.handleShowPopup()
-        this.props.handlePopupContent(<Search closePopup={this.props.handleClosePopup}/>)
+        this.props.handlePopupContent(<Search closePopup={this.props.handleClosePopup} />)
     }
 
     detectIsVisible(item) {
@@ -56,8 +56,8 @@ class Header extends BaseComponent {
                         <label className="ccheck" id={`toolWindowShowHideLabel${item.name}Component`}>
                             {this.detectIsVisible(item) ? 'Hide' : 'Show'} {item.name}
                             <input type="checkbox" tool-window-id={item.id} defaultChecked={this.detectIsVisible(item)}
-                                   onChange={(e) => this.props.handleChangeWindow(e)}/>
-                            <span className="checkmark"/>
+                                   onChange={(e) => this.props.handleChangeWindow(e)} />
+                            <span className="checkmark" />
                         </label>
                     </span>
                 ))}
@@ -72,7 +72,6 @@ class Header extends BaseComponent {
             })
 
         this.subscribeToSharedState('selected_cluster', (selected_cluster) => {
-            console.log('selected_cluster', selected_cluster)
             this.setState({ cluster: selected_cluster })
         })
     }
@@ -82,30 +81,40 @@ class Header extends BaseComponent {
 
         return (
             <div className="header">
-                <div className="logo"/>
+                <div className="logo" />
+                <div className="selected-cluster">
+                    {!cluster && <div className="cluster">
+                        <div className="not-selected-text" onClick={this.props.handleOpenCluster}>
+                            no cluster selected
+                        </div>
+                    </div>}
+
+                    {cluster && <div className="cluster">
+                        <div className="selected-text">selected:</div>
+                        <img className="cluster-logo" src={`/img/clusters/${cluster.kind}.svg`} alt={cluster.kind} />
+                        <div className="cluster-name" onClick={this.props.handleOpenCluster}>{cluster.name}</div>
+                    </div>}
+                </div>
+
                 <div className="loading-icon">
                     {isLoading && <FontAwesomeIcon icon={faSpinner} spin />}
                 </div>
-                {cluster && <div className="cluster">
-                    {cluster.name}
-                    <button type="button" className="btn btn-cluster" onClick={this.props.handleOpenCluster}/>
-                </div>}
                 <div className="actions">
                     <a href="https://github.com/kubevious/kubevious/issues/new/choose" target="_blank"
                        className="btn btn-bug">
-                        <img src={bugImg} alt="bug"/>
+                        <img src={bugImg} alt="bug" />
 
                     </a>
                     <a href="https://kubevious.io/slack" target="_blank" className="btn btn-slack">
-                        <img src={slackImg} alt="slack"/>
+                        <img src={slackImg} alt="slack" />
                     </a>
                     <a href="https://github.com/kubevious/kubevious" target="_blank" className="btn btn-github">
-                        <img src={githubImg} alt="github"/>
+                        <img src={githubImg} alt="github" />
                     </a>
-                    <button id="btnHeaderAbout" type="button" className="btn btn-about" onClick={this.openAbout}/>
-                    <button id="btnHeaderSearch" type="button" className="btn btn-search" onClick={this.openSearch}/>
+                    <button id="btnHeaderAbout" type="button" className="btn btn-about" onClick={this.openAbout} />
+                    <button id="btnHeaderSearch" type="button" className="btn btn-search" onClick={this.openSearch} />
                     <button className="btn btn-settings" onMouseEnter={() => this.setState({ showSettings: true })}
-                            onMouseLeave={() => this.setState({ showSettings: false })}/>
+                            onMouseLeave={() => this.setState({ showSettings: false })} />
                     {showSettings && this.renderSettings()}
                 </div>
             </div>
