@@ -141,13 +141,13 @@ class ClusterEngine
 
         if (!clusterConfig.ready)
         {
-            details.runCommand = this._generateRunCommand(clusterConfig);
+            details.runCommands = this._generateRunCommands(clusterConfig);
         }
 
         return details;
     }
 
-    _generateRunCommand(clusterConfig)
+    _generateRunCommands(clusterConfig)
     {
         var mappings = {
             '/root/.kube/config': {
@@ -155,22 +155,23 @@ class ClusterEngine
             } 
         }
 
-        this.logger.info("[_generateRunCommand] FileMappings: ", clusterConfig.fileMappings);
+        this.logger.info("[_generateRunCommands] FileMappings: ", clusterConfig.fileMappings);
 
         mappings = _.defaults(mappings, clusterConfig.fileMappings);
 
-        this.logger.info("[_generateRunCommand] Combined Mappings: ", mappings);
+        this.logger.info("[_generateRunCommands] Combined Mappings: ", mappings);
 
-        var commands = {
-
-        };
+        var commands = [];
 
         for(var x of ClusterResolver.OS_LIST)
         {
-            commands[x] = this._generateRunCommandForOS(x, mappings);
+            commands.push({
+                'os': x,
+                'command': this._generateRunCommandForOS(x, mappings)
+            })
         }
 
-        this.logger.info("[_generateRunCommand] Commands: ", commands);
+        this.logger.info("[_generateRunCommands] Commands: ", commands);
 
         return commands;
     }
@@ -222,7 +223,7 @@ class ClusterEngine
             return {
                 success: false,
                 messages: config.messages,
-                runCommand: this._generateRunCommand(config)
+                runCommands: this._generateRunCommands(config)
             };
         }
 

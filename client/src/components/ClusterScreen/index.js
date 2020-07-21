@@ -1,7 +1,7 @@
 import React from 'react'
 import BaseComponent from '../../HOC/BaseComponent';
 import './styles.scss'
-import { isEmptyArray, isEmptyObject } from '../../utils/util';
+import { isEmptyArray } from '../../utils/util';
 import cx from 'classnames'
 
 class ClusterScreen extends BaseComponent {
@@ -13,7 +13,7 @@ class ClusterScreen extends BaseComponent {
         this.state = {
             clusters: [],
             error: null,
-            commandOs: null,
+            selectedCommand: null,
             selectedCluster: null
         }
     }
@@ -34,9 +34,13 @@ class ClusterScreen extends BaseComponent {
                 this.props.handleCloseClusters()
                 this.sharedState.set('selected_cluster', item)
             } else {
+                var selectedCommand = null;
+                if (!isEmptyArray(result.runCommands)) {
+                    selectedCommand = result.runCommands[0];
+                }
                 this.setState({
-                    error: { messages: result.messages, runCommand: result.runCommand },
-                    commandOs: 'Linux',
+                    error: { messages: result.messages, runCommands: result.runCommands },
+                    selectedCommand: selectedCommand,
                 })
             }
         })
@@ -47,7 +51,7 @@ class ClusterScreen extends BaseComponent {
     }
 
     render() {
-        const { clusters, error, commandOs, selectedCluster } = this.state
+        const { clusters, error, selectedCommand, selectedCluster } = this.state
 
         return (
             <div className="ClusterScreen-container">
@@ -81,32 +85,22 @@ class ClusterScreen extends BaseComponent {
                         ))}
                     </div>}
 
-                    {!isEmptyObject(error.runCommand) && <div>
+                    {!isEmptyArray(error.runCommands) && <div>
                         Please try running Kubevious Portable using following command:
                         <div className="commands">
                             <div className="os-tabs">
+                                {error.runCommands.map(cmd => (
                                 <div
-                                    className={cx('tab', { 'selected': commandOs === 'Linux' })}
-                                    onClick={() => this.setState({ commandOs: 'Linux' })}
+                                    className={cx('tab', { 'selected': cmd.os === selectedCommand.os })}
+                                    onClick={() => this.setState({ selectedCommand: cmd })}
                                 >
-                                    Linux
+                                    {cmd.os}
                                 </div>
-                                <div
-                                    className={cx('tab', { 'selected': commandOs === 'Windows' })}
-                                    onClick={() => this.setState({ commandOs: 'Windows' })}
-                                >
-                                    Windows
-                                </div>
-                                <div
-                                    className={cx('tab', { 'selected': commandOs === 'Mac OS X' })}
-                                    onClick={() => this.setState({ commandOs: 'Mac OS X' })}
-                                >
-                                    Mac OS
-                                </div>
+                                ))}
                             </div>
 
                             <pre className="command-box">
-                                {error.runCommand[commandOs]}
+                                {selectedCommand.command}
                             </pre>
                         </div>
                     </div>}
