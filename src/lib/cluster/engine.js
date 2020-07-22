@@ -141,61 +141,68 @@ class ClusterEngine
 
         if (!clusterConfig.ready)
         {
-            details.runCommand = this._generateRunCommand(clusterConfig);
+            details.runCommands = this._generateRunCommands(clusterConfig);
         }
 
         return details;
     }
 
-    _generateRunCommand(clusterConfig)
+    _generateRunCommands(clusterConfig)
     {
-        let commands = {}
-        const systems = ['Mac OS X', 'Linux', 'Windows']
+        var mappings = {
+            '/root/.kube/config': {
+                [ClusterResolver.OS_DEFAULT]: '~/.kube/config'
+            } 
+        }
 
-        systems.map((os) => {
-            var mappings = this._generateMappings(os)
+        this.logger.info("[_generateRunCommands] FileMappings: ", clusterConfig.fileMappings);
 
-            mappings = _.defaults(mappings, clusterConfig.fileMappings);
+        mappings = _.defaults(mappings, clusterConfig.fileMappings);
 
-            var cmd =
-                'docker run --rm -it \\\n' +
-                '  -p 5001:5001 \\\n';
+        this.logger.info("[_generateRunCommands] Combined Mappings: ", mappings);
 
-            for (var x of _.keys(mappings)) {
-                var binding = x + ':' + mappings[x];
-                if (binding.includes(' ')) {
-                    binding = '"' + binding + '"';
-                }
-                cmd += '  -v ' + binding + ' \\\n';
-            }
+        var commands = [];
 
-            cmd += '  kubevious/portable';
+        for(var x of ClusterResolver.OS_LIST)
+        {
+            commands.push({
+                'os': x,
+                'command': this._generateRunCommandForOS(x, mappings)
+            })
+        }
 
-            commands[os] = cmd
-        })
+        this.logger.info("[_generateRunCommands] Commands: ", commands);
 
         return commands;
     }
 
-    _generateMappings(os)
+    _generateRunCommandForOS(os, mappings)
     {
-        switch (os) {
-            case 'Mac OS X':
-                return {
-                    '~/.kube/config': '/root/.kube/config',
-                    '~/Library/Application\\ Support/doctl/config.yaml': '/root/.config/doctl/config.yaml',
-                }
-            case 'Linux':
-                return {
-                    '~/.kube/config': '/root/.kube/config',
-                    '~/.config/doctl/config.yaml': '/root/.config/doctl/config.yaml',
-                }
-            case 'Windows':
-                return {
-                    '~/.kube/config': '/root/.kube/config',
-                    '~/.config/doctl/config.yaml': '/root/.config/doctl/config.yaml',
-                }
+        var cmd =
+            "docker run --rm -it \\\n" + 
+            "  -p 5001:5001 \\\n";
+
+        for(var x of _.keys(mappings))
+        {
+            var sourcePath = mappings[x][os];
+            if (!sourcePath) {
+                sourcePath = mappings[x][ClusterResolver.OS_DEFAULT];
+            }
+            if (sourcePath)
+            {
+                var binding =  sourcePath + ":" + x;
+                cmd += "  -v " + binding + " \\\n";
+            }
         }
+
+        if (this._selectedClusterConfig) {
+            return {
+                name: this._selectedClusterConfig.name,
+                kind: this._selectedClusterConfig.kind
+            }
+        }
+
+        return null
     }
 
     getActiveCluster() {
@@ -222,7 +229,7 @@ class ClusterEngine
             return {
                 success: false,
                 messages: config.messages,
-                runCommand: this._generateRunCommand(config)
+                runCommands: this._generateRunCommands(config)
             };
         }
 

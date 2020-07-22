@@ -5,10 +5,10 @@ cd $MY_DIR
 
 docker run --rm -it \
     -p 5001:5001 \
-    -v $HOME/.kube/config:/root/.kube/config \
-    -v $HOME/.minikube/ca.crt:/data/$HOME/.minikube/ca.crt \
-    -v $HOME/.minikube/client.crt:/data/$HOME/.minikube/client.crt \
-    -v $HOME/.minikube/client.key:/data/$HOME/.minikube/client.key \
-    -v $HOME/.config/gcloud:/root/.config/gcloud \
-    -v $HOME/.config/doctl/config.yaml:/root/.config/doctl/config.yaml \
+    -v ~/.kube/config:/root/.kube/config \
+    -v ~/.minikube/ca.crt:/data/$HOME/.minikube/ca.crt \
+    -v ~/.minikube/profiles/minikube/client.crt:/data/$HOME/.minikube/profiles/minikube/client.crt \
+    -v ~/.minikube/profiles/minikube/client.key:/data/$HOME/.minikube/profiles/minikube/client.key \
+    -v ~/.config/gcloud:/root/.config/gcloud \
+    -v ~/.config/doctl/config.yaml:/root/.config/doctl/config.yaml \
     kubevious/portable:dev

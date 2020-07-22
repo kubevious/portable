@@ -22,11 +22,17 @@ class MockClustersService {
         cb({
             "success": false,
             "messages": [
-                "\"/data/Users/rubenhak/.minikube/ca.crt\" not found.",
-                "\"/data/Users/rubenhak/.minikube/client.crt\" not found.",
-                "\"/data/Users/rubenhak/.minikube/client.key\" not found."
+                "\"/data/Users/super/.minikube/ca.crt\" not found.",
+                "\"/data/Users/super/.minikube/client.crt\" not found.",
+                "\"/data/Users/super/.minikube/client.key\" not found."
             ],
-            "runCommand": "docker run --rm -it \\\n  -p 5001:5001 \\\n  -v ~/.kube/config:/root/.kube/config \\\n  -v /Users/rubenhak/.minikube/ca.crt:/data/Users/rubenhak/.minikube/ca.crt \\\n  -v /Users/rubenhak/.minikube/client.crt:/data/Users/rubenhak/.minikube/client.crt \\\n  -v /Users/rubenhak/.minikube/client.key:/data/Users/rubenhak/.minikube/client.key \\\n  kubevious/portable"
+            "runCommands": [{
+                "os": "Linux",
+                "command": "docker run --rm -it \\\n  -p 5001:5001 \\\n  -v ~/.kube/config:/root/.kube/config \\\n  -v ~/.minikube/ca.crt:/data/Users/super/.minikube/ca.crt \\\n  -v /Users/super/.minikube/client.crt:/data/Users/super/.minikube/client.crt \\\n  -v /Users/super/.minikube/client.key:/data/Users/super/.minikube/client.key \\\n  kubevious/portable"
+            }, {
+                "os": "Mac",
+                "command": "docker run --rm -it \\\n  -p 5001:5001 \\\n  -v ~/.kube/config:/root/.kube/config \\\n  -v /Users/super/.minikube/ca.crt:/data/Users/super/.minikube/ca.crt \\\n  -v /Users/super/.minikube/client.crt:/data/Users/super/.minikube/client.crt \\\n  -v /Users/super/.minikube/client.key:/data/Users/super/.minikube/client.key \\\n  kubevious/portable"
+            }]
         })
     }
 }
