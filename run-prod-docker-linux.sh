@@ -11,4 +11,6 @@ docker run --rm -it \
     -v ~/.minikube/profiles/minikube/client.key:/data/$HOME/.minikube/profiles/minikube/client.key \
     -v ~/.config/gcloud:/root/.config/gcloud \
     -v ~/.config/doctl/config.yaml:/root/.config/doctl/config.yaml \
+    -v ~/.aws/config:/root/.aws/config \
+    -v ~/.aws/credentials:/root/.aws/credentials \
     kubevious/portable:dev

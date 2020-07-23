@@ -38,6 +38,21 @@ RUN apk add --no-cache curl
 RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 RUN curl -L https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VERSION}/doctl-${DOCTL_VERSION}-linux-amd64.tar.gz  | tar xz
 
+RUN apk --no-cache add ca-certificates wget
+RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
+RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk
+RUN apk add glibc-2.28-r0.apk
+
+RUN curl -Lso /tmp/libz.tar.xz https://www.archlinux.org/packages/core/x86_64/zlib/download
+RUN mkdir -p /tmp/libz
+RUN tar -xf /tmp/libz.tar.xz -C /tmp/libz
+RUN cp /tmp/libz/usr/lib/libz.so.* /usr/glibc-compat/lib
+
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+RUN unzip awscliv2.zip
+RUN chmod 775 ./aws/install
+RUN ./aws/install
+
 WORKDIR /app
 ENV NODE_ENV production
 ENV KUBECONFIG /root/.kube/config
