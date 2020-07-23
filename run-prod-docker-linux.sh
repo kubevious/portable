@@ -13,4 +13,5 @@ docker run --rm -it \
     -v ~/.config/doctl/config.yaml:/root/.config/doctl/config.yaml \
     -v ~/.aws/config:/root/.aws/config \
     -v ~/.aws/credentials:/root/.aws/credentials \
+    -v ~/.azure/azureProfile.json:/root/.azure/azureProfile.json \
     kubevious/portable:dev
