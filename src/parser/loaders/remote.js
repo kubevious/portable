@@ -140,7 +140,8 @@ class RemoteLoader
         if (this._config.user.exec) {
             if (this._config.user.exec.command) {
                 return this._executeTool(this._config.user.exec.command,
-                                         this._config.user.exec.args)
+                                         this._config.user.exec.args,
+                                         this._config.user.exec.env)
                     .then(result => {
                         var doc = JSON.parse(result);
                         return doc.status.token;
@@ -224,14 +225,20 @@ class RemoteLoader
         }
     }
 
-    _executeTool(toolPath, args)
+    _executeTool(toolPath, args, envArray)
     {
         var toolName = Path.basename(toolPath);
-        return this._executeCommand(toolName, args);
+        var envDict = {}; 
+        if (envArray) {
+            envDict = _.makeDict(envArray, x => x.name, x => x.value);
+        }
+        return this._executeCommand(toolName, args, envDict);
     }
 
-    _executeCommand(program, args)
+    _executeCommand(program, args, envDict)
     {
+        var options = {};
+        options.timeout = 20 * 1000;
         if (_.isArray(args)) {
             args = args.join(' ');
         }
@@ -239,11 +246,21 @@ class RemoteLoader
         if (args && (args.length > 0)) {
             cmd = program + ' ' + args;
         }
-        this.logger.info('[_executeCommand] running: %s', cmd)
+        if (envDict) {
+            envDict = _.defaults(envDict, process.env);
+            options.env = envDict;
+        }
+        this.logger.info('[_executeCommand] running: %s, options:', cmd, options)
         return new Promise((resolve, reject) => {
-            exec(cmd, (error, stdout, stderr) => {
+            exec(cmd, options, (error, stdout, stderr) => {
                 if (error) {
-                    this.logger.error('[_executeCommand] failed: ', error);
+                    this.logger.error('[_executeCommand] failed: %s', error.message);
+                    this.logger.error('[_executeCommand] cmd: %s', error.cmd);
+                    this.logger.error('[_executeCommand] killed: %s', error.killed);
+                    this.logger.error('[_executeCommand] signal: %s', error.signal);
+                    this.logger.error('[_executeCommand] code: %s', error.code);
+                    this.logger.error('[_executeCommand] stdout: %s', stdout);
+                    this.logger.error('[_executeCommand] stderr: %s', stderr);
                     reject(error);
                 } else {
                     this.logger.info('[_executeCommand] result: ', stdout);

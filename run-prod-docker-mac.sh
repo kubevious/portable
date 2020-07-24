@@ -5,13 +5,13 @@ cd $MY_DIR
 
 docker run --rm -it \
     -p 5001:5001 \
-    -v ~/.kube/config:/root/.kube/config \
-    -v ~/.minikube/ca.crt:/data/$HOME/.minikube/ca.crt \
-    -v ~/.minikube/profiles/minikube/client.crt:/data/$HOME/.minikube/profiles/minikube/client.crt \
-    -v ~/.minikube/profiles/minikube/client.key:/data/$HOME/.minikube/profiles/minikube/client.key \
-    -v ~/.config/gcloud:/root/.config/gcloud \
-    -v ~/Library/Application\ Support/doctl/config.yaml:/root/.config/doctl/config.yaml \
-    -v ~/.aws/config:/root/.aws/config \
-    -v ~/.aws/credentials:/root/.aws/credentials \
-    -v ~/.azure/azureProfile.json:/root/.azure/azureProfile.json \
+    -v ~/.kube/config:/root/.kube/config:ro \
+    -v ~/.minikube/ca.crt:/data/$HOME/.minikube/ca.crt:ro \
+    -v ~/.minikube/profiles/minikube/client.crt:/data/$HOME/.minikube/profiles/minikube/client.crt:ro \
+    -v ~/.minikube/profiles/minikube/client.key:/data/$HOME/.minikube/profiles/minikube/client.key:ro \
+    -v ~/.config/gcloud:/root/.config/gcloud:ro \
+    -v ~/Library/Application\ Support/doctl/config.yaml:/root/.config/doctl/config.yaml:ro \
+    -v ~/.aws/credentials:/root/.aws/credentials:ro \
+    -v ~/.azure/azureProfile.json:/root/.azure/azureProfile.json:ro \
     kubevious/portable:dev
+

@@ -198,18 +198,13 @@ class ClusterEngine
             if (sourcePath)
             {
                 var binding =  sourcePath + ":" + x;
-                cmd += "  -v " + binding + " \\\n";
+                cmd += "  -v " + binding + ":ro \\\n";
             }
         }
+        
+        cmd += '  kubevious/portable';
 
-        if (this._selectedClusterConfig) {
-            return {
-                name: this._selectedClusterConfig.name,
-                kind: this._selectedClusterConfig.kind
-            }
-        }
-
-        return null
+        return cmd;
     }
 
     getActiveCluster() {

@@ -37,6 +37,11 @@ class ClusterResolver
                 '/root/.config/gcloud': {
                     [OS_DEFAULT]: '~/.config/gcloud'
                 }
+            },
+            aws: {
+                '/root/.aws/credentials': {
+                    [OS_DEFAULT]: '~/.aws/credentials'
+                }
             }
         }
 
