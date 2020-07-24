@@ -33,6 +33,7 @@ RUN curl -sSL https://sdk.cloud.google.com | bash
 RUN rm -rf /root/.config/gcloud
 RUN ln -s /root/google-cloud-sdk/bin/gcloud /tools/
 
+# Install digital ocean cli
 ENV DOCTL_VERSION=1.45.1
 RUN apk add --no-cache curl
 RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
@@ -48,10 +49,17 @@ RUN mkdir -p /tmp/libz
 RUN tar -xf /tmp/libz.tar.xz -C /tmp/libz
 RUN cp /tmp/libz/usr/lib/libz.so.* /usr/glibc-compat/lib
 
+# Install aws cli
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 RUN unzip awscliv2.zip
 RUN chmod 775 ./aws/install
 RUN ./aws/install
+
+# Install aws-iam-authenticator
+RUN curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.7/2020-07-08/bin/linux/amd64/aws-iam-authenticator
+RUN chmod +x ./aws-iam-authenticator
+RUN mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin
+RUN echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
 
 WORKDIR /app
 ENV NODE_ENV production
