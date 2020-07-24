@@ -1,8 +1,10 @@
 import React from 'react'
 import BaseComponent from '../../HOC/BaseComponent';
 import './styles.scss'
-import { isEmptyArray, isEmptyObject } from '../../utils/util';
+import { isEmptyArray } from '../../utils/util';
 import cx from 'classnames'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 class ClusterScreen extends BaseComponent {
     constructor(props) {
@@ -14,7 +16,8 @@ class ClusterScreen extends BaseComponent {
             clusters: [],
             error: null,
             selectedCommand: null,
-            selectedCluster: null
+            selectedCluster: null,
+            isLoading: false,
         }
     }
 
@@ -29,7 +32,11 @@ class ClusterScreen extends BaseComponent {
     }
 
     selectCluster(item) {
+        this.setState({ isLoading: true })
+
         this.service.activateCluster(item, result => {
+            this.setState({ isLoading: false })
+
             if (result.success) {
                 this.props.handleCloseClusters()
                 this.sharedState.set('selected_cluster', item)
@@ -51,13 +58,18 @@ class ClusterScreen extends BaseComponent {
     }
 
     render() {
-        const { clusters, error, selectedCommand, selectedCluster } = this.state
+        const { clusters, error, selectedCommand, selectedCluster, isLoading } = this.state
 
         return (
             <div className="ClusterScreen-container">
                 <div className={cx('title', { 'error': error })}>
                     {error ? 'Error Connecting to Cluster' : 'Select cluster'}
+
+                    <div className="loading-box">
+                        {isLoading && <FontAwesomeIcon icon={faSpinner} spin />}
+                    </div>
                 </div>
+
 
                 <div className="close-clusters" onClick={() => this.props.handleCloseClusters()}>
                     x
@@ -89,12 +101,12 @@ class ClusterScreen extends BaseComponent {
                         <div className="commands">
                             <div className="os-tabs">
                                 {error.runCommands.map(cmd => (
-                                <div
-                                    className={cx('tab', { 'selected': cmd.os === selectedCommand.os })}
-                                    onClick={() => this.setState({ selectedCommand: cmd })}
-                                >
-                                    {cmd.os}
-                                </div>
+                                    <div
+                                        className={cx('tab', { 'selected': cmd.os === selectedCommand.os })}
+                                        onClick={() => this.setState({ selectedCommand: cmd })}
+                                    >
+                                        {cmd.os}
+                                    </div>
                                 ))}
                             </div>
 
