@@ -78,6 +78,8 @@ class ClusterEngine
 
     _determineKind(config)
     {
+        const url = new URL(config.cluster.server)
+
         if (config.name == 'docker-for-desktop') {
             return 'docker';
         }
@@ -85,7 +87,7 @@ class ClusterEngine
             return 'minikube';
         }
 
-        if (isStringMatch(config.name, 'aks')) {
+        if (url.origin.endsWith('azmk8s.io')) {
             return 'aks'
         }
 
