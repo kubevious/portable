@@ -4,7 +4,6 @@ const Promise = require('the-promise');
 const fs = require('fs').promises;
 const Path = require('path');
 const ClusterResolver = require('./resolver');
-const { isStringMatch } = require('../utils/util')
 
 class ClusterEngine
 {
