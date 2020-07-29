@@ -100,7 +100,7 @@ class Header extends BaseComponent {
                     {isLoading && <FontAwesomeIcon icon={faSpinner} spin />}
                 </div>
                 <div className="actions">
-                    <a href="https://github.com/kubevious/kubevious/issues/new/choose" target="_blank"
+                    <a href="https://github.com/kubevious/portable/issues/new/choose" target="_blank"
                        className="btn btn-bug">
                         <img src={bugImg} alt="bug" />
 

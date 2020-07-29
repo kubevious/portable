@@ -8,6 +8,7 @@ const WebSocketServer = require('./websocket/server');
 const SnapshotProcessor = require('./snapshot-processor')
 const ClusterEngine = require('./cluster/engine')
 const ParserContext = require('../parser/context');
+const version = require('../version');
 
 const SERVER_PORT = 5001;
 
@@ -15,7 +16,7 @@ class Context
 {
     constructor(logger)
     {
-        console.log("Launching Kubevious Portable...")
+        console.log("Launching Kubevious Portable (" + version + ")...");
         require('./art');
         
         this._logger = logger.sublogger("Context");

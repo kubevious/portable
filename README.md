@@ -15,6 +15,9 @@ docker run --rm -it \
   kubevious/portable
 ```
 
+# Issue Reporting
+In case you identify issues or have suggestions to improve Kubevious Portable, please take a minute and [report here](https://github.com/kubevious/portable/issues/new/choose).
+
 ![Running Kubevious Portable](https://raw.githubusercontent.com/kubevious/media/master/portable/portable-run-script.png)
 
 ## Running Kubevious Portable for Minikube
