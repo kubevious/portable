@@ -37,7 +37,7 @@ docker run --rm -it \
   -p 5001:5001 \
   -v ~/.kube/config:/root/.kube/config \
   -v ~/.config/gcloud:/root/.config/gcloud \
-  kubevious/portable
+  kubevious/portable:gcp
 ```
 
 ## Running Kubevious Portable for Amazon Web Services (EKS)
@@ -46,7 +46,7 @@ docker run --rm -it \
   -p 5001:5001 \
   -v ~/.kube/config:/root/.kube/config \
   -v ~/.aws/credentials:/root/.aws/credentials \
-  kubevious/portable
+  kubevious/portable:aws
 ```
 
 ## Running Kubevious Portable for Digital Ocean (DOKE)
@@ -57,7 +57,7 @@ docker run --rm -it \
   -p 5001:5001 \
   -v ~/.kube/config:/root/.kube/config \
   -v ~/Library/Application\ Support/doctl/config.yaml:/root/.config/doctl/config.yaml \
-  kubevious/portable
+  kubevious/portable:do
 ```
 
 ### Running on Linux
@@ -66,7 +66,7 @@ docker run --rm -it \
   -p 5001:5001 \
   -v ~/.kube/config:/root/.kube/config \
   -v ~/.config/doctl/config.yaml:/root/.config/doctl/config.yaml \
-  kubevious/portable
+  kubevious/portable:do
 ```
 
 ## Operating Instructions

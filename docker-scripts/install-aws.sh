@@ -1,7 +1,9 @@
-apk --no-cache add ca-certificates wget
+apk --no-cache add ca-certificates wget curl
+
 wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
 wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk
 apk add glibc-2.28-r0.apk
+rm glibc-2.28-r0.apk
 
 curl -Lso /tmp/libz.tar.xz https://www.archlinux.org/packages/core/x86_64/zlib/download
 mkdir -p /tmp/libz
@@ -11,6 +13,7 @@ cp /tmp/libz/usr/lib/libz.so.* /usr/glibc-compat/lib
 # Install aws cli
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
+rm awscliv2.zip
 chmod 775 ./aws/install
 ./aws/install
 
