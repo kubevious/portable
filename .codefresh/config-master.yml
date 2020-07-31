@@ -65,7 +65,7 @@ steps:
     stage: build
     disable_push: true
     build_arguments:
-      INSTALL_AWS=true
+      - INSTALL_AWS=true
 
   build_gcloud:
     title: "Building GCLOUD Image"
@@ -74,7 +74,7 @@ steps:
     stage: build
     disable_push: true
     build_arguments:
-      INSTALL_GCLOUD=true
+      - INSTALL_GCLOUD=true
 
   build_do:
     title: "Building DO Image"
@@ -83,7 +83,7 @@ steps:
     stage: build
     disable_push: true
     build_arguments:
-      INSTALL_DO=true
+      - INSTALL_DO=true
 
   push_base:
     title: "Pushing Base Image"
