@@ -9,7 +9,7 @@ docker run --rm -it \
     -v ~/.minikube/ca.crt:/data/$HOME/.minikube/ca.crt:ro \
     -v ~/.minikube/profiles/minikube/client.crt:/data/$HOME/.minikube/profiles/minikube/client.crt:ro \
     -v ~/.minikube/profiles/minikube/client.key:/data/$HOME/.minikube/profiles/minikube/client.key:ro \
-    -v ~/.config/gcloud:/root/.config/gcloud:ro \
+    -v ~/.config/gcloud:/root/.config/gcloud \
     -v ~/Library/Application\ Support/doctl/config.yaml:/root/.config/doctl/config.yaml:ro \
     -v ~/.aws/credentials:/root/.aws/credentials:ro \
     -v ~/.azure/azureProfile.json:/root/.azure/azureProfile.json:ro \

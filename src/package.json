@@ -22,7 +22,7 @@
     "express": "^4.17.1",
     "flexsearch": "^0.6.32",
     "js-yaml": "^3.13.1",
-    "k8s-super-client": "^1.1.11",
+    "k8s-super-client": "^1.1.14",
     "kubevious-helpers": "git+https://github.com/kubevious/helpers.git",
     "kubevious-kubik": "git+https://github.com/kubevious/kubik.git",
     "kubik.git": "git+https://github.com/kubevious/kubik.git",

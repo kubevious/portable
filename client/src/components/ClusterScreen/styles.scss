@@ -26,10 +26,6 @@
     justify-content: center;
     font-size: 20px;
     margin-bottom: 20px;
-
-    &.error {
-      color: #E24C4B;
-    }
   }
 
   .loading-box {
@@ -116,18 +112,18 @@
         background: #35373f;
       }
     }
+  }
 
-    .back-btn {
-      background: #0b0b0c;
-      color: white;
-      outline: none;
-      border: 1px solid #666;
-      padding: 5px 10px;
-      margin-top: 20px;
+  .back-btn {
+    background: #0b0b0c;
+    color: white;
+    outline: none;
+    border: 1px solid #666;
+    padding: 5px 10px;
+    margin-top: 20px;
 
-      &:hover {
-        background: #35373E;
-      }
+    &:hover {
+      background: #35373E;
     }
   }
 }

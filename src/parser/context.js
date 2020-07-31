@@ -94,13 +94,13 @@ class Context
                 };
             })
             .catch(reason => {
-                this.logger.error(reason);
+                this.logger.error("Error connecting: ", reason);
+                this.logger.error("Error connecting: ", reason.message);
                 var messages = ['Unknown'];
                 if (reason) {
                     if (reason.messages) {
                         messages = reason.messages;
-                    }
-                    if (reason.message) {
+                    } else if (reason.message) {
                         messages = [ reason.message ];
                     }
                 }

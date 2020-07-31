@@ -29,18 +29,27 @@ class ClusterResolver
         this._toolConfigs = {
             doctl: {
                 '/root/.config/doctl/config.yaml': {
-                    [OS_DEFAULT]: '~/.config/doctl/config.yaml',
-                    [OS_MAC]: '~/Library/Application\\ Support/doctl/config.yaml'
+                    needWrite: false,
+                    os: {
+                        [OS_DEFAULT]: '~/.config/doctl/config.yaml',
+                        [OS_MAC]: '~/Library/Application\\ Support/doctl/config.yaml'
+                    }
                 } 
             },
             gcloud: {
                 '/root/.config/gcloud': {
-                    [OS_DEFAULT]: '~/.config/gcloud'
+                    needWrite: true,
+                    os: {
+                        [OS_DEFAULT]: '~/.config/gcloud'
+                    }
                 }
             },
             aws: {
                 '/root/.aws/credentials': {
-                    [OS_DEFAULT]: '~/.aws/credentials'
+                    needWrite: false,
+                    os: {
+                        [OS_DEFAULT]: '~/.aws/credentials'
+                    }
                 }
             }
         }
@@ -87,7 +96,10 @@ class ClusterResolver
 
         var filePath = this._mapFile(srcFilePath, '/data');
         this._config.fileMappings[filePath] = {
-            [OS_DEFAULT]: srcFilePath
+            needWrite: false,
+            os: {
+                [OS_DEFAULT]: srcFilePath
+            }
         };
 
         _.set(this._config, location, filePath);

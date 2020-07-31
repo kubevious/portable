@@ -90,7 +90,6 @@ class Header extends BaseComponent {
                     </div>}
 
                     {cluster && <div className="cluster">
-                        <div className="selected-text">selected:</div>
                         <img className="cluster-logo" src={`/img/clusters/${cluster.kind}.svg`} alt={cluster.kind} />
                         <div className="cluster-name" onClick={this.props.handleOpenCluster}>{cluster.name}</div>
                     </div>}

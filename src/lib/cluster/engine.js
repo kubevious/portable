@@ -157,7 +157,10 @@ class ClusterEngine
     {
         var mappings = {
             '/root/.kube/config': {
-                [ClusterResolver.OS_DEFAULT]: '~/.kube/config'
+                needWrite: false,
+                os: {
+                    [ClusterResolver.OS_DEFAULT]: '~/.kube/config'
+                }
             } 
         }
 
@@ -190,14 +193,19 @@ class ClusterEngine
 
         for(var x of _.keys(mappings))
         {
-            var sourcePath = mappings[x][os];
+            var mappingInfo = mappings[x];
+            var sourcePath = mappingInfo.os[os];
             if (!sourcePath) {
-                sourcePath = mappings[x][ClusterResolver.OS_DEFAULT];
+                sourcePath = mappingInfo.os[ClusterResolver.OS_DEFAULT];
             }
             if (sourcePath)
             {
                 var binding =  sourcePath + ":" + x;
-                cmd += "  -v " + binding + ":ro \\\n";
+                var flag = "";
+                if (!mappingInfo.needWrite) {
+                    flag = ":ro";
+                }
+                cmd += "  -v " + binding + flag + " \\\n";
             }
         }
         

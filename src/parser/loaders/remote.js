@@ -270,23 +270,6 @@ class RemoteLoader
         })
     }
 
-    // setToken(user) {
-    //     return new Promise((resolve, reject) => {
-    //         if (user.user.token) {
-    //             resolve(user.user.token)
-    //         } else {
-    //             exec(this.generateCommand(user.user.exec), (error, stdout, stderr) => {
-    //                 resolve(JSON.parse(stdout).status.token)
-    //             })
-    //         }
-    //     })
-    // }
-
-    // generateCommand(params) {
-    //     return params.command + ' ' + params.args.join(' ')
-    // }
-
-
 }
 
 module.exports = RemoteLoader;

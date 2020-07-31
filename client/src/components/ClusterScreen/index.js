@@ -96,7 +96,9 @@ class ClusterScreen extends BaseComponent {
                             </div>
                         ))}
                     </div>}
-                    {!isEmptyArray(error.runCommands) && <div>
+                </div>}
+
+                {error && !isEmptyArray(error.runCommands) && <div>
                         Please try running Kubevious Portable using following command:
                         <div className="commands">
                             <div className="os-tabs">
@@ -116,8 +118,10 @@ class ClusterScreen extends BaseComponent {
                         </div>
                     </div>}
 
+                {error &&
                     <button className="back-btn" onClick={() => this.backToList()}>Back to list</button>
-                </div>}
+                }
+
             </div>
         )
     }
