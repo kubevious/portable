@@ -6,5 +6,8 @@ cd $MY_DIR
 # --no-cache
 docker build \
     -m 4000m \
+    --build-arg INSTALL_AWS=true \
+    --build-arg INSTALL_GCLOUD=true \
+    --build-arg INSTALL_DO=true \
     -t kubevious/portable:dev \
     .

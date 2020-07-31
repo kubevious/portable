@@ -50,23 +50,85 @@ steps:
       - cat /codefresh/volume/${PRODUCT_NAME}/src/version.js
       - cf_export PRODUCT_VERSION="${PRODUCT_VERSION}"
       - cf_export DOCKER_TAG="${PRODUCT_VERSION}"
-  build:
-    title: "Building Docker Image"
+
+  build_base:
+    title: "Building Base Image"
     type: build
     image_name: "kubevious/${{PRODUCT_NAME}}"
     stage: build
     disable_push: true
 
-  push:
-    title: "Pushing image to DockerHub"
+  build_aws:
+    title: "Building AWS Image"
+    type: build
+    image_name: "kubevious/${{PRODUCT_NAME}}"
+    stage: build
+    disable_push: true
+    build_arguments:
+      INSTALL_AWS=true
+
+  build_gcloud:
+    title: "Building GCLOUD Image"
+    type: build
+    image_name: "kubevious/${{PRODUCT_NAME}}"
+    stage: build
+    disable_push: true
+    build_arguments:
+      INSTALL_GCLOUD=true
+
+  build_do:
+    title: "Building DO Image"
+    type: build
+    image_name: "kubevious/${{PRODUCT_NAME}}"
+    stage: build
+    disable_push: true
+    build_arguments:
+      INSTALL_DO=true
+
+  push_base:
+    title: "Pushing Base Image"
     type: "push"
     stage: "push"
     image_name: "kubevious/${{PRODUCT_NAME}}"
     registry: "dockerhub"
-    candidate: "${{build}}"
+    candidate: "${{build_base}}"
     tags:
       - latest
       - "${{DOCKER_TAG}}"
+
+  push_aws:
+    title: "Pushing AWS Image"
+    type: "push"
+    stage: "push"
+    image_name: "kubevious/${{PRODUCT_NAME}}"
+    registry: "dockerhub"
+    candidate: "${{build_aws}}"
+    tags:
+      - aws
+      - "aws-${{DOCKER_TAG}}"
+      
+  push_gcloud:
+    title: "Pushing GCLOUD Image"
+    type: "push"
+    stage: "push"
+    image_name: "kubevious/${{PRODUCT_NAME}}"
+    registry: "dockerhub"
+    candidate: "${{build_gcloud}}"
+    tags:
+      - gcp
+      - "gcp-${{DOCKER_TAG}}"
+
+  push_do:
+    title: "Pushing DO Image"
+    type: "push"
+    stage: "push"
+    image_name: "kubevious/${{PRODUCT_NAME}}"
+    registry: "dockerhub"
+    candidate: "${{build_do}}"
+    tags:
+      - do
+      - "do-${{DOCKER_TAG}}"
+
   process_versioning:
     title: Process Versioning
     stage: push

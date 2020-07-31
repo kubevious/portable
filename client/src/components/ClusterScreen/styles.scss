@@ -80,37 +80,37 @@
     .error-messages {
       margin-bottom: 20px;
     }
+  }
 
-    .commands {
-      margin-top: 20px;
+  .commands {
+    margin-top: 20px;
 
-      .os-tabs {
-        display: flex;
+    .os-tabs {
+      display: flex;
 
-        .tab {
-          padding: 5px 20px;
-          color: #737888;
+      .tab {
+        padding: 5px 20px;
+        color: #737888;
 
-          &.selected {
-            color: white;
-            border: 1px solid #666;
-            border-bottom: none;
-            margin-bottom: -1px;
-            background: #35373f;
-          }
+        &.selected {
+          color: white;
+          border: 1px solid #666;
+          border-bottom: none;
+          margin-bottom: -1px;
+          background: #35373f;
+        }
 
-          &:hover {
-            cursor: pointer;
-          }
+        &:hover {
+          cursor: pointer;
         }
       }
+    }
 
-      .command-box {
-        border: 1px solid #666;
-        padding: 10px;
-        color: white;
-        background: #35373f;
-      }
+    .command-box {
+      border: 1px solid #666;
+      padding: 10px;
+      color: white;
+      background: #35373f;
     }
   }
 

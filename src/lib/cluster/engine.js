@@ -60,6 +60,7 @@ class ClusterEngine
             name: contextConfig.name,
             cluster: clustersDict[contextConfig.context.cluster] || null,
             user: usersDict[contextConfig.context.user] || null,
+            imageTag: null
         };
         config.kind = this._determineKind(config);
         return config;
@@ -164,7 +165,7 @@ class ClusterEngine
             } 
         }
 
-        this.logger.info("[_generateRunCommands] FileMappings: ", clusterConfig.fileMappings);
+        this.logger.info("[_generateRunCommands] ClusterConfig: ", clusterConfig);
 
         mappings = _.defaults(mappings, clusterConfig.fileMappings);
 
@@ -176,8 +177,8 @@ class ClusterEngine
         {
             commands.push({
                 'os': x,
-                'command': this._generateRunCommandForOS(x, mappings)
-            })
+                'command': this._generateRunCommandForOS(x, mappings, clusterConfig)
+            }) 
         }
 
         this.logger.info("[_generateRunCommands] Commands: ", commands);
@@ -185,7 +186,7 @@ class ClusterEngine
         return commands;
     }
 
-    _generateRunCommandForOS(os, mappings)
+    _generateRunCommandForOS(os, mappings, clusterConfig)
     {
         var cmd =
             "docker run --rm -it \\\n" + 
@@ -210,6 +211,9 @@ class ClusterEngine
         }
         
         cmd += '  kubevious/portable';
+        if (clusterConfig.imageTag) {
+            cmd += ':' + clusterConfig.imageTag;
+        }
 
         return cmd;
     }

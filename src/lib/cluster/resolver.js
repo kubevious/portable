@@ -28,27 +28,36 @@ class ClusterResolver
 
         this._toolConfigs = {
             doctl: {
-                '/root/.config/doctl/config.yaml': {
-                    needWrite: false,
-                    os: {
-                        [OS_DEFAULT]: '~/.config/doctl/config.yaml',
-                        [OS_MAC]: '~/Library/Application\\ Support/doctl/config.yaml'
-                    }
-                } 
+                imageTag: 'do',
+                mappings: {
+                    '/root/.config/doctl/config.yaml': {
+                        needWrite: false,
+                        os: {
+                            [OS_DEFAULT]: '~/.config/doctl/config.yaml',
+                            [OS_MAC]: '~/Library/Application\\ Support/doctl/config.yaml'
+                        }
+                    } 
+                }
             },
             gcloud: {
-                '/root/.config/gcloud': {
-                    needWrite: true,
-                    os: {
-                        [OS_DEFAULT]: '~/.config/gcloud'
+                imageTag: 'gcp',
+                mappings: {
+                    '/root/.config/gcloud': {
+                        needWrite: true,
+                        os: {
+                            [OS_DEFAULT]: '~/.config/gcloud'
+                        }
                     }
                 }
             },
             aws: {
-                '/root/.aws/credentials': {
-                    needWrite: false,
-                    os: {
-                        [OS_DEFAULT]: '~/.aws/credentials'
+                imageTag: 'aws',
+                mappings: {
+                    '/root/.aws/credentials': {
+                        needWrite: false,
+                        os: {
+                            [OS_DEFAULT]: '~/.aws/credentials'
+                        }
                     }
                 }
             }
@@ -140,10 +149,13 @@ class ClusterResolver
         if (!toolConfig) {
             return;
         }
+        this._config.imageTag = toolConfig.imageTag;
 
-        for(var configPath of _.keys(toolConfig) )
+        this.logger.info('[_valideToolConfig] %s:', toolName, toolConfig);
+
+        for(var configPath of _.keys(toolConfig.mappings) )
         {
-            this._config.fileMappings[configPath] = toolConfig[configPath];
+            this._config.fileMappings[configPath] = toolConfig.mappings[configPath];
 
             var exists = fs.existsSync(configPath)
             if (!exists) {

@@ -29,16 +29,31 @@ ENV PATH="/tools:${PATH}"
 WORKDIR /tools
 
 # Installing DOCTL
+ARG INSTALL_DO
 COPY docker-scripts/install-doctl.sh /tmp/install.sh
-RUN chmod u+x /tmp/install.sh && /tmp/install.sh && rm /tmp/install.sh
+RUN chmod u+x /tmp/install.sh
+RUN if [ "${INSTALL_DO}" = "true" ]; \
+        then /tmp/install.sh; \
+    fi
+RUN rm /tmp/install.sh
 
 # Installing AWS
+ARG INSTALL_AWS
 COPY docker-scripts/install-aws.sh /tmp/install.sh
-RUN chmod u+x /tmp/install.sh && /tmp/install.sh && rm /tmp/install.sh
+RUN chmod u+x /tmp/install.sh
+RUN if [ "${INSTALL_AWS}" = "true" ]; \
+        then /tmp/install.sh; \
+    fi
+RUN rm /tmp/install.sh
 
 # Installing GCLOUD
+ARG INSTALL_GCLOUD
 COPY docker-scripts/install-gcloud.sh /tmp/install.sh
-RUN chmod u+x /tmp/install.sh && /tmp/install.sh && rm /tmp/install.sh
+RUN chmod u+x /tmp/install.sh
+RUN if [ "${INSTALL_GCLOUD}" = "true" ]; \
+        then /tmp/install.sh; \
+    fi
+RUN rm /tmp/install.sh
 
 WORKDIR /app
 ENV NODE_ENV production
