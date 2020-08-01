@@ -187,6 +187,8 @@ class ClusterResolver
         if (this._isRunningOnHost) {
             return srcFilePath;
         }
+        srcFilePath = srcFilePath.replaceAll(':', '');
+        srcFilePath = srcFilePath.replaceAll('\\', '/');
         var filePath = Path.join(rootDir, srcFilePath);
         return filePath;
     }
