@@ -34,7 +34,8 @@ class ClusterResolver
                         needWrite: false,
                         os: {
                             [OS_DEFAULT]: '~/.config/doctl/config.yaml',
-                            [OS_MAC]: '~/Library/Application\\ Support/doctl/config.yaml'
+                            [OS_MAC]: '~/Library/Application\\ Support/doctl/config.yaml',
+                            [OS_WIN]: '%USERPROFILE%/AppData/Local/doctl/config/config.yaml'
                         }
                     } 
                 }
@@ -45,7 +46,8 @@ class ClusterResolver
                     '/root/.config/gcloud': {
                         needWrite: true,
                         os: {
-                            [OS_DEFAULT]: '~/.config/gcloud'
+                            [OS_DEFAULT]: '~/.config/gcloud',
+                            [OS_WIN]: '%USERPROFILE%/AppData/Roaming/gcloud'
                         }
                     }
                 }
@@ -56,7 +58,8 @@ class ClusterResolver
                     '/root/.aws/credentials': {
                         needWrite: false,
                         os: {
-                            [OS_DEFAULT]: '~/.aws/credentials'
+                            [OS_DEFAULT]: '~/.aws/credentials',
+                            [OS_WIN]: '%USERPROFILE%/.aws/credentials'
                         }
                     }
                 }

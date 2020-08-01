@@ -160,7 +160,8 @@ class ClusterEngine
             '/root/.kube/config': {
                 needWrite: false,
                 os: {
-                    [ClusterResolver.OS_DEFAULT]: '~/.kube/config'
+                    [ClusterResolver.OS_DEFAULT]: '~/.kube/config',
+                    [ClusterResolver.OS_WIN]: '%USERPROFILE%/.kube/config'
                 }
             } 
         }
@@ -188,9 +189,13 @@ class ClusterEngine
 
     _generateRunCommandForOS(os, mappings, clusterConfig)
     {
+        var separator = '\\';
+        if (os == ClusterResolver.OS_WIN) {
+            separator = '^';
+        }
         var cmd =
-            "docker run --rm -it \\\n" + 
-            "  -p 5001:5001 \\\n";
+            `docker run --rm -it ${separator}\n` + 
+            `  -p 5001:5001 ${separator}\n`;
 
         for(var x of _.keys(mappings))
         {
@@ -202,11 +207,14 @@ class ClusterEngine
             if (sourcePath)
             {
                 var binding =  sourcePath + ":" + x;
-                var flag = "";
                 if (!mappingInfo.needWrite) {
-                    flag = ":ro";
+                    binding += ":ro";
                 }
-                cmd += "  -v " + binding + flag + " \\\n";
+                if (binding.includes('%'))
+                {
+                    binding = '"' + binding + '"';
+                }
+                cmd += `  -v ${binding} ${separator}\n`;
             }
         }
         
