@@ -125,6 +125,10 @@ class ClusterEngine
             })
             .catch(reason => {
                 this.logger.error('Failed to load %s. Details: ', fileName, reason);
+                console.log('Make sure that ~/.kube/config file is properly mounted.')
+                console.log('Visit https://github.com/kubevious/portable for details')
+                process.exit(1);
+                
                 return null;
             });
     }
