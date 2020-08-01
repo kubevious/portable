@@ -31,6 +31,7 @@ docker run --rm -it ^
 In case you identify issues or have suggestions to improve Kubevious Portable, please take a minute and [report here](https://github.com/kubevious/portable/issues/new/choose).
 
 ## Running Kubevious Portable for Minikube
+
 ```sh
 docker run --rm -it \
   -p 5001:5001 \
@@ -40,6 +41,17 @@ docker run --rm -it \
   -v ~/.minikube/profiles/minikube/client.key:/data/$HOME/.minikube/profiles/minikube/client.key:ro \
   kubevious/portable
 ```
+Because of differences on Windows it is not possible to connect to Minikube running on the same host. The *host.docker.internal* address that allows connecting to the host from inside the container is not implemented on Windows. For details see [Networking features in Docker Desktop for Windows](https://docs.docker.com/docker-for-windows/networking/).
+
+## Running Kubevious Portable for Docker Desktop Kubernetes
+
+```sh
+docker run --rm -it \
+  -p 5001:5001 \
+  -v ~/.kube/config:/root/.kube/config:ro \
+  kubevious/portable
+```
+Because of differences on Windows it is not possible to connect to Docker Desktop Kubernetes running on the same host. The *host.docker.internal* address that allows connecting to the host from inside the container is not implemented on Windows. For details see [Networking features in Docker Desktop for Windows](https://docs.docker.com/docker-for-windows/networking/).
 
 ## Running Kubevious Portable for Google Cloud Platform (GKE)
 
