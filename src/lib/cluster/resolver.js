@@ -132,8 +132,13 @@ class ClusterResolver
             return;
         }
 
-        var toolName = Path.basename(toolPath);
-        this.logger.info('[_registerTool] probe: %s => %s', location, toolName);
+        var toolName;
+        if (toolPath.includes('\\')) {
+            toolName = Path.basename(toolPath);
+        } else {
+            toolName = Path.win32.basename(toolPath);
+        }
+        this.logger.info('[_registerTool] toolName: %s => %s', location, toolName);
 
         if (this._isRunningOnHost) {
             return;
