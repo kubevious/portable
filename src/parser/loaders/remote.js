@@ -227,7 +227,13 @@ class RemoteLoader
 
     _executeTool(toolPath, args, envArray)
     {
-        var toolName = Path.basename(toolPath);
+        var toolName;
+        if (this._config.toolMappings[toolPath]) {
+            toolName = this._config.toolMappings[toolPath];
+        } else {
+            toolName = Path.basename(toolPath);
+        }
+
         var envDict = {}; 
         if (envArray) {
             envDict = _.makeDict(envArray, x => x.name, x => x.value);

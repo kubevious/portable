@@ -60,7 +60,8 @@ class ClusterEngine
             name: contextConfig.name,
             cluster: clustersDict[contextConfig.context.cluster] || null,
             user: usersDict[contextConfig.context.user] || null,
-            imageTag: null
+            imageTag: null,
+            toolMappings: {}
         };
         config.kind = this._determineKind(config);
         return config;

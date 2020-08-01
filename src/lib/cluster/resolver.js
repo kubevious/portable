@@ -139,6 +139,7 @@ class ClusterResolver
             toolName = Path.basename(toolPath);
         }
         this.logger.info('[_registerTool] toolName: %s => %s', location, toolName);
+        this._config.toolMappings[toolPath] = toolName;
 
         if (this._isRunningOnHost) {
             return;
