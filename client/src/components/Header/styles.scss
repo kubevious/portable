@@ -41,11 +41,12 @@
     }
 
     .not-selected-text, .cluster-name {
-      text-decoration: underline;
+      text-decoration: none;
       color: #449AFF;
 
       &:hover {
         cursor: pointer;
+        text-decoration: underline;
       }
     }
 

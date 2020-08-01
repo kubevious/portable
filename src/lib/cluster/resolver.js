@@ -66,6 +66,8 @@ class ClusterResolver
             }
         }
 
+        this._toolConfigs['gcloud.cmd'] = this._toolConfigs['gcloud']
+
         this._isRunningOnHost = (process.env.KUBEVIOUS_ON_HOST == 'true');
     }
 
@@ -137,22 +139,29 @@ class ClusterResolver
             return;
         }
 
+        var toolConfig = this._toolConfigs[toolName];
+        if (toolConfig) {
+            if (!this._config.imageTag) {
+                if (toolConfig.imageTag) {
+                    this._config.imageTag = toolConfig.imageTag;
+                }
+            }
+        }
+
         var filePath = this._mapFile(toolName, '/tools');
         var exists = fs.existsSync(filePath)
         if (!exists) {
             this._reportError('Tool not found: "' + toolName + '"');
         }
 
-        return this._valideToolConfig(toolName);
+        return this._valideToolConfig(toolName, toolConfig);
     }
 
-    _valideToolConfig(toolName)
+    _valideToolConfig(toolName, toolConfig)
     {
-        var toolConfig = this._toolConfigs[toolName];
         if (!toolConfig) {
             return;
         }
-        this._config.imageTag = toolConfig.imageTag;
 
         this.logger.info('[_valideToolConfig] %s:', toolName, toolConfig);
 
@@ -188,5 +197,8 @@ class ClusterResolver
 
 module.exports = ClusterResolver;
 
+module.exports.OS_MAC = OS_MAC;
+module.exports.OS_LINUX = OS_LINUX;
+module.exports.OS_WIN = OS_WIN;
 module.exports.OS_DEFAULT = OS_DEFAULT;
 module.exports.OS_LIST = OS_LIST;

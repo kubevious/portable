@@ -103,10 +103,10 @@ docker run --rm -it \
 
 ### Running on Windows
 ```sh
-docker run --rm -it \
-  -p 5001:5001 \
+docker run --rm -it ^
+  -p 5001:5001 ^
   -v "%USERPROFILE%/.kube/config:/root/.kube/config:ro" ^
-  -v "%USERPROFILE%/AppData/Local/doctl/config/config.yaml:/root/.config/doctl/config.yaml:ro" \
+  -v "%USERPROFILE%/AppData/Local/doctl/config/config.yaml:/root/.config/doctl/config.yaml:ro" ^
   kubevious/portable:do
 ```
 ## Operating Instructions
