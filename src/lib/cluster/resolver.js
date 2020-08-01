@@ -134,9 +134,9 @@ class ClusterResolver
 
         var toolName;
         if (toolPath.includes('\\')) {
-            toolName = Path.basename(toolPath);
-        } else {
             toolName = Path.win32.basename(toolPath);
+        } else {
+            toolName = Path.basename(toolPath);
         }
         this.logger.info('[_registerTool] toolName: %s => %s', location, toolName);
 
