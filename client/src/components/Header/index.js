@@ -107,7 +107,7 @@ class Header extends BaseComponent {
                     <a href="https://kubevious.io/slack" target="_blank" className="btn btn-slack">
                         <img src={slackImg} alt="slack" />
                     </a>
-                    <a href="https://github.com/kubevious/kubevious" target="_blank" className="btn btn-github">
+                    <a href="https://github.com/kubevious/portable" target="_blank" className="btn btn-github">
                         <img src={githubImg} alt="github" />
                     </a>
                     <button id="btnHeaderAbout" type="button" className="btn btn-about" onClick={this.openAbout} />
