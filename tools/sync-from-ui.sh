@@ -19,6 +19,9 @@ sync "src/components/Alerts/styles.scss" "src/components/Alerts/styles.scss"
 sync "src/components/BurgerMenu/index.js" "src/components/BurgerMenu/index.js"
 sync "src/components/BurgerMenu/styles.scss" "src/components/BurgerMenu/styles.scss"
 
+sync "src/components/CopyClipboard/index.js" "src/components/CopyClipboard/index.js"
+sync "src/components/CopyClipboard/styles.scss" "src/components/CopyClipboard/styles.scss"
+
 sync "src/components/Diagram/index.js" "src/components/Diagram/index.js"
 #sync "src/components/Diagram/visual-view.js" "src/components/Diagram/visual-view.js"
 #sync "src/components/Diagram/visual-node.js" "src/components/Diagram/visual-node.js"

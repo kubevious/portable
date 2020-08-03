@@ -5,6 +5,7 @@ import { isEmptyArray } from '../../utils/util';
 import cx from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import CopyClipboard from '../CopyClipboard';
 
 class ClusterScreen extends BaseComponent {
     constructor(props) {
@@ -113,6 +114,7 @@ class ClusterScreen extends BaseComponent {
                             </div>
 
                             <pre className="command-box">
+                                <CopyClipboard text={selectedCommand.command} />
                                 {selectedCommand.command}
                             </pre>
                         </div>
