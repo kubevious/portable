@@ -98,6 +98,7 @@
           border-bottom: none;
           margin-bottom: -1px;
           background: #35373f;
+          z-index: 1;
         }
 
         &:hover {
@@ -111,6 +112,8 @@
       padding: 10px;
       color: white;
       background: #35373f;
+      position: relative;
+      overflow: unset;
     }
   }
 
@@ -125,5 +128,10 @@
     &:hover {
       background: #35373E;
     }
+  }
+
+  .icon-wrapper {
+    position: absolute;
+    right: 30px;
   }
 }
