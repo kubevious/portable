@@ -6,9 +6,10 @@ cd $MY_DIR
 cd $MY_DIR/src
 rm -rf node_modules/
 npm install
-npm update kubevious-helpers kubevious-kubik websocket-subscription-server
+npm update kubevious-helpers kubevious-kubik websocket-subscription-server the-promise the-lodash
 
 cd $MY_DIR/client
 rm -rf node_modules/
 npm install
 npm install --save-dev
+npm update kubevious-helpers websocket-subscription-client the-promise the-lodash k8s-super-client
