@@ -13,8 +13,8 @@ echo "Sync from UI..."
 sync "src/components/About/index.js" "src/components/About/index.js"
 
 sync "src/components/Alerts/index.js" "src/components/Alerts/index.js"
-sync "src/components/Alerts/AlertTable/index.js" "src/components/Alerts/AlertTable/index.js"
 sync "src/components/Alerts/styles.scss" "src/components/Alerts/styles.scss"
+sync "src/components/Alerts/AlertView/index.js" "src/components/Alerts/AlertView/index.js"
 
 sync "src/components/BurgerMenu/index.js" "src/components/BurgerMenu/index.js"
 sync "src/components/BurgerMenu/styles.scss" "src/components/BurgerMenu/styles.scss"
@@ -81,7 +81,10 @@ sync "src/utils/util.js" "src/utils/util.js"
 sync "src/BaseRootApiService.js" "src/BaseRootApiService.js"
 
 # Copying services
+sync "src/services/BaseService.js" "src/services/BaseService.js"
 sync "src/services/BackendClient.js" "src/services/BackendClient.js"
+sync "src/services/DiagramService.js" "src/services/DiagramService.js"
+sync "src/services/WebSocketService.js" "src/services/WebSocketService.js"
 # Finish copying services
 
 # Copying services-mock

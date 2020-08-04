@@ -4,8 +4,8 @@
 
 import React from 'react'
 import BaseComponent from '../../HOC/BaseComponent'
-import AlertTable from './AlertTable'
-import { isEmptyArray } from '../../utils/util'
+import AlertView from './AlertView'
+import { isEmptyArray, sortSeverity } from '../../utils/util'
 
 import './styles.scss'
 
@@ -14,8 +14,11 @@ class Alerts extends BaseComponent {
         super(props)
 
         this.state = {
-            alerts: []
+            alerts: [],
         }
+
+        this.clickDn = this.clickDn.bind(this)
+        this.openRule = this.openRule.bind(this)
     }
 
     componentDidMount() {
@@ -23,6 +26,18 @@ class Alerts extends BaseComponent {
             selected_object_assets => {
                 this.setState({ alerts: selected_object_assets })
             })
+
+        document.getElementById('alertsComponent').parentElement.style.overflow = 'hidden'
+    }
+
+    clickDn(dn) {
+        this.sharedState.set('selected_dn', dn);
+        this.sharedState.set('auto_pan_to_selected_dn', true);
+    }
+
+    openRule(ruleName) {
+        this.sharedState.set('rule_editor_selected_rule_id', ruleName);
+        this.sharedState.set('focus_rule_editor', true);
     }
 
     render() {
@@ -30,7 +45,11 @@ class Alerts extends BaseComponent {
 
         return (
             <div id="alertsComponent">
-                {!isEmptyArray(alerts) && <AlertTable alerts={alerts}/>}
+                {!isEmptyArray(alerts) && <AlertView
+                    alerts={alerts.sort(sortSeverity)}
+                    clickDn={this.clickDn}
+                    openRule={this.openRule}
+                />}
             </div>
         )
     }

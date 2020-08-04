@@ -9,7 +9,7 @@ import DnComponent from '../../DnComponent'
 
 const EnvironmentVariables = ({ group, options, dn }) => {
     return (
-        <>
+        <div className="EnvironmentVariables-wrapper p-40 overflow-hide">
             {dn && <div className="container-header">
                 <DnComponent dn={dn}/>
                 <h3>Environment Variables</h3>
@@ -24,7 +24,7 @@ const EnvironmentVariables = ({ group, options, dn }) => {
                     </div>
                 ))}
             </div>
-        </>
+        </div>
     )
 }
 

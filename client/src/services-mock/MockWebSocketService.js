@@ -67,16 +67,6 @@ class MockWebSocketService
         console.log("NODE CHILDREN DATA", this._nodeChildren);
     }
 
-    _setup()
-    {
-        this._setupDiagram();
-    }
-
-    _setupDiagram()
-    {
-
-    }
-
     scope(cb)
     {
         return {

@@ -58,7 +58,7 @@ const PropertiesTable = ({ group, options, state, dn }) => {
     )
 
     return (
-        <>
+        <div className="PropertiesTable-wrapper p-40 overflow-hide">
             {dn && <div className="container-header">
                 <DnComponent dn={dn} />
                 <h3>Resource Role Matrix</h3>
@@ -81,7 +81,7 @@ const PropertiesTable = ({ group, options, state, dn }) => {
                     </tbody>
                 </table>
             </div>
-        </>
+        </div>
     )
 }
 

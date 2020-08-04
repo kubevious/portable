@@ -1,10 +1,13 @@
-class ClustersService {
-    constructor(client, sharedState, socketService) {
-        this._client = client;
-        this.sharedState = sharedState;
-        socketService._subscribe({ kind: 'active-cluster' }, (value) => {
-            this.sharedState.set('selected_cluster', value);
-        })
+import BaseService from './BaseService'
+
+
+class ClustersService extends BaseService {
+
+    constructor(client, sharedState, socket)
+    {
+        super(client, sharedState, socket)
+
+        this._setupWebSocket();
     }
 
     fetchClusters(cb) {
@@ -30,6 +33,14 @@ class ClustersService {
                 cb(err.response.data)
             })
     }
+
+    _setupWebSocket()
+    {
+        this._socketSubscribe({ kind: 'active-cluster' }, (value) => {
+            this.sharedState.set('selected_cluster', value);
+        })
+    }
+
 }
 
 export default ClustersService

@@ -2,58 +2,147 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../ui.git/src/src/components/Alerts/styles.scss                                              ***/
 
-.alert-item {
-    width: 16px;
+#alertsComponent {
+  height: 100%;
+}
+
+.AlertView-container {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  height: 100%;
+
+  .alerts {
+    width: calc(100% - 160px);
+    border-right: 1px solid #474D54;
+    padding-top: 5px;
+    overflow-y: hidden;
+
+    &:hover {
+      overflow-y: auto;
+    }
+
+    &.group-no .alert-detail.even {
+      background: #474D54;
+    }
+
+    &.group-object, &.group-message {
+      padding: 5px;
+    }
+  }
+
+  .alert-item {
+    min-width: 16px;
     height: 16px;
     background-size: contain;
-}
+    margin-right: 10px;
+    background-repeat: no-repeat;
 
-.alert-item.warn {
-    background-image: url("/img/alerts/warn.svg");
-}
+    &.warn {
+      background-image: url("/img/alerts/warn.svg");
+    }
 
-.alert-item.error {
-    background-image: url("/img/alerts/error.svg");
-}
+    &.error {
+      background-image: url("/img/alerts/error.svg");
+    }
 
-.alert-item.info {
-    background-image: url("/img/alerts/info.svg");
-}
+    &.info {
+      background-image: url("/img/alerts/info.svg");
+    }
+  }
 
-table {
-    border-collapse: collapse;
-}
+  .message-container {
+    width: 40%;
+    word-break: break-word;
 
-.table {
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 1rem;
-    background-color: transparent;
-}
+    &.rule:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
 
-.table thead th {
-    vertical-align: bottom;
-    border-bottom: 2px solid #32383e;
-}
+    .dn-container {
+      width: 60%;
+    }
+  }
 
-.table td, .table th {
-    padding: .75rem;
-    vertical-align: top;
-    text-align: inherit;
-}
+  .message-group-container {
+    .message-container, .dn-container {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
 
-.table-dark td, .table-dark {
-    background: #1E1E1E;
-}
+  .message-container, .object-container {
+    display: flex;
+    align-items: flex-start;
 
-.table-dark tr:nth-of-type(2n) td {
-    background: #292A2D;
-}
+    .alert-item {
+      margin-top: 3px;
+    }
+  }
 
-.table-dark pre {
-    color: white;
-}
+  .message-objects .dn-container, .object-container .dn-container {
+    margin-left: 0;
+  }
 
-.table-dark.table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgba(255, 255, 255, .05);
+  .alert-detail {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 5px;
+    padding: 0 5px;
+  }
+
+  .dn-container {
+    display: flex;
+    width: 60%;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .dn-logo {
+      height: 15px;
+      width: 15px;
+    }
+
+    .dn-part {
+      margin-right: 5px;
+
+      &:after {
+        content: " >";
+      }
+
+      &:last-child {
+        margin-right: 0;
+
+        &:after {
+          content: none;
+        }
+      }
+    }
+  }
+
+  .message-objects {
+    padding-left: 40px;
+  }
+
+  .group-options {
+    width: 160px;
+    padding: 10px;
+
+    .option {
+      display: flex;
+      justify-content: center;
+      border: 1px solid #666666;
+      color: #666666;
+      padding: 3px 5px;
+      margin-bottom: 5px;
+
+      &.selected {
+        border: 1px solid white;
+        color: white;
+      }
+    }
+  }
 }

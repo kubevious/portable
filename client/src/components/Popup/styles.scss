@@ -11,7 +11,7 @@
     bottom: 80px;
     border: solid 1px #999;
     background: #35373E;
-    overflow: hidden;
+    //overflow: hidden;
     color: white;
 }
 
@@ -32,12 +32,22 @@
 }
 
 .popup .popup-contents {
-    padding: 40px;
     height: 100%;
-    overflow: hidden;
 
-    &:hover {
-        overflow-y: auto;
+    &> div {
+        height: 100%;
+    }
+
+    .p-40 {
+        padding: 40px;
+    }
+
+    .overflow-hide {
+        overflow: hidden;
+
+        &:hover {
+            overflow: auto;
+        }
     }
 }
 
@@ -47,6 +57,7 @@
     width: 32px;
     height: 32px;
     position: absolute;
-    top: 15px;
+    top: 5px;
     right: 5px;
+    outline: none;
 }

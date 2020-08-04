@@ -7,7 +7,7 @@ import { isEmptyArray } from '../../utils/util'
 
 const About = ({ result }) => {
     return(
-        <div className="about">
+        <div className="About-wrapper p-40 overflow-hide">
             <div className="container-header">
                 <h3>About Kubevious</h3>
             </div>
