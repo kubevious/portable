@@ -26,14 +26,16 @@ class ClusterEngine
     init()
     {
         var configFilePath = process.env.KUBECONFIG || '~/.kube/config';
-        return this._setConfig(this._loadConfigFile(configFilePath))
-
+        return this._loadConfigFile(configFilePath)
+            .then(data => {
+                return this._setConfig(data)
+            });
     }
 
-    _setConfig(configData)
+    _setConfig(config)
     {
-        return configData
-            .then(config => {
+        return Promise.resolve()
+            .then(() => {
                 config = config || {};
                 config.contexts = config.contexts || [];
                 config.clusters = config.clusters || [];
@@ -133,16 +135,13 @@ class ClusterEngine
                 this.logger.error('Failed to load %s. Details: ', fileName, reason);
                 console.log('Make sure that ~/.kube/config file is properly mounted.')
                 console.log('Visit https://github.com/kubevious/portable for details')
-                process.exit(1);
-                
                 return null;
             });
     }
 
     createConfig(data)
     {
-        const configData = Promise.resolve(yaml.safeLoad(data.config))
-
+        const configData = yaml.safeLoad(data.config);
         return this._setConfig(configData)
             .then(() => ({ clusters: this._clustersList, success: true }))
     }
