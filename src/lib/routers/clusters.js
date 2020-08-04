@@ -20,5 +20,13 @@ module.exports = {
             }
             return context.clusterEngine.setActiveCluster(req.body.name);
         })
+
+        router.post('/create-config', function (req, res) {
+            if (!req.body.config) {
+                reportUserError('Missing config')
+            }
+
+            return context.clusterEngine.createConfig(req.body)
+        })
     },
 }

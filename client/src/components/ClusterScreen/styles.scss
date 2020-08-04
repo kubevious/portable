@@ -117,7 +117,7 @@
     }
   }
 
-  .back-btn {
+  .btn {
     background: #0b0b0c;
     color: white;
     outline: none;
@@ -133,5 +133,17 @@
   .icon-wrapper {
     position: absolute;
     right: 30px;
+  }
+}
+
+.CustomConfig-container {
+  height: calc(100% - 50px);
+
+  .react-codemirror2 {
+    height: calc(100% - 40px);
+
+    .CodeMirror {
+      height: 100%;
+    }
   }
 }

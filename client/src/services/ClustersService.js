@@ -20,6 +20,16 @@ class ClustersService {
                 cb(result.data)
             })
     }
+
+    createCustomConfig(data, cb) {
+        return this._client.post('/create-config', data)
+            .then(result => {
+                cb(result.data)
+            })
+            .catch(err => {
+                cb(err.response.data)
+            })
+    }
 }
 
 export default ClustersService

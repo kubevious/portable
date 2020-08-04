@@ -26,7 +26,13 @@ class ClusterEngine
     init()
     {
         var configFilePath = process.env.KUBECONFIG || '~/.kube/config';
-        return this._loadConfigFile(configFilePath)
+        return this._setConfig(this._loadConfigFile(configFilePath))
+
+    }
+
+    _setConfig(configData)
+    {
+        return configData
             .then(config => {
                 config = config || {};
                 config.contexts = config.contexts || [];
@@ -133,6 +139,14 @@ class ClusterEngine
             });
     }
 
+    createConfig(data)
+    {
+        const configData = Promise.resolve(yaml.safeLoad(data.config))
+
+        return this._setConfig(configData)
+            .then(() => ({ clusters: this._clustersList, success: true }))
+    }
+
     fetchList() {
         return this._clustersList;
     }
@@ -168,7 +182,7 @@ class ClusterEngine
                     [ClusterResolver.OS_DEFAULT]: '~/.kube/config',
                     [ClusterResolver.OS_WIN]: '%USERPROFILE%/.kube/config'
                 }
-            } 
+            }
         }
 
         this.logger.info("[_generateRunCommands] ClusterConfig: ", clusterConfig);
@@ -184,7 +198,7 @@ class ClusterEngine
             commands.push({
                 'os': x,
                 'command': this._generateRunCommandForOS(x, mappings, clusterConfig)
-            }) 
+            })
         }
 
         this.logger.info("[_generateRunCommands] Commands: ", commands);
@@ -199,7 +213,7 @@ class ClusterEngine
             separator = '^';
         }
         var cmd =
-            `docker run --rm -it ${separator}\n` + 
+            `docker run --rm -it ${separator}\n` +
             `  -p 5001:5001 ${separator}\n`;
 
         for(var x of _.keys(mappings))
@@ -222,7 +236,7 @@ class ClusterEngine
                 cmd += `  -v ${binding} ${separator}\n`;
             }
         }
-        
+
         cmd += '  kubevious/portable';
         if (clusterConfig.imageTag) {
             cmd += ':' + clusterConfig.imageTag;

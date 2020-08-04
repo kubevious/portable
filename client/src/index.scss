@@ -135,3 +135,19 @@ div {
   background-color: #249448;
 }
 
+button {
+  border-radius: 0 !important;
+}
+
+.btn-group {
+  display: flex;
+
+  button {
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
