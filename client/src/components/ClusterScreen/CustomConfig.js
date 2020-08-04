@@ -12,6 +12,22 @@ const CustomConfig = ({ backToList, createCustomConfig }) => {
         setConfig(value)
     }
 
+    const uploadConfig = () => {
+        const input = document.getElementById('config-file')
+
+        if (input.files.length === 0) {
+            console.error('No file selected.')
+            return
+        }
+
+        const reader = new FileReader()
+        reader.onload = () => {
+            createCustomConfig(reader.result)
+        }
+
+        reader.readAsText(input.files[0])
+    }
+
     return (
         <div className='CustomConfig-container'>
             <CodeMirrorEditor
@@ -33,6 +49,15 @@ const CustomConfig = ({ backToList, createCustomConfig }) => {
                 >
                     Add config
                 </button>
+
+                <label htmlFor='config-file' className='btn label-btn'>
+                    Upload file
+                </label>
+                <input
+                    type='file'
+                    id='config-file'
+                    onChange={() => uploadConfig()}
+                />
 
                 <button className='btn' onClick={() => backToList()}>
                     Back to list

@@ -81,7 +81,7 @@ class ClusterScreen extends BaseComponent {
     createCustomConfig(config) {
         this.setState({ isLoading: true })
         this.service.createCustomConfig({ config }, (result) => {
-            this.setState({ isLoading: false})
+            this.setState({ isLoading: false })
 
             if (result.success) {
                 this.setState({
