@@ -6,7 +6,6 @@ cd $MY_DIR
 winpty docker run --rm -it \
     -p 5001:5001 \
     -v "c:\Users\MI\.kube":/root/.kube \
-    -v "c:\Users\MI\.azure\azureProfile.json":/root/.azure/azureProfile.json \
     -v "c:\Users\MI\.aws\credentials":/root/.aws/credentials \
     -e NODE_ENV=development \
     kubevious/portable:dev
