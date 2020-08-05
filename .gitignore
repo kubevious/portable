@@ -66,3 +66,5 @@ src/client/node_modules
 src/node_modules
 
 .history
+
+.idea/
