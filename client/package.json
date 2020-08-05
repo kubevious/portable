@@ -54,10 +54,20 @@
       "last 1 safari version"
     ]
   },
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "prettier": "2.0.5",
+    "pretty-quick": "^2.0.1"
+  },
   "prettier": {
     "jsxSingleQuote": true,
     "tabWidth": 4,
     "semi": false,
     "singleQuote": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }

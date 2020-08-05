@@ -37,8 +37,5 @@
     "concurrently": "^5.2.0",
     "mocha": "^6.2.2",
     "should": "^13.2.3"
-  },
-  "prettier": {
-    "tabWidth": 4
   }
 }
