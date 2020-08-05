@@ -45,6 +45,26 @@
     }
   }
 
+  .add-config {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .add-config-icon {
+      font-size: 24px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .add-config-text:hover {
+      text-decoration: underline;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   .clusters {
     .cluster {
       width: 100%;

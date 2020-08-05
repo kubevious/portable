@@ -1,12 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
 
-const ClusterList = ({
-    clusters,
-    selectedCluster,
-    addCustomConfig,
-    selectCluster,
-}) => {
+const ClusterList = ({ clusters, selectedCluster, selectCluster }) => {
     return (
         <div className='clusters'>
             {clusters.map((item) => (
@@ -27,15 +22,6 @@ const ClusterList = ({
                     {item.name}
                 </div>
             ))}
-
-            <div className='cluster' onClick={() => addCustomConfig()}>
-                <img
-                    className='kubernetes-logo'
-                    src={`/img/clusters/new-cluster.svg`}
-                    alt='New cluster'
-                />
-                Add custom kube config
-            </div>
         </div>
     )
 }

@@ -29,6 +29,7 @@ class ClusterScreen extends BaseComponent {
         this.backToList = this.backToList.bind(this)
         this.addCustomConfig = this.addCustomConfig.bind(this)
         this.createCustomConfig = this.createCustomConfig.bind(this)
+        this.renderTitle = this.renderTitle.bind(this)
     }
 
     componentDidMount() {
@@ -92,6 +93,16 @@ class ClusterScreen extends BaseComponent {
         })
     }
 
+    renderTitle() {
+        if (this.state.error) {
+            return 'Error Connecting to Cluster'
+        } else if (this.state.isCustomConfig) {
+            return 'Upload or paste kube config'
+        } else {
+            return 'Select cluster'
+        }
+    }
+
     render() {
         const {
             clusters,
@@ -105,7 +116,7 @@ class ClusterScreen extends BaseComponent {
         return (
             <div className='ClusterScreen-container'>
                 <div className={cx('title', { error: error })}>
-                    {error ? 'Error Connecting to Cluster' : 'Select cluster'}
+                    {this.renderTitle()}
 
                     <div className='loading-box'>
                         {isLoading && <FontAwesomeIcon icon={faSpinner} spin />}
@@ -118,6 +129,18 @@ class ClusterScreen extends BaseComponent {
                 >
                     x
                 </div>
+
+                {!error && !isCustomConfig && (
+                    <div
+                        className='add-config'
+                        onClick={() => this.addCustomConfig()}
+                    >
+                        <span className='add-config-icon'>+</span>
+                        <span className='add-config-text'>
+                            Add custom kube config
+                        </span>
+                    </div>
+                )}
 
                 {!isEmptyArray(clusters) && !error && !isCustomConfig && (
                     <ClusterList
