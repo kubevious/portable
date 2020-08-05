@@ -29,7 +29,7 @@
         "react-scripts": "3.4.1",
         "the-lodash": "^1.1.1",
         "webpack-jquery-ui": "^2.0.1",
-        "websocket-subscription-client": "^1.0.11",
+        "websocket-subscription-client": "^1.0.12",
         "xml-js": "^1.6.11"
     },
     "scripts": {
