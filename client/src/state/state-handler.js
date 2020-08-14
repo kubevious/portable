@@ -23,8 +23,8 @@ class StateHandler {
 
         this._handleDefaultParams()
         this._handleSelectedDnAutoExpandChange()
-        this._handleSelectedObjectChange()
-        this._handleSelectedObjectAssetsChange()
+        this._handleSelectedDnChange()
+        this._handleSelectedAlertsChange()
     }
 
     _handleDefaultParams() {
@@ -58,28 +58,61 @@ class StateHandler {
             });
     }
 
-    _handleSelectedObjectChange() {
+    _handleSelectedDnChange() {
 
         this.sharedState.subscribe(['selected_dn'],
             ({ selected_dn }) => {
-                this.sharedState.set('selected_object_assets', null);
+                this.sharedState.set('selected_object_props', null);
+                this.sharedState.set('selected_raw_alerts', null);
             });
 
     }
 
-    _handleSelectedObjectAssetsChange() {
-        this.sharedState.subscribe('selected_object_assets',
-            (selected_object_assets) => {
-                if (selected_object_assets) {
-                    this.sharedState.set('selected_object_props', selected_object_assets.props);
-                    this.sharedState.set('selected_object_alerts', selected_object_assets.alerts);
-                } else {
-                    this.sharedState.set('selected_object_props', []);
-                    this.sharedState.set('selected_object_alerts', []);
-                }
-            })
-    }
+    _handleSelectedAlertsChange() {
+        this.sharedState.subscribe(['selected_raw_alerts', 'selected_dn'],
+            ({selected_raw_alerts, selected_dn}) => {
+                if (selected_raw_alerts && selected_dn) {
 
+                    var alerts = _.cloneDeep(selected_raw_alerts);
+
+                    if (_.isPlainObject(alerts))
+                    {
+                        var newAlerts = [];
+                        for(var dn of _.keys(alerts))
+                        {
+                            for(var alert of alerts[dn])
+                            {
+                                alert.dn = dn;
+                                newAlerts.push(alert);
+                            }
+                        }
+                        alerts = newAlerts
+                    }
+                    else
+                    {
+                        for(var alert of alerts)
+                        {
+                            if (!alert.dn)
+                            {
+                                alert.dn = selected_dn;
+                            }
+                        }
+                    }
+
+                    alerts = _.orderBy(alerts, ['dn', 'severity', 'msg']);
+
+                    for(var alert of alerts)
+                    {
+                        alert.uiKey = alert.dn + '-' + alert.severity + '-' + alert.id + '-' + alert.msg;
+                    }
+
+                    this.sharedState.set('selected_object_alerts', alerts);
+                } else {
+                    this.sharedState.set('selected_object_alerts', null);
+                }
+            });
+    }
+    
 }
 
 export default StateHandler;
