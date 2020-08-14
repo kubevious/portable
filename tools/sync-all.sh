@@ -7,6 +7,15 @@ source $MY_DIR/utils.sh
 
 global_status=0
 
+## Cleanup
+./delete-synced-files.sh
+status=$?
+cleanup_status=0
+if [[ ${status} -ne 0 ]]; then
+    global_status=1
+    cleanup_status=1
+fi
+
 ## UI
 ./sync-from-ui.sh
 status=$?
@@ -35,6 +44,13 @@ if [[ ${status} -ne 0 ]]; then
 fi
 
 log_header "Sync Summary"
+
+if [[ ${cleanup_status} -eq 0 ]]; then
+    log_info " | Cleanup: Passed"
+else 
+    log_error " | Cleanup: Failed. Error=${cleanup_status}"
+fi
+
 if [[ ${ui_status} -eq 0 ]]; then
     log_info " | UI: Passed"
 else 

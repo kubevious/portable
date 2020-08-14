@@ -17,20 +17,23 @@ function sync {
 }
 
 sync "index.js" "index.js"
+
 sync "lib/snapshot-processor.js" "lib/snapshot-processor.js"
+sync "lib/snapshot-processors/010_parser-alerts.js" "lib/snapshot-processors/010_parser-alerts.js"
+sync "lib/snapshot-processors/200_children-count.js" "lib/snapshot-processors/200_children-count.js"
 
 sync "lib/registry/registry.js" "lib/registry/registry.js"
+
 sync "lib/search/engine.js" "lib/search/engine.js"
+
 sync "lib/utils/debug-object-logger.js" "lib/utils/debug-object-logger.js"
 sync "lib/utils/name-helpers.js" "lib/utils/name-helpers.js"
 
 sync "lib/routers/top.js" "lib/routers/top.js"
 sync "lib/routers/diagram.js" "lib/routers/diagram.js"
 
-sync "lib/snapshot-processors/alert-count.js" "lib/snapshot-processors/alert-count.js"
-sync "lib/snapshot-processors/children-count.js" "lib/snapshot-processors/children-count.js"
-sync "lib/snapshot-processors/hierarchy-alert-count.js" "lib/snapshot-processors/hierarchy-alert-count.js"
-sync "lib/snapshot-processors/parser-alerts.js" "lib/snapshot-processors/parser-alerts.js"
+sync "lib/websocket/server.js" "lib/websocket/server.js"
+
 
 if [[ global_status -ne 0 ]]; then
     log_error "[sync-from-kubevious] failed"
