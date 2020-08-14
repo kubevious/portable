@@ -5,6 +5,8 @@
 class BaseService {
     constructor(client, sharedState, socket)
     {
+        console.log('[BaseService] ' + this.constructor.name + ' :: create');
+
         this._client = client;
         this._sharedState = sharedState;
         this._socket = socket;
@@ -37,6 +39,8 @@ class BaseService {
 
     close()
     {
+        console.log('[BaseService] ' + this.constructor.name + ' :: destroy');
+
         for(var handler of this._socketHandlers)
         {
             handler.stop();

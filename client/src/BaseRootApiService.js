@@ -15,6 +15,10 @@ class BaseRootApiService {
     get sharedState() {
         return this._sharedState;
     }
+    
+    get serviceKinds() {
+        return _.keys(this._servicesDict);
+    }
 
     registerService(info, cb)
     {
@@ -30,6 +34,18 @@ class BaseRootApiService {
         this._servicesDict[info.kind] = svcInfo;
     }
 
+    closeServicesByKind(kind)
+    {
+        var svcInfo = this._servicesDict[kind];
+        if (svcInfo) {
+            for(var service of _.values(svcInfo.services))
+            {
+                service.close()
+            }
+            svcInfo.services = {};
+        }
+    }
+
     resolveService(info)
     {
         if (!info.kind) {
@@ -41,29 +57,32 @@ class BaseRootApiService {
         }
 
         var key = _.stableStringify(info);
-        var service = svcInfo.services[key];
-        if (service) {
-            return service;
+        if (key in svcInfo.services) {
+            return svcInfo.services[key];
         }
 
-        service = svcInfo.cb({
+        var service = svcInfo.cb({
             info, 
             sharedState: this.sharedState,
             parent: this
         });
         
-        if (service.setSharedState) {
-            service.setSharedState(this.sharedState);
+        if (service) {
+            if (service.setSharedState) {
+                service.setSharedState(this.sharedState);
+            }
+    
+            if (service.setParent) {
+                service.setParent(this);
+            }
+    
+            if (service.init) {
+                service.init();
+            }
+        } else {
+            service = null;
         }
-
-        if (service.setParent) {
-            service.setParent(this);
-        }
-
-        if (service.init) {
-            service.init();
-        }
-
+        
         svcInfo.services[key] = service;
         return service;
     }

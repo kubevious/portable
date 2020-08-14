@@ -14,6 +14,11 @@ class MockWebSocketService
         this._readGraphData();
     }
 
+    close()
+    {
+      
+    }
+
     _readGraphData()
     {
         this._nodeData = {};
@@ -55,7 +60,7 @@ class MockWebSocketService
                             graphNode.alertCount[severity] = childNode.alertCount[severity];
                         }
                     }
-                    
+
                     this._nodeChildren[dn].push(childNode.dn);
                 }
             }
@@ -95,7 +100,7 @@ class MockWebSocketService
             if (!value) {
                 return;
             }
-    
+
             return {
                 target: { dn: subscription.dn},
                 value: value

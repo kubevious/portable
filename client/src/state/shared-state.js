@@ -19,6 +19,39 @@ class SharedState
         this._subscribedKeys = {};
     }
 
+    close()
+    {
+        throw new Error("Close functionality works for user scoped shared state objects.");
+    }
+
+    user() 
+    {
+        var subscribers = [];
+
+        return {
+            user: () => {
+                return this.user();
+            },
+            close: () => {
+                for(var x of subscribers) {
+                    x.close();
+                }
+                subscribers = [];
+            },
+            subscribe: (keyOrKeys, cb) => {
+                var subscriber = this.subscribe(keyOrKeys, cb);
+                subscribers.push(subscriber);
+                return subscriber;
+            },
+            get: (name) => {
+                return this.get(name);
+            },
+            set: (name, value, options) => {
+                return this.set(name, value, options);
+            }
+        }
+    }
+
     /*
      * Subscribes to changes of key value. Supports multiple key subscription.
      * Usage:
@@ -32,7 +65,7 @@ class SharedState
             console.log(key1);
             console.log(key2);
        })
-     */
+    */
     subscribe(keyOrKeys, cb)
     {
         var subscriber = {
@@ -60,14 +93,11 @@ class SharedState
         this._notifyToSubscriber(subscriber.id);
         
         return {
-            subscriber: subscriber.id
-        }
-    }
-
-    unsubscribe(values) {
-        values.forEach(key => {
-            delete this._subscribers[key]
-        })
+            id: subscriber.id,
+            close: () => {
+                delete this._subscribers[subscriber.id];
+            }
+        };
     }
 
     get(name)

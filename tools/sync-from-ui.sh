@@ -3,11 +3,18 @@ MY_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE
 MY_DIR="$(dirname $MY_PATH)"
 cd $MY_DIR
 
+source $MY_DIR/utils.sh
+
+log_header "Sync from UI"
+
+global_status=0
 function sync {
     ./copy-file-from-source.sh "$1" "$2" "ui"
+    local status=$?
+    if [[ ${status} -ne 0 ]]; then
+        global_status=1
+    fi
 }
-
-echo "Sync from UI..."
 
 # Copying components
 sync "src/components/About/index.js" "src/components/About/index.js"
@@ -91,4 +98,8 @@ sync "src/services/WebSocketService.js" "src/services/WebSocketService.js"
 sync "src/services-mock/MockWebSocketService.js" "src/services-mock/MockWebSocketService.js"
 # Finish copying services-mock
 
-echo "Successfully synced"
+if [[ global_status -ne 0 ]]; then
+    log_error "[sync-from-ui] failed"
+fi
+
+exit $global_status

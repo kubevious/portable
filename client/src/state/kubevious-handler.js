@@ -11,16 +11,24 @@ class KubeviousHandler
     {
         this._api = api;
         this._info = info;
-    
-        const diagramService = api.resolveService(info);
-        
-        this._stateHandler = new StateHandler(api.sharedState, diagramService);
-        this._diagramSource = new DiagramSource(api.sharedState, api.socketService());
+
+        console.log("[KubeviousHandler] :: create", this._info);
+
+        this._stateHandler = new StateHandler(
+            api.sharedState,
+            api.diagramService());
+
+        this._diagramSource = new DiagramSource(
+            api.sharedState,
+            api.socketService(info));
     }
 
     close()
     {
-        // handle
+        console.log("[KubeviousHandler] :: destroy", this._info);
+
+        this._stateHandler.close();
+        this._diagramSource.close();
     }
 
 }

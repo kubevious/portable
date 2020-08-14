@@ -23,8 +23,8 @@ class Alerts extends BaseComponent {
 
     componentDidMount() {
         this.subscribeToSharedState('selected_object_alerts',
-            selected_object_assets => {
-                this.setState({ alerts: selected_object_assets })
+            selected_object_alerts => {
+                this.setState({ alerts: selected_object_alerts })
             })
 
         document.getElementById('alertsComponent').parentElement.style.overflow = 'hidden'
