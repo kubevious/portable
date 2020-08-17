@@ -10,8 +10,10 @@
   display: block;
 
 }
+
 .Config-header {
   color: white;
+  font-family: 'Montserrat', monospace;
 
   .cluster {
     padding: 5px 10px;
@@ -114,6 +116,10 @@
     color: white;
   }
 
+  .react-codemirror2 {
+    height: 100%;
+  }
+
   .CodeMirror {
     background: inherit;
     position: relative;
@@ -121,6 +127,8 @@
 
     &.cm-s-darcula {
       border: none;
+      background: inherit;
+      height: 100%;
     }
 
     .CodeMirror-code {
