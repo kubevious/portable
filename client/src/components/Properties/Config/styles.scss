@@ -87,8 +87,8 @@
   padding: 0;
 
   &.edit-mode {
-    background: #181819d6;
-    height: calc(100% - 110px - 50px);
+    background: rgba(24,24,25,.84);
+    height: calc(100% - 160px);
     padding: 20px;
   }
 
@@ -117,7 +117,7 @@
   }
 
   .react-codemirror2 {
-    height: 100%;
+    overflow: hidden;
   }
 
   .CodeMirror {

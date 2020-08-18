@@ -16290,26 +16290,30 @@ export const ALERTS_DATA = [
     {
         'id': 'Initialized-2019-12-27T19:47:53Z',
         'severity': 'warn',
-        'msg': 'something happened',
-        'date': '2019-12-27T19:47:53Z'
+        'msg': 'Memory usage warning',
+        'source': { kind: 'rule', id: 'rule 1'},
+        'dn': 'root/ns-[gitlab]/app-[gitlab-gitlab-exporter]/initcont-[configure]/image-[busybox]',
     },
     {
         'id': 'Ready-2019-12-27T19:47:59Z',
         'severity': 'error',
-        'msg': 'something happened',
-        'date': '2019-12-27T19:47:59Z'
+        'msg': 'Rule container-memory-usage failed. Memory request is not set.',
+        'source': { kind: 'rule', id: 'rule 2'},
+        'dn': 'root/ns-[gitlab]/app-[gitlab-gitlab-exporter]/initcont-[configure]',
     },
     {
         'id': 'ContainersReady-2019-12-27T19:47:59Z',
         'severity': 'warn',
-        'msg': 'something happened',
-        'date': '2019-12-27T19:47:59Z'
+        'msg': 'Memory usage warning',
+        'source': { kind: 'parser' },
+        'dn': 'root/ns-[gitlab]/app-[gitlab-gitlab-exporter]/initcont-[configure]/image-[busybox]',
     },
     {
         'id': 'PodScheduled-2019-12-27T19:47:53Z',
-        'severity': 'warn',
-        'msg': 'something happened',
-        'date': '2019-12-27T19:47:53Z'
+        'severity': 'error',
+        'msg': 'Could not find apps matching selector.',
+        'source': { kind: 'parser' },
+        'dn': 'root/ns-[gitlab]/app-[gitlab-gitlab-exporter]/initcont-[configure]/image-[busybox]',
     }
 ]
 
