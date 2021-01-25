@@ -43,10 +43,10 @@
     }
 
     .overflow-hide {
-        overflow: hidden;
+        overflow-y: hidden;
 
         &:hover {
-            overflow: auto;
+            overflow-y: overlay;
         }
     }
 }

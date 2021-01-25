@@ -3,13 +3,13 @@
 /*** SOURCE: ../ui.git/src/src/components/Alerts/AlertView/index.js                                       ***/
 
 import React, { useState } from 'react'
-import { parseDn } from '../../../utils/naming-utils';
 import cx from 'classnames'
-import { prettyKind } from '../../../utils/ui-utils';
 import { sortSeverity, uniqueMessages, uniqueObjects } from '../../../utils/util';
+import DnPath from '../../GenerateDnPath';
+import * as DnUtils from '@kubevious/helpers/dist/dn-utils'
 
-const AlertView = ({ alerts, clickDn, openRule }) => {
-    const [group, setGroup] = useState('no')
+const AlertView = ({ alerts, clickDn, openRule, groupPreset }) => {
+    const [group, setGroup] = useState(groupPreset || 'no')
 
     const clickMessage = (alert) => {
         if (alert.source.kind === 'rule') {
@@ -32,7 +32,7 @@ const AlertView = ({ alerts, clickDn, openRule }) => {
     }
 
     const renderDnParts = (dn) => {
-        const dnParts = parseDn(dn).slice(1)
+        const dnParts = DnUtils.parseDn(dn).slice(1)
 
         return (
             <div className="dn-container" key={dn} onClick={() => clickDn(dn)}>
@@ -40,11 +40,7 @@ const AlertView = ({ alerts, clickDn, openRule }) => {
                     <img className="dn-logo" src="/img/entities/ns.svg" alt="logo" />
                 </div>
                 <div className="parts-container">
-                    {dnParts.map((part, index) => (
-                        <span className="dn-part" key={index}>
-                        {prettyKind(part.kind)} {part.name}
-                    </span>
-                    ))}
+                    <DnPath dnParts={dnParts} />
                 </div>
             </div>
         )
@@ -61,7 +57,7 @@ const AlertView = ({ alerts, clickDn, openRule }) => {
             <>
                 {messages.map((message, index) => (
                     <div className="message-group-container" key={index}>
-                        <div className="message-container" onClick={() => clickMessage(message)}>
+                        <div className={cx('message-container', { 'rule': message.source.kind === 'rule' })} onClick={() => clickMessage(message)}>
                             <div className={'alert-item ' + message.severity} />
                             {message.msg}
                         </div>
@@ -102,38 +98,47 @@ const AlertView = ({ alerts, clickDn, openRule }) => {
     return (
         <div className="AlertView-container">
             <div className={`alerts group-${group}`}>
-                {group === 'no' && <>
-                    {alerts.map((alert, index) => renderAlert({ alert, index }))}
-                </>}
+                {group === 'no' && (
+                    <>
+                        {alerts.map((alert, index) =>
+                            renderAlert({ alert, index })
+                        )}
+                    </>
+                )}
 
                 {group === 'message' && renderMessageGroup()}
 
                 {group === 'object' && renderObjectGroup()}
             </div>
 
+            {!groupPreset && (
+                <div className="group-options">
+                    <div
+                        className={cx('option', { selected: group === 'no' })}
+                        onClick={() => setGroup('no')}
+                    >
+                        No Group
+                    </div>
 
-            <div className="group-options">
-                <div
-                    className={cx('option', { 'selected': group === 'no' })}
-                    onClick={() => setGroup('no')}
-                >
-                    No Group
-                </div>
+                    <div
+                        className={cx('option', {
+                            selected: group === 'object',
+                        })}
+                        onClick={() => setGroup('object')}
+                    >
+                        Group by Object
+                    </div>
 
-                <div
-                    className={cx('option', { 'selected': group === 'object' })}
-                    onClick={() => setGroup('object')}
-                >
-                    Group by Object
+                    <div
+                        className={cx('option', {
+                            selected: group === 'message',
+                        })}
+                        onClick={() => setGroup('message')}
+                    >
+                        Group by Alert
+                    </div>
                 </div>
-
-                <div
-                    className={cx('option', { 'selected': group === 'message' })}
-                    onClick={() => setGroup('message')}
-                >
-                    Group by Alert
-                </div>
-            </div>
+            )}
         </div>
     )
 }

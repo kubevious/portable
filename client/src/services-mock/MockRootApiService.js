@@ -5,7 +5,6 @@ import BaseRootApiService from '../BaseRootApiService'
 import DiagramService from './MockDiagramService'
 import WebSocketService from './MockWebSocketService'
 import MiscService from './MockMiscService';
-import ClustersService from './MockClustersService';
 
 class MockRootApiService extends BaseRootApiService
 {
@@ -13,20 +12,16 @@ class MockRootApiService extends BaseRootApiService
     {
         super(sharedState);
 
-        this.registerService({ kind: 'socket' }, () => {
+        this.registerService({kind: 'socket'}, () => {
             return new WebSocketService(sharedState);
         });
 
-        this.registerService({ kind: 'diagram' }, ({ info }) => {
+        this.registerService({kind: 'diagram'}, ({info}) => {
             return new DiagramService(sharedState);
         });
 
         this.registerService({ kind: 'misc' }, () => {
-            return new MiscService(this);
-        });
-
-        this.registerService({ kind: 'clusters' }, () => {
-            return new ClustersService(sharedState);
+            return new MiscService(this, sharedState);
         });
     }
     
@@ -47,10 +42,6 @@ class MockRootApiService extends BaseRootApiService
 
     miscService() {
         return this.registerService({ kind: 'misc' })
-    }
-
-    clustersService() {
-        return this.registerService({ kind: 'clusters' })
     }
 }
 

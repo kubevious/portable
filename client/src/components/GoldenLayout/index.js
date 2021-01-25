@@ -7,7 +7,6 @@ import 'golden-layout/src/css/goldenlayout-base.css'
 import 'golden-layout/src/css/goldenlayout-dark-theme.css'
 import GoldenLayout from 'golden-layout'
 import RegisterComponents from './register-components';
-import { isEmptyArray } from '../../utils/util';
 
 import './styles.scss'
 
@@ -18,12 +17,8 @@ class GoldenLayoutComponent extends BaseComponent {
     }
 
     componentDidMount() {
-        this.subscribeToSharedState('selected_cluster', (selected_cluster) => {
-            if (selected_cluster && isEmptyArray(this._components)) {
-                new RegisterComponents(this)
-                this._activateLayout()
-            }
-        })
+        new RegisterComponents(this)
+        this._activateLayout()
     }
 
     _activateLayout() {
@@ -97,7 +92,7 @@ class GoldenLayoutComponent extends BaseComponent {
 
     activateComponent(id) {
         var info = this._getComponent(id);
-        if (!info.goldenTab) {
+        if (!info || !info.goldenTab) {
             return;
         }
 

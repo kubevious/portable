@@ -92,6 +92,8 @@ sync "src/components/Properties/KeyValueList/styles.scss" "src/components/Proper
 
 sync "src/components/Properties/PropertiesContents/index.js" "src/components/Properties/PropertiesContents/index.js"
 
+sync "src/components/Properties/PropertiesAlertList/index.js" "src/components/Properties/PropertiesAlertList/index.js"
+
 sync "src/components/Properties/PropertiesCounters/index.js" "src/components/Properties/PropertiesCounters/index.js"
 sync "src/components/Properties/PropertiesCounters/styles.scss" "src/components/Properties/PropertiesCounters/styles.scss"
 
@@ -129,7 +131,6 @@ sync "src/services/BaseService.js" "src/services/BaseService.js"
 sync "src/services/DiagramService.js" "src/services/DiagramService.js"
 sync "src/services/MiscService.js" "src/services/MiscService.js"
 sync "src/services/RootApiService.js" "src/services/RootApiService.js"
-sync "src/services/RuleService.js" "src/services/RuleService.js"
 sync "src/services/WebSocketService.js" "src/services/WebSocketService.js"
 # Finish copying services
 
@@ -137,7 +138,6 @@ sync "src/services/WebSocketService.js" "src/services/WebSocketService.js"
 sync "src/services-mock/MockDiagramService.js" "src/services-mock/MockDiagramService.js"
 sync "src/services-mock/MockMiscService.js" "src/services-mock/MockMiscService.js"
 sync "src/services-mock/MockRootApiService.js" "src/services-mock/MockRootApiService.js"
-sync "src/services-mock/MockRuleService.js" "src/services-mock/MockRuleService.js"
 sync "src/services-mock/MockWebSocketService.js" "src/services-mock/MockWebSocketService.js"
 # Finish copying services-mock
 
@@ -160,9 +160,17 @@ sync "src/utils/ui-utils.js" "src/utils/ui-utils.js"
 sync "src/utils/util.js" "src/utils/util.js"
 # Finish copying utils
 
+#Copying utils
+sync "src/boot/diagramMockData.js" "src/boot/diagramMockData.js"
+sync "src/boot/filterData.js" "src/boot/filterData.js"
+sync "src/boot/targetSnippets.js" "src/boot/targetSnippets.js"
+sync "src/boot/aboutMockData.js" "src/boot/aboutMockData.js"
+# Finish copying utils
+
 sync "src/BaseRootApiService.js" "src/BaseRootApiService.js"
 sync "src/configureService.js" "src/configureService.js"
 sync "src/index.scss" "src/index.scss"
+sync "src/version.js" "src/version.js"
 
 if [[ global_status -ne 0 ]]; then
     log_error "[sync-from-ui] failed"

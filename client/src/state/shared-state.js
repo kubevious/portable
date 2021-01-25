@@ -17,6 +17,28 @@ class SharedState
         this._values = {};
         this._subscribers = {};
         this._subscribedKeys = {};
+        this._metadata = {};
+    }
+
+    register(name, options)
+    {
+        options = options || {};
+        this._metadata[name] = options;
+    }
+
+    _getMetadata(name)
+    {
+        let value = this._metadata[name];
+        if (!value) {
+            value = {};
+        }
+        if (_.isNullOrUndefined(value.skipCompare)) {
+            value.skipCompare = false;
+        }
+        if (_.isNullOrUndefined(value.skipValueOutput)) {
+            value.skipValueOutput = false;
+        }
+        return value;
     }
 
     close()
@@ -109,11 +131,11 @@ class SharedState
         return value;
     }
 
-    set(name, value, options)
+    set(name, value)
     {
-        options = options || {};
+        const metadata = this._getMetadata(name);
 
-        if (!options.skipCompare)
+        if (!metadata.skipCompare)
         {
             if (_.fastDeepEqual(value, this._values[name]))
             {
@@ -123,13 +145,17 @@ class SharedState
 
         if (this._debugOutput)
         {
-            var str = JSON.stringify(value);
-            if (str) {
-                if (str.length > 80) {
-                    str = str.substring(0, 80) + '...';
+            if (metadata.skipValueOutput) {
+                console.log("[SharedState] SET " + name + ". Value Output Skipped.");
+            } else {
+                var str = JSON.stringify(value);
+                if (str) {
+                    if (str.length > 80) {
+                        str = str.substring(0, 80) + '...';
+                    }
                 }
+                console.log("[SharedState] SET " + name + " = " + str);
             }
-            console.log("[SharedState] SET " + name + " = " + str);
         }
 
         if (_.isNullOrUndefined(value)) {

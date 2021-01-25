@@ -3,52 +3,126 @@
 /*** SOURCE: ../ui.git/src/src/components/Properties/PropertyGroup/index.js                               ***/
 
 import React from 'react'
-import EnvironmentVariables from '../EnvironmentVariables'
-import DnList from '../DnList'
-import Config from '../Config'
-import PropertiesTable from '../PropertiesTable'
+import propTypes from 'prop-types'
+import { propertyGroupTooltip } from '@kubevious/helpers/dist/docs'
+import _ from 'the-lodash'
+import PropertiesContents from '../PropertiesContents'
+import DnComponent from '../../DnComponent'
+import BaseComponent from '../../../HOC/BaseComponent'
 
-const PropertyGroup = ({ title, extraClassTitle, extraClassContents, tooltip, dn, groupName, group,
-                           propertyExpanderHandleClick, onPropertyGroupPopup, closePopup }) => {
-    const renderGroup = (options = {}) => {
-        options.relativeTo = dn;
+class PropertyGroup extends BaseComponent {
+    constructor(props) {
+        super(props)
 
-        if (group.kind === 'key-value') {
-            if (group.id === 'env') {
-                options.keyLabel = 'Variable'
-            }
+        this.tooltip = null
+        this.renderTooltip()
+    }
 
-            return <EnvironmentVariables group={group} options={options}/>
-        } else if (group.kind === 'dn-list') {
-            return <DnList group={group} options={options} hidePopup={closePopup}/>
-        } else if (group.kind === 'yaml') {
-            return <Config group={group}/>
-        } else if (group.kind === 'table') {
-            return <PropertiesTable group={group} options={options}/>
+    static propTypes = {
+        title: propTypes.string,
+        extraClassTitle: propTypes.string,
+        extraClassContents: propTypes.string,
+        dn: propTypes.string,
+        dnKind: propTypes.string,
+        groupName: propTypes.string,
+        group: propTypes.object,
+        propertyExpanderHandleClick: propTypes.func,
+    }
+
+    renderTooltip() {
+        const { group, dnKind } = this.props
+        const tooltipInfo = propertyGroupTooltip(group.id)
+        if (tooltipInfo && _.isObject(tooltipInfo)) {
+            const str = _.get(tooltipInfo, 'owner.' + dnKind)
+            this.tooltip = str ? str : _.get(tooltipInfo, 'default')
+        } else if (tooltipInfo && _.isString(tooltipInfo)) {
+            this.tooltip = tooltipInfo
         }
     }
 
-    return (
-        <div className="property-group">
-            <button id="expander" className={`expander ${extraClassTitle}`} tag={`${groupName}`}
-                    onClick={propertyExpanderHandleClick}>
-                {title}
-                <span className="property-group-openclose"/>
-                <span className="property-group-popup" tag={`${groupName}`}
-                      onClick={(e) => onPropertyGroupPopup(e, group)}/>
+    openMaximized()
+    {
+        const {
+            dn,
+            group,
+        } = this.props
 
-                {tooltip &&
-                <span className="property-group-info" data-toggle="tooltip" data-placement="top" title={`${tooltip}`}/>}
-            </button>
-            <div className="scrollbar dark">
-                <div className="force-overflow">
-                    <div className={`expander-contents ${extraClassContents}`}>
-                        {renderGroup()}
+        this.sharedState.set('popup_window', {
+            title: 'Properties: ' + group,
+            content:
+                group.kind !== 'yaml' ? (
+                    <div
+                        className={`Property-wrapper p-40 overflow-hide`}
+                    >
+                        {dn && (
+                            <div className="container-header">
+                                <DnComponent dn={dn} />
+                                <h3>{group.title}</h3>
+                            </div>
+                        )}
+                        <PropertiesContents group={group} />
+                    </div>
+                ) : (
+                    <PropertiesContents
+                        group={group}
+                        dn={dn}
+                    />
+                ),
+        })
+    }
+
+    render() {
+        const {
+            title,
+            extraClassTitle,
+            extraClassContents,
+            groupName,
+            group,
+            propertyExpanderHandleClick,
+        } = this.props
+
+        return (
+            <div className="property-group">
+                <button
+                    id="expander"
+                    className={`expander ${extraClassTitle}`}
+                    tag={groupName}
+                    onClick={propertyExpanderHandleClick}
+                >
+                    {title}
+                    <span className="property-group-openclose" />
+                    <span
+                        className="property-group-popup"
+                        tag={groupName}
+                        onClick={(e) => {
+                            this.openMaximized();
+                        }}
+                    />
+                    {this.tooltip && (
+                        <>
+                            <span
+                                className="property-group-info"
+                                data-toggle="property-tooltiptext"
+                                data-placement="top"
+                            />
+                            <span className="property-tooltiptext">
+                                {this.tooltip}
+                            </span>
+                        </>
+                    )}
+                </button>
+                <div className="scrollbar dark">
+                    <div className="force-overflow">
+                        <div
+                            className={`expander-contents ${extraClassContents}`}
+                        >
+                            <PropertiesContents group={group} />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default PropertyGroup
