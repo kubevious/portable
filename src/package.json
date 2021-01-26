@@ -17,6 +17,11 @@
     "url": "git+https://kubevious@github.com/kubevious/portable.git"
   },
   "dependencies": {
+    "@kubevious/easy-data-store": "^1.0.9",
+    "@kubevious/kubik": "^1.0.5",
+    "cron": "^1.8.2",
+    "joi": "^17.3.0",
+    "uuid-parse": "^1.1.0",
     "@kubevious/helper-backend": "^1.0.13",
     "@kubevious/worldvious-client": "^1.0.6",
     "@kubevious/helpers": "^1.0.31",
