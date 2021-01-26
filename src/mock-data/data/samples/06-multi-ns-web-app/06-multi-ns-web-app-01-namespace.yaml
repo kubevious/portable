@@ -1,0 +1,15 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: test-webapp-backend
+  labels:
+    name: test-webapp-backend
+
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: test-webapp-frontend
+  labels:
+    name: test-webapp-frontend

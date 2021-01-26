@@ -1,0 +1,6 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: test-ingress-isolated-ns-02
+  labels:
+    name: test-ingress-isolated-ns-02

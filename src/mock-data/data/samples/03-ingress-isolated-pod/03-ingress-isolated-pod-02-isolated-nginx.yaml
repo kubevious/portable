@@ -1,0 +1,23 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: isolated-nginx
+  namespace: test-ingress-isolated-pod
+  labels:
+    app: isolated-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: isolated-nginx
+  template:
+    metadata:
+      labels:
+        app: isolated-nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
