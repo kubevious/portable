@@ -33,7 +33,6 @@ class Alerts extends BaseComponent {
                 this.setState({ isDnSelected: true })
             }
         })
-        document.getElementById('alertsComponent').parentElement.style.overflow = 'hidden'
     }
 
     clickDn(dn) {
