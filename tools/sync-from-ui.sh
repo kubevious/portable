@@ -31,14 +31,11 @@ sync "src/components/CopyClipboard/styles.scss" "src/components/CopyClipboard/st
 
 sync "src/components/Diagram/index.js" "src/components/Diagram/index.js"
 sync "src/components/Diagram/styles.scss" "src/components/Diagram/styles.scss"
-sync "src/components/Diagram/visual-view.js" "src/components/Diagram/visual-view.js"
-sync "src/components/Diagram/visual-node.js" "src/components/Diagram/visual-node.js"
 sync "src/components/Diagram/packer.growing.js" "src/components/Diagram/packer.growing.js"
 
 sync "src/components/DnComponent/index.js" "src/components/DnComponent/index.js"
 sync "src/components/DnComponent/styles.scss" "src/components/DnComponent/styles.scss"
 
-sync "src/components/DnShortcutComponent/index.js" "src/components/DnShortcutComponent/index.js"
 sync "src/components/DnShortcutComponent/styles.scss" "src/components/DnShortcutComponent/styles.scss"
 
 sync "src/components/ErrorBox/index.js" "src/components/ErrorBox/index.js"
@@ -51,8 +48,6 @@ sync "src/components/Feedback/styles.scss" "src/components/Feedback/styles.scss"
 
 sync "src/components/GenerateDnPath/index.js" "src/components/GenerateDnPath/index.js"
 
-sync "src/components/GoldenLayout/index.js" "src/components/GoldenLayout/index.js"
-sync "src/components/GoldenLayout/register-components.js" "src/components/GoldenLayout/register-components.js"
 sync "src/components/GoldenLayout/styles.scss" "src/components/GoldenLayout/styles.scss"
 
 sync "src/components/Header/index.js" "src/components/Header/index.js"
@@ -78,7 +73,6 @@ sync "src/components/PostFeedback/styles.scss" "src/components/PostFeedback/styl
 
 sync "src/components/Properties/index.js" "src/components/Properties/index.js"
 sync "src/components/Properties/styles.scss" "src/components/Properties/styles.scss"
-sync "src/components/Properties/index.js" "src/components/Properties/helpers.js"
 sync "src/components/Properties/styles.scss" "src/components/Properties/obsidian.scss"
 
 sync "src/components/Properties/Config/index.js" "src/components/Properties/Config/index.js"
@@ -107,7 +101,6 @@ sync "src/components/Properties/PropertyGroup/index.js" "src/components/Properti
 sync "src/components/Root/index.js" "src/components/Root/index.js"
 sync "src/components/Root/styles.scss" "src/components/Root/styles.scss"
 
-sync "src/components/Search/index.js" "src/components/Search/index.js"
 sync "src/components/Search/styles.scss" "src/components/Search/styles.scss"
 
 sync "src/components/SEO/index.js" "src/components/SEO/index.js"
@@ -130,14 +123,11 @@ sync "src/services/BackendClient.js" "src/services/BackendClient.js"
 sync "src/services/BaseService.js" "src/services/BaseService.js"
 sync "src/services/DiagramService.js" "src/services/DiagramService.js"
 sync "src/services/MiscService.js" "src/services/MiscService.js"
-sync "src/services/RootApiService.js" "src/services/RootApiService.js"
 sync "src/services/WebSocketService.js" "src/services/WebSocketService.js"
 # Finish copying services
 
 # Copying services-mock
-sync "src/services-mock/MockDiagramService.js" "src/services-mock/MockDiagramService.js"
 sync "src/services-mock/MockMiscService.js" "src/services-mock/MockMiscService.js"
-sync "src/services-mock/MockRootApiService.js" "src/services-mock/MockRootApiService.js"
 sync "src/services-mock/MockWebSocketService.js" "src/services-mock/MockWebSocketService.js"
 # Finish copying services-mock
 
@@ -145,7 +135,6 @@ sync "src/services-mock/MockWebSocketService.js" "src/services-mock/MockWebSocke
 sync "src/state/diagram-source.js" "src/state/diagram-source.js"
 sync "src/state/kubevious-handler.js" "src/state/kubevious-handler.js"
 sync "src/state/shared-state.js" "src/state/shared-state.js"
-sync "src/state/state-handler.js" "src/state/state-handler.js"
 # Finish copying state
 
 #Copying styles
@@ -164,7 +153,6 @@ sync "src/utils/util.js" "src/utils/util.js"
 sync "src/boot/diagramMockData.js" "src/boot/diagramMockData.js"
 sync "src/boot/filterData.js" "src/boot/filterData.js"
 sync "src/boot/targetSnippets.js" "src/boot/targetSnippets.js"
-sync "src/boot/aboutMockData.js" "src/boot/aboutMockData.js"
 # Finish copying utils
 
 sync "src/BaseRootApiService.js" "src/BaseRootApiService.js"

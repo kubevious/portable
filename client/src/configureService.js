@@ -9,6 +9,7 @@ import KubeviousHandler from './state/kubevious-handler'
 
 export const sharedState = new SharedState();
 sharedState.register('diagram_expanded_dns', { skipCompare: true, skipValueOutput: true })
+sharedState.register('time_machine_timeline_data', { skipCompare: true, skipValueOutput: true })
 
 function apiFactory() {
     const factory = process.env.REACT_APP_MOCKED_DATA === 'true' ? MockRootApiService : RootApiService;

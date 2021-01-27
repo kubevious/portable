@@ -3,7 +3,7 @@
 /*** SOURCE: ../ui.git/src/src/components/Properties/PropertyGroup/index.js                               ***/
 
 import React from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { propertyGroupTooltip } from '@kubevious/helpers/dist/docs'
 import _ from 'the-lodash'
 import PropertiesContents from '../PropertiesContents'
@@ -18,15 +18,15 @@ class PropertyGroup extends BaseComponent {
         this.renderTooltip()
     }
 
-    static propTypes = {
-        title: propTypes.string,
-        extraClassTitle: propTypes.string,
-        extraClassContents: propTypes.string,
-        dn: propTypes.string,
-        dnKind: propTypes.string,
-        groupName: propTypes.string,
-        group: propTypes.object,
-        propertyExpanderHandleClick: propTypes.func,
+    static PropTypes = {
+        title: PropTypes.string,
+        extraClassTitle: PropTypes.string,
+        extraClassContents: PropTypes.string,
+        dn: PropTypes.string,
+        dnKind: PropTypes.string,
+        groupName: PropTypes.string,
+        group: PropTypes.object,
+        propertyExpanderHandleClick: PropTypes.func,
     }
 
     renderTooltip() {

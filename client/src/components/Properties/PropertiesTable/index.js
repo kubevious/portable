@@ -45,7 +45,7 @@ const PropertiesTable = ({ config, options, state }) => {
             <td key={column.name}>
                 {column.formatter
                     ? renderColumnFormatter(column.formatter, cell)
-                    :  PropertiesValue(cell)}
+                    : PropertiesValue(cell)}
             </td>
         )
     }

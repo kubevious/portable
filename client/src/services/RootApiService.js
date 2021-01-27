@@ -10,14 +10,12 @@ import MiscService from './MiscService'
 class RootApiService extends BaseRootApiService {
     constructor(sharedState) {
         super(sharedState);
-        console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&212312312')
 
         this.registerService({ kind: 'socket' }, () => {
             return new WebSocketService();
         });
 
         this.registerService({ kind: 'diagram' }, ({ info }) => {
-            console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
             var client = new BackendClient('/api/v1', sharedState);
             return new DiagramService(client, sharedState, this.socketService());
         });

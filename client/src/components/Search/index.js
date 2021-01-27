@@ -75,7 +75,6 @@ class Search extends BaseComponent {
     }
 
     fetchKeys(type, criteria) {
-        console.log(this.service)
         return this.service.fetchAutocompleteKeys(
             type,
             { criteria },
