@@ -8,7 +8,7 @@ backend.initialize(() => {
 
     const context = new Context(backend);
 
-    var mockDirName = 'mock-data/data';
+    var mockDirName = '../mock-data/data';
     var myArgs = process.argv.slice(2);
     if (myArgs.length > 0) {
         mockDirName = myArgs[0];

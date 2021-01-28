@@ -150,6 +150,7 @@ sync "src/utils/util.js" "src/utils/util.js"
 # Finish copying utils
 
 #Copying utils
+sync "src/boot/aboutMockData.js" "src/boot/aboutMockData.js"
 sync "src/boot/diagramMockData.js" "src/boot/diagramMockData.js"
 sync "src/boot/filterData.js" "src/boot/filterData.js"
 sync "src/boot/targetSnippets.js" "src/boot/targetSnippets.js"

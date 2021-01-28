@@ -18,7 +18,7 @@ export class WebServer
         this.logger = context.logger.sublogger('WebServer');
         this.helpers = {
         };
-        this.server = new Server(this.logger, context, 4002, Path.join(__dirname, '..', 'routers'), this.helpers );
+        this.server = new Server(this.logger, context, 5002, Path.join(__dirname, '..', 'routers'), this.helpers );
         this.server.initializer((app) => {
             app.set('trust proxy', true);
         })

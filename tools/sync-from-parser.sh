@@ -313,7 +313,6 @@ sync "logic/table-builder.ts" "logic/table-builder.ts"
 #Copying mock
 sync "mock/gke.ts" "mock/gke.ts"
 sync "mock/index-gke.ts" "mock/index-gke.ts"
-sync "mock/index-mock.ts" "mock/index-mock.ts"
 sync "mock/index-remote.ts" "mock/index-remote.ts"
 sync "mock/k8s-mock.ts" "mock/k8s-mock.ts"
 # Finish copying mock
@@ -334,15 +333,11 @@ sync "reporting/target.ts" "reporting/target.ts"
 sync "routers/top.ts" "routers/top.ts"
 # Finish copying routers
 
-#Copying server
-sync "server/index.ts" "server/index.ts"
-# Finish copying server
-
-#Copying server
+#Copying utils
 sync "utils/debug-object-logger.ts" "utils/debug-object-logger.ts"
 sync "utils/job-dampener.ts" "utils/job-dampener.ts"
 sync "utils/name-helpers.ts" "utils/name-helpers.ts"
-# Finish copying server
+# Finish copying utils
 
 sync "context.ts" "context.ts"
 sync "index.ts" "index.ts"

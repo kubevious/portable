@@ -64,6 +64,8 @@ typings/
 
 src/client/node_modules
 src/node_modules
+src/dist
+src/mysql/runtime-data
 
 .history
 

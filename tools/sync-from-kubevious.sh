@@ -40,7 +40,6 @@ sync "snapshot-processor/processors/200_summary.ts" "src/lib/snapshot-processor/
 
 #Copying server
 sync "server/websocket.ts" "src/lib/server/websocket.ts"
-sync "server/index.ts" "src/lib/server/index.ts"
 # Finish copying server
 
 #Copying search
