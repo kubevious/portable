@@ -44,13 +44,18 @@ export const NEW_VERSION_AVAILABLE_DATA = {
     "version": "1.6.1",
     "url": "https://github.com/kubevious/kubevious/releases/tag/v0.6",
     "changes": [
+        "Rule editor. Define custom rules to continuously validate Kubernetes cluster and apps configurations.",
+        "Marker editor. Associate custom markers to configurations using smart filters.",
         "Continuous diagram, properties alerts refresh upon changes.",
         "Frontend rewritten using React.",
         "Fixed issue related to preparing sql statements after connection restart. #12, #25",
         "Fixed issue related to DB initialization. #16",
+        "Fixed issue with timeline contents getting disappeared after window reopen. #17",
         "Fixed UI crash on startup. kubevious/helm#7",
     ],
     "features": [
+        "Rules editor",
+        "Markers editor",
         "Diagram autorefresh"
     ],
     "content": MD_CONTENT
