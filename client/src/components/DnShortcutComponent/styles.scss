@@ -15,10 +15,6 @@
         display: flex;
         align-items: center;
 
-        .marker {
-            margin-right: 10px;
-        }
-
         .indicator {
             display: flex;
             align-items: center;
@@ -41,6 +37,6 @@
     }
 
     &:hover {
-        background: #35373E;
+        background: #35373e;
     }
 }

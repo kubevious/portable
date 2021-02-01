@@ -6,30 +6,24 @@ import _ from 'the-lodash'
 
 import { GRAPH_DATA } from '../boot/diagramMockData'
 
-class MockWebSocketService
-{
-    constructor(state)
-    {
-        this.sharedState = state;
-        this._readGraphData();
+class MockWebSocketService {
+    constructor(state) {
+        this.sharedState = state
+        this._readGraphData()
     }
 
-    close()
-    {
-      
-    }
+    close() {}
 
-    _readGraphData()
-    {
-        this._nodeData = {};
-        this._nodeChildren = {};
+    _readGraphData() {
+        this._nodeData = {}
+        this._nodeChildren = {}
 
         var traverse = (parentDn, node) => {
-            var dn;
+            var dn
             if (parentDn) {
-                dn = parentDn + '/' + node.rn;
+                dn = parentDn + '/' + node.rn
             } else {
-                dn = node.rn;
+                dn = node.rn
             }
 
             var graphNode = {
@@ -40,85 +34,77 @@ class MockWebSocketService
                 order: node.order,
                 alertCount: node.alertCount,
                 flags: _.keys(node.flags),
-                markers: node.markers,
-                childrenCount: 0
-            };
+                childrenCount: 0,
+            }
 
-            this._nodeData[dn] = graphNode;
-            this._nodeChildren[dn] = [];
+            this._nodeData[dn] = graphNode
+            this._nodeChildren[dn] = []
 
             if (node.children) {
-                graphNode.childrenCount = node.children.length;
-                for(var childNode of node.children)
-                {
-                    var childNode = traverse(dn, childNode);
-                    for(var severity of _.keys(childNode.alertCount))
-                    {
+                graphNode.childrenCount = node.children.length
+                for (var childNode of node.children) {
+                    var childNode = traverse(dn, childNode)
+                    for (var severity of _.keys(childNode.alertCount)) {
                         if (graphNode.alertCount[severity]) {
-                            graphNode.alertCount[severity] += childNode.alertCount[severity];
+                            graphNode.alertCount[severity] +=
+                                childNode.alertCount[severity]
                         } else {
-                            graphNode.alertCount[severity] = childNode.alertCount[severity];
+                            graphNode.alertCount[severity] =
+                                childNode.alertCount[severity]
                         }
                     }
 
-                    this._nodeChildren[dn].push(childNode.dn);
+                    this._nodeChildren[dn].push(childNode.dn)
                 }
             }
-            return graphNode;
-        };
-        traverse(null, GRAPH_DATA);
+            return graphNode
+        }
+        traverse(null, GRAPH_DATA)
 
-        console.log("NODE DATA", this._nodeData);
-        console.log("NODE CHILDREN DATA", this._nodeChildren);
+        console.log('NODE DATA', this._nodeData)
+        console.log('NODE CHILDREN DATA', this._nodeChildren)
     }
 
-    scope(cb)
-    {
+    scope(cb) {
         return {
             replace: (subscriptions) => {
-                this._handleSubscriptions(subscriptions, cb);
-            }
+                this._handleSubscriptions(subscriptions, cb)
+            },
         }
     }
 
-    _handleSubscriptions(subscriptions, cb)
-    {
-        for(var x of subscriptions)
-        {
-            var item = this._getItem(x);
+    _handleSubscriptions(subscriptions, cb) {
+        for (var x of subscriptions) {
+            var item = this._getItem(x)
             if (item) {
-                cb(item.value, item.target);
+                cb(item.value, item.target)
             }
         }
     }
 
-    _getItem(subscription)
-    {
-        if(subscription.kind == 'node')
-        {
-            var value = this._nodeData[subscription.dn];
+    _getItem(subscription) {
+        if (subscription.kind == 'node') {
+            var value = this._nodeData[subscription.dn]
             if (!value) {
-                return;
+                return
             }
 
             return {
-                target: { dn: subscription.dn},
-                value: value
+                target: { dn: subscription.dn },
+                value: value,
             }
-        }
-        else if(subscription.kind == 'children')
-        {
-            var value = this._nodeChildren[subscription.dn];
+        } else if (subscription.kind == 'children') {
+            var value = this._nodeChildren[subscription.dn]
             if (!value) {
-                return;
+                return
             }
 
             return {
-                target: { dn: subscription.dn},
-                value: value
+                target: { dn: subscription.dn },
+                value: value,
             }
         }
     }
 }
 
-export default MockWebSocketService;
+export default MockWebSocketService

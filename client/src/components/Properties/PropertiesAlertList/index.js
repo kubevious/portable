@@ -13,11 +13,6 @@ class PropertiesAlertList extends BaseComponent {
         this.sharedState.set('auto_pan_to_selected_dn', true)
     }
 
-    openRule = (ruleName) => {
-        this.sharedState.set('rule_editor_selected_rule_id', ruleName)
-        this.sharedState.set('focus_rule_editor', true)
-    }
-
     configureAlerts() {
         const { config } = this.props
         let alerts = []
@@ -46,8 +41,7 @@ class PropertiesAlertList extends BaseComponent {
             <AlertView
                 alerts={parsedAlerts}
                 clickDn={this.clickDn}
-                openRule={this.openRule}
-                groupPreset="message"
+                groupPreset='message'
             />
         )
     }

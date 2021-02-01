@@ -7,9 +7,8 @@
     "start": "node dist/lib/index.ts",
     "server": "node dist/lib/index.js",
     "client": "cd ../client && npm start",
-    "parser": "node dist/parser/mock/index-mock",
     "client-mock": "npm run start-mock --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run parser\" \"npm run client\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "dev-mock": "concurrently \"npm run client-mock\"",
     "test": "mocha"
   },
