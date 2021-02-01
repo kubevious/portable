@@ -7,7 +7,6 @@ export LOG_TO_FILE=true
 export NODE_ENV=development
 export KUBECONFIG=~/.kube/config
 export KUBEVIOUS_ON_HOST=true
-export KUBEVIOUS_COLLECTOR=http://localhost:5001/api/v1/collect
 
 cd src
 npm run build

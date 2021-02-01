@@ -12,7 +12,6 @@ import { FacadeRegistry } from "./facade/registry";
 import { WorldviousClient } from "@kubevious/worldvious-client";
 
 import { LogicProcessor } from "./logic/processor";
-import { SnapshotReporter } from "./reporting/reporter";
 import { WebServer } from "./server";
 
 import VERSION from "./version";
@@ -25,7 +24,6 @@ export class Context {
   private _concreteRegistry: ConcreteRegistry;
   private _k8sParser: K8sParser;
   private _logicProcessor: LogicProcessor;
-  private _reporter: SnapshotReporter;
   private _facadeRegistry: FacadeRegistry;
   private _worldvious: WorldviousClient;
   private _server: WebServer;
@@ -40,7 +38,6 @@ export class Context {
     this._concreteRegistry = new ConcreteRegistry(this);
     this._k8sParser = new K8sParser(this);
     this._logicProcessor = new LogicProcessor(this);
-    this._reporter = new SnapshotReporter(this);
 
     this._facadeRegistry = new FacadeRegistry(this);
 
@@ -79,10 +76,6 @@ export class Context {
 
   get logicProcessor(): LogicProcessor {
     return this._logicProcessor;
-  }
-
-  get reporter(): SnapshotReporter {
-    return this._reporter;
   }
 
   get areLoadersReady(): boolean {

@@ -3,18 +3,12 @@ import { Promise } from "the-promise";
 import { ILogger } from "the-logger";
 
 import { Context } from "../context";
-import { CollectorSnapshotInfo } from "../collector/collector";
-import { RegistryState } from "@kubevious/helpers/dist/registry-state";
 import { RegistryBundleState } from "@kubevious/helpers/dist/registry-bundle-state";
 import { ProcessingTrackerScoper } from "@kubevious/helpers/dist/processing-tracker";
 
 export class FacadeRegistry {
   private _logger: ILogger;
   private _context: Context;
-
-  private _latestSnapshot: CollectorSnapshotInfo | null = null;
-  private _isProcessing: boolean = false;
-  private _isScheduled: boolean = false;
 
   constructor(context: Context) {
     this._context = context;
@@ -27,60 +21,6 @@ export class FacadeRegistry {
 
   get debugObjectLogger() {
     return this._context.debugObjectLogger;
-  }
-
-  acceptCurrentSnapshot(snapshotInfo: CollectorSnapshotInfo) {
-    this._latestSnapshot = snapshotInfo;
-    this._triggerProcess();
-  }
-
-  private _triggerProcess() {
-    this._logger.verbose("[_triggerProcess] Begin");
-
-    if (this._isScheduled) {
-      this._logger.verbose("[_triggerProcess] Timer scheduled...");
-      return;
-    }
-    if (this._isProcessing) {
-      this._logger.verbose("[_triggerProcess] Is Processing...");
-      return;
-    }
-
-    this._isScheduled = true;
-
-    this._context.backend.timer(5000, () => {
-      this._logger.verbose("[_triggerProcess] Timer Triggered...");
-
-      this._isScheduled = false;
-
-      if (!this._latestSnapshot) {
-        this._logger.verbose("[_triggerProcess] No Latest snapshot...");
-        return;
-      }
-      var snapshot = this._latestSnapshot;
-      this._latestSnapshot = null;
-      this._isProcessing = true;
-      return this._processCurrentSnapshot(snapshot)
-        .catch((reason) => {
-          this._logger.error("[_triggerProcess] failed: ", reason);
-        })
-        .finally(() => {
-          this._isProcessing = false;
-        });
-    });
-  }
-
-  private _processCurrentSnapshot(snapshotInfo: CollectorSnapshotInfo) {
-    return this._context.tracker.scope(
-      "FacadeRegistry::_processCurrentSnapshot",
-      (tracker) => {
-        return this._context.snapshotProcessor
-          .process(snapshotInfo, tracker)
-          .then((bundle) => {
-            return this._runFinalize(bundle, tracker);
-          });
-      }
-    );
   }
 
   private _runFinalize(
@@ -117,7 +57,6 @@ export class FacadeRegistry {
   }
 
   private _debugOutput(bundle: RegistryBundleState) {
-    return;
     return Promise.resolve().then(() => {
       const snapshotInfo = {
         date: bundle.date.toISOString(),

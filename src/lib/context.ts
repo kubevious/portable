@@ -1,5 +1,4 @@
 import _ from "the-lodash";
-import { ILogger } from "the-logger";
 import { Promise } from "the-promise";
 
 import { Backend, TimerFunction } from "@kubevious/helper-backend";
@@ -10,7 +9,6 @@ import { FacadeRegistry } from "./facade/registry";
 import { SearchEngine } from "./search/engine";
 import { AutocompleteBuilder } from "./search/autocomplete-builder";
 import { Registry } from "./registry/registry";
-import { Collector } from "./collector/collector";
 import { DebugObjectLogger } from "./utils/debug-object-logger";
 import { SnapshotProcessor } from "./snapshot-processor";
 import { NotificationsApp } from "./apps/notifications";
@@ -35,7 +33,6 @@ export class Context {
   private _websocket: WebSocket;
 
   private _searchEngine: SearchEngine;
-  private _collector: Collector;
   private _registry: Registry;
   private _autocompleteBuilder: AutocompleteBuilder;
 
@@ -59,7 +56,6 @@ export class Context {
     this._worldvious = new WorldviousClient(this.logger, "backend", VERSION);
 
     this._searchEngine = new SearchEngine(this);
-    this._collector = new Collector(this);
     this._registry = new Registry(this);
     this._autocompleteBuilder = new AutocompleteBuilder(this);
 
@@ -102,10 +98,6 @@ export class Context {
 
   get searchEngine() {
     return this._searchEngine;
-  }
-
-  get collector() {
-    return this._collector;
   }
 
   get registry() {
