@@ -27,6 +27,7 @@ class Header extends BaseComponent {
             showSettings: false,
             isLoading: false,
             hasNotifications: false,
+            cluster: null,
         }
 
         this.openAbout = this.openAbout.bind(this)
@@ -128,6 +129,10 @@ class Header extends BaseComponent {
             }
         )
 
+        this.subscribeToSharedState('selected_cluster', (selected_cluster) => {
+            this.setState({ cluster: selected_cluster })
+        })
+
         this.subscribeToSharedState('notifications_info', (info) => {
             const hasNotifications =
                 info && _.isNotNullOrUndefined(info.count) && info.count > 0
@@ -136,11 +141,39 @@ class Header extends BaseComponent {
     }
 
     render() {
-        const { showSettings, isLoading } = this.state
+        const { showSettings, isLoading, cluster } = this.state
 
         return (
             <div className='header'>
                 <a className='logo' href='/' />
+                <div className='selected-cluster'>
+                    {!cluster && (
+                        <div className='cluster'>
+                            <div
+                                className='not-selected-text'
+                                onClick={this.props.handleOpenCluster}
+                            >
+                                no cluster selected
+                            </div>
+                        </div>
+                    )}
+
+                    {cluster && (
+                        <div className='cluster'>
+                            <img
+                                className='cluster-logo'
+                                src={`/img/clusters/${cluster.kind}.svg`}
+                                alt={cluster.kind}
+                            />
+                            <div
+                                className='cluster-name'
+                                onClick={this.props.handleOpenCluster}
+                            >
+                                {cluster.name}
+                            </div>
+                        </div>
+                    )}
+                </div>
                 <div className='loading-icon'>
                     {isLoading && <FontAwesomeIcon icon={faSpinner} spin />}
                 </div>

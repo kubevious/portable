@@ -1,23 +1,23 @@
 import { ILogger } from "the-logger";
 import { Promise } from "the-promise";
 
-import { Backend } from "@kubevious/helper-backend";
-
 import { ProcessingTracker } from "@kubevious/helpers/dist/processing-tracker";
 
 import { ConcreteRegistry } from "./concrete/registry";
+import RemoteLoader from "./loaders/remote";
 
 import { K8sParser } from "./parsers/k8s";
 import { FacadeRegistry } from "./facade/registry";
 import { WorldviousClient } from "@kubevious/worldvious-client";
+import { DebugObjectLogger } from "./utils/debug-object-logger";
 
 import { LogicProcessor } from "./logic/processor";
 import { WebServer } from "./server";
 
-import VERSION from "./version";
+import VERSION from "../version";
 
 export class Context {
-  private _backend: Backend;
+  [x: string]: any;
   private _logger: ILogger;
   private _tracker: ProcessingTracker;
   private _loaders: any[] = [];
@@ -28,10 +28,13 @@ export class Context {
   private _worldvious: WorldviousClient;
   private _server: WebServer;
   private _areLoadersReady = false;
+  private _appContext: any;
+  private _loaderInfo: any;
 
-  constructor(backend: Backend) {
-    this._backend = backend;
-    this._logger = backend.logger.sublogger("Context");
+  constructor(logger: ILogger, appContext: any) {
+    this._logger = logger.sublogger("ParserContext");
+    this._appContext = appContext;
+    this._loaderInfo = null;
 
     this._tracker = new ProcessingTracker(this.logger.sublogger("Tracker"));
 
@@ -42,12 +45,9 @@ export class Context {
     this._facadeRegistry = new FacadeRegistry(this);
 
     this._worldvious = new WorldviousClient(this._logger, "parser", VERSION);
+    this._debugObjectLogger = new DebugObjectLogger(this);
 
     this._server = new WebServer(this);
-
-    this.backend.registerErrorHandler((reason) => {
-      return this.worldvious.acceptError(reason);
-    });
   }
 
   get backend() {
@@ -82,8 +82,20 @@ export class Context {
     return this._areLoadersReady;
   }
 
+  get debugObjectLogger() {
+    return this._debugObjectLogger;
+  }
+
+  get appContext() {
+    return this._appContext;
+  }
+
   get worldvious(): WorldviousClient {
     return this._worldvious;
+  }
+
+  init() {
+    return Promise.resolve().then(() => this.facadeRegistry.init());
   }
 
   addLoader(loader: any) {
@@ -149,5 +161,54 @@ export class Context {
       }
     }
     return true;
+  }
+
+  activateLoader(config: any) {
+    this._logger.debug("[activateLoader]", config);
+    //   var loader = new RemoteLoader(this, config);
+
+    //   this._loaderInfo = {
+    //       loader: loader
+    //   }
+
+    return (
+      Promise.resolve()
+        //   .then(() => this._loaderInfo.loader.run())
+        .then(() => {
+          return {
+            success: true,
+          };
+        })
+        .catch((reason) => {
+          this.logger.error("Error connecting: ", reason);
+          this.logger.error("Error connecting: ", reason.message);
+          var messages = ["Unknown"];
+          if (reason) {
+            if (reason.messages) {
+              messages = reason.messages;
+            } else if (reason.message) {
+              messages = [reason.message];
+            }
+          }
+          return {
+            success: false,
+            messages: messages,
+          };
+        })
+    );
+  }
+
+  stopLoaders() {
+    this._logger.debug("[stopLoaders]");
+    this._k8sClient = null;
+    //   if (this._loaderInfo) {
+    //       this._loaderInfo.loader.stop();
+    //       this.concreteRegistry.reset();
+    //       this._loaderInfo = null;
+    //   }
+  }
+
+  setupK8sClient(client: any) {
+    this._k8sClient = client;
   }
 }

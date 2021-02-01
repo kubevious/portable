@@ -1,11 +1,11 @@
 const yaml = require("js-yaml");
-const _ = require("the-lodash");
-const Promise = require("the-promise");
+import _ from "the-lodash";
+import { Promise } from "the-promise";
 const fs = require("fs").promises;
 const Path = require("path");
 const ClusterResolver = require("./resolver");
 
-class ClusterEngine {
+export default class ClusterEngine {
   constructor(context) {
     this._context = context;
     this._logger = context.logger.sublogger("ClusterEngine");
@@ -23,7 +23,7 @@ class ClusterEngine {
   }
 
   init() {
-    var configFilePath = process.env.KUBECONFIG || "~/.kube/config";
+    var configFilePath = process.env.KUBECONFIG || "/home/user/.kube/config";
     return this._loadConfigFile(configFilePath).then((data) => {
       return this._setConfig(data);
     });
@@ -74,7 +74,10 @@ class ClusterEngine {
   _buildClusterConfig(contextConfig, usersDict, clustersDict) {
     var config = {
       name: contextConfig.name,
-      cluster: clustersDict[contextConfig.context.cluster] || null,
+      cluster:
+        clustersDict[contextConfig.context.user] ||
+        clustersDict[contextConfig.context.cluster] ||
+        null,
       user: usersDict[contextConfig.context.user] || null,
       imageTag: null,
       toolMappings: {},

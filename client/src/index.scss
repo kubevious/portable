@@ -2,143 +2,163 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../ui.git/src/src/index.scss                                                                 ***/
 
-@import "styles/fonts";
+@import 'styles/fonts';
 
-h1, h2, h3, h4 {
-  font-family: 'Montserrat', sans-serif;
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'Montserrat', sans-serif;
 }
 
-html, body {
-  height: 100%;
-  background: #1E1E1E;
-  color: #FFF;
-  margin: 0;
+html,
+body {
+    height: 100%;
+    background: #1e1e1e;
+    color: #fff;
+    margin: 0;
 }
 
 div {
-  box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
 
-  &::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #666;
-  }
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: #666;
+    }
 
-  &::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-    background-color: #F5F5F5;
-  }
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+        background-color: #f5f5f5;
+    }
 
-  &::-webkit-scrollbar-thumb {
-    background-color: #f2a81c;
-  }
+    &::-webkit-scrollbar-thumb {
+        background-color: #f2a81c;
+    }
 }
 
 #root {
-  height: 100vh;
+    height: 100vh;
 }
 
 .button {
-  min-width: 100px;
-  height: 40px;
-  margin-right: 10px;
-  border: 1px solid #4E515B;
-  border-radius: 3px;
-  color: #4E515B;
-  background: #1E1E1E;
-  outline: none;
+    min-width: 100px;
+    height: 40px;
+    margin-right: 10px;
+    border: 1px solid #4e515b;
+    border-radius: 3px;
+    color: #4e515b;
+    background: #1e1e1e;
+    outline: none;
 }
 
 .button.square {
-  width: 40px;
-  height: 40px;
+    width: 40px;
+    height: 40px;
 }
 
 .button.success {
-  color: white;
-  background: #4ECD77;
+    color: white;
+    background: #4ecd77;
 }
 
 .button.light {
-  background: #557C9B;
-  color: white;
+    background: #557c9b;
+    color: white;
 }
 
 .button.light:disabled {
-  background: #45596c;
-  color: #9a9b9e;
+    background: #45596c;
+    color: #9a9b9e;
 }
 
 .button:hover {
-  color: white;
-  border: 1px solid white;
-  cursor: pointer;
+    color: white;
+    border: 1px solid white;
+    cursor: pointer;
 }
 
 .button.success:hover {
-  background: #249448;
-  border-color: #249448;
+    background: #249448;
+    border-color: #249448;
 }
 
 .button:disabled:hover {
-  cursor: not-allowed;
+    cursor: not-allowed;
 }
 
 .button:last-child {
-  margin-right: 0;
+    margin-right: 0;
 }
 
 .checkbox-container {
-  display: block;
-  position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .checkbox-container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
 }
 
 .checkmark {
-  position: absolute;
-  top: -3px;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #CCCCCC;
-  border: 5px solid #4E515B;
+    position: absolute;
+    top: -3px;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #cccccc;
+    border: 5px solid #4e515b;
 }
 
 .checkbox-container input:checked ~ .checkmark {
-  background-color: #4ECD77;
-  border: 5px solid #4E515B;
+    background-color: #4ecd77;
+    border: 5px solid #4e515b;
 }
 
 .checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
+    content: '';
+    position: absolute;
+    display: none;
 }
 
 .checkmark:hover {
-  background-color: #35373E;
+    background-color: #35373e;
 }
 
 .checkbox-container input:checked ~ .checkmark:hover {
-  background-color: #249448;
+    background-color: #249448;
 }
 
 .lm_drag_handle {
-  left: 0 !important;
+    left: 0 !important;
+}
+
+.btn-group {
+    display: flex;
+
+    button {
+        margin-right: 10px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
+input[type='file'] {
+    display: none;
 }

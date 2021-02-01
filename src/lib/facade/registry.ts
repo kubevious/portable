@@ -9,10 +9,17 @@ import { ProcessingTrackerScoper } from "@kubevious/helpers/dist/processing-trac
 export class FacadeRegistry {
   private _logger: ILogger;
   private _context: Context;
+  _configMap: {};
+  _latestSnapshot: ProcessingTrackerScoper | null;
+  private _processTimer!: NodeJS.Timeout | null;
+  private _isProcessing!: boolean;
 
   constructor(context: Context) {
     this._context = context;
     this._logger = context.logger.sublogger("FacadeRegistry");
+
+    this._configMap = {};
+    this._latestSnapshot = null;
   }
 
   get logger() {
@@ -21,6 +28,57 @@ export class FacadeRegistry {
 
   get debugObjectLogger() {
     return this._context.debugObjectLogger;
+  }
+
+  acceptCurrentSnapshot(snapshotInfo: ProcessingTrackerScoper) {
+    this._latestSnapshot = snapshotInfo;
+    this._triggerProcess();
+  }
+
+  _triggerProcess() {
+    this._logger.verbose("[_triggerProcess] Begin");
+
+    this._processTimer = setTimeout(() => {
+      this._logger.verbose("[_triggerProcess] Timer Triggered...");
+
+      this._processTimer = null;
+      if (!this._latestSnapshot) {
+        this._logger.verbose("[_triggerProcess] No Latest snapshot...");
+        return;
+      }
+      var snapshot = this._latestSnapshot;
+      this._latestSnapshot = null;
+      this._isProcessing = true;
+      return this._processCurrentSnapshot(snapshot)
+        .catch((reason) => {
+          this._logger.error("[_triggerProcess] failed: ", reason);
+        })
+        .finally(() => {
+          this._isProcessing = false;
+        });
+    }, 1000);
+
+    if (this._processTimer) {
+      this._logger.verbose("[_triggerProcess] Timer scheduled...");
+      return;
+    }
+    if (this._isProcessing) {
+      this._logger.verbose("[_triggerProcess] Is Processing...");
+      return;
+    }
+  }
+
+  _processCurrentSnapshot(snapshotInfo: ProcessingTrackerScoper) {
+    return this._context.tracker.scope(
+      "FacadeRegistry::_processCurrentSnapshot",
+      (tracker) => {
+        return this._context.snapshotProcessor
+          .process(snapshotInfo, tracker)
+          .then((result: any) => {
+            return this._runFinalize(result.bundle, tracker);
+          });
+      }
+    );
   }
 
   private _runFinalize(

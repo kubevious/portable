@@ -11,6 +11,7 @@ import BaseComponent from '../../HOC/BaseComponent'
 import SEO from '../SEO'
 import FieldsSaver from '../../utils/save-fields'
 import ErrorBox from '../ErrorBox'
+import ClusterScreen from '../ClusterScreen'
 
 class Root extends BaseComponent {
     constructor(props) {
@@ -23,6 +24,7 @@ class Root extends BaseComponent {
             windows: [],
             isError: false,
             error: null,
+            showClustersPopup: true,
         }
 
         this._fieldsSaver = new FieldsSaver('Diagram')
@@ -30,6 +32,8 @@ class Root extends BaseComponent {
         this.handleLayout = this.handleLayout.bind(this)
         this.handleChangeWindow = this.handleChangeWindow.bind(this)
         this.closeError = this.closeError.bind(this)
+        this.handleOpenCluster = this.handleOpenCluster.bind(this)
+        this.handleCloseClusters = this.handleCloseClusters.bind(this)
 
         this.subscribeToSharedState(
             [
@@ -127,9 +131,27 @@ class Root extends BaseComponent {
         })
     }
 
-    render() {
-        const { showPopup, popupContent, windows, isError, error } = this.state
+    handleOpenCluster() {
+        this.setState({ showClustersPopup: true })
+    }
 
+    handleCloseClusters() {
+        this.setState({
+            showClustersPopup: false,
+        })
+    }
+
+    render() {
+        const {
+            showPopup,
+            popupContent,
+            windows,
+            isError,
+            error,
+            showClustersPopup,
+        } = this.state
+
+        console.log(showClustersPopup)
         return (
             <>
                 <SEO />
@@ -153,8 +175,15 @@ class Root extends BaseComponent {
                 <div className='wrapper'>
                     <Header
                         handleChangeWindow={this.handleChangeWindow}
+                        handleOpenCluster={this.handleOpenCluster}
                         windows={windows}
                     />
+
+                    {showClustersPopup && (
+                        <ClusterScreen
+                            handleCloseClusters={this.handleCloseClusters}
+                        />
+                    )}
 
                     <GoldenLayoutComponent
                         diagramSource={this.diagramSource}

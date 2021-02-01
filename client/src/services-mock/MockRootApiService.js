@@ -4,40 +4,43 @@ import BaseRootApiService from '../BaseRootApiService'
 
 import DiagramService from './MockDiagramService'
 import WebSocketService from './MockWebSocketService'
-import MiscService from './MockMiscService';
+import MiscService from './MockMiscService'
+import ClustersService from './MockClustersService'
 
-class MockRootApiService extends BaseRootApiService
-{
-    constructor(sharedState)
-    {
-        super(sharedState);
+class MockRootApiService extends BaseRootApiService {
+    constructor(sharedState) {
+        super(sharedState)
 
-        this.registerService({kind: 'socket'}, () => {
-            return new WebSocketService(sharedState);
-        });
+        this.registerService({ kind: 'socket' }, () => {
+            return new WebSocketService(sharedState)
+        })
 
-        this.registerService({kind: 'diagram'}, ({info}) => {
-            return new DiagramService(sharedState);
-        });
+        this.registerService({ kind: 'diagram' }, ({ info }) => {
+            return new DiagramService(sharedState)
+        })
 
         this.registerService({ kind: 'misc' }, () => {
-            return new MiscService(this, sharedState);
-        });
+            return new MiscService(this, sharedState)
+        })
+
+        this.registerService({ kind: 'clusters' }, () => {
+            return new ClustersService(sharedState)
+        })
     }
-    
+
     socketService() {
-        return this.resolveService({kind: 'socket'});
+        return this.resolveService({ kind: 'socket' })
     }
 
     diagramService(params) {
-        var info;
+        var info
         if (params) {
-            info = _.clone(params);
+            info = _.clone(params)
         } else {
             info = {}
         }
-        info.kind = 'diagram';
-        return this.resolveService(info);
+        info.kind = 'diagram'
+        return this.resolveService(info)
     }
 
     miscService() {
@@ -46,4 +49,3 @@ class MockRootApiService extends BaseRootApiService
 }
 
 export default MockRootApiService
-

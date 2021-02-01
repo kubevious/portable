@@ -25,6 +25,11 @@ export class FacadeRegistry {
     return this._logger;
   }
 
+  init() {
+    this._context.concreteRegistry.onChanged(
+      this._handleConcreteRegistryChange.bind(this)
+    );
+  }
   acceptLogicItems(items: LogicItem[]) {
     this._logger.info("[acceptLogicItems] item count: %s", items.length);
     this._jobDampener.acceptJob(new Date(), items);

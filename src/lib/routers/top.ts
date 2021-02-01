@@ -1,7 +1,7 @@
 import _ from "the-lodash";
 import { Context } from "../context";
 import { Router } from "@kubevious/helper-backend";
-import VERSION from "../version";
+import VERSION from "../../version";
 
 export default function (router: Router, context: Context) {
   router.url("/");

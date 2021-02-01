@@ -1,7 +1,7 @@
-const Promise = require("the-promise");
+import { Promise } from "the-promise";
 const fs = require("fs");
 const Path = require("path");
-const _ = require("the-lodash");
+import _ from "the-lodash";
 
 const OS_DEFAULT = "default";
 const OS_MAC = "Mac OS X";
@@ -82,6 +82,7 @@ class ClusterResolver {
         if (this._isRunningOnHost) {
           return;
         }
+        console.log(this._config, _.startsWith(server, "https://127.0.0.1:"));
         var server = this._config.cluster.server;
         if (_.startsWith(server, "https://127.0.0.1:")) {
           this._config.cluster.server = server.replace(
