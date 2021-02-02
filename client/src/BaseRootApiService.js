@@ -47,7 +47,6 @@ class BaseRootApiService {
         }
         var svcInfo = this._servicesDict[info.kind]
         if (!svcInfo) {
-            console.log(this._servicesDict, info.kind)
             throw new Error('Unknown service: ' + info.kind)
         }
 

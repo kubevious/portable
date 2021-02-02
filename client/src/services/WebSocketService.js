@@ -16,7 +16,6 @@ class WebSocketService {
     }
 
     subscribe(target, cb) {
-        console.log('subscription')
         return this._socket.subscribe(target, (value) => {
             cb(value)
         })

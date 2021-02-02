@@ -157,7 +157,7 @@ export class Context {
   }
 
   run() {
-    // this._setupTracker();
+    this._setupTracker();
 
     return Promise.resolve()
       .then(() => this._clusterEngine.init())

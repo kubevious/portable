@@ -3,16 +3,26 @@ import { Context } from "../context";
 import { Router } from "@kubevious/helper-backend";
 import VERSION from "../../version";
 
-export default function (router: Router, context: Context) {
-  router.url("/");
+module.exports = {
+  url: "/",
 
-  router.get("/", (req, res) => {
-    return {};
-  });
+  setup: ({
+    router,
+    logger,
+    context,
+  }: {
+    router: Router;
+    logger?: any; //ILogger
+    context: Context;
+  }) => {
+    router.get("/", (req, res) => {
+      return {};
+    });
 
-  router.get("/api/v1/version", (req, res) => {
-    return {
-      version: VERSION,
-    };
-  });
-}
+    router.get("/api/v1/version", (req, res) => {
+      return {
+        version: VERSION,
+      };
+    });
+  },
+};

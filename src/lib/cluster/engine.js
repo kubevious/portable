@@ -23,7 +23,7 @@ export default class ClusterEngine {
   }
 
   init() {
-    var configFilePath = process.env.KUBECONFIG || "/home/user/.kube/config";
+    var configFilePath = process.env.KUBECONFIG || ".kube/config";
     return this._loadConfigFile(configFilePath).then((data) => {
       return this._setConfig(data);
     });

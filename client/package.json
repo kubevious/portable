@@ -8,7 +8,7 @@
         "@fortawesome/free-regular-svg-icons": "^5.15.1",
         "@fortawesome/free-solid-svg-icons": "^5.15.1",
         "@fortawesome/react-fontawesome": "^0.1.12",
-        "@kubevious/helpers": "^1.0.33",
+        "@kubevious/helpers": "^1.0.37",
         "axios": "^0.19.2",
         "bootstrap": "^4.5.0",
         "c3": "^0.7.20",

@@ -6,7 +6,7 @@ import _ from 'the-lodash'
 import 'golden-layout/src/css/goldenlayout-base.css'
 import 'golden-layout/src/css/goldenlayout-dark-theme.css'
 import GoldenLayout from 'golden-layout'
-import RegisterComponents from './register-components';
+import RegisterComponents from './register-components'
 
 import './styles.scss'
 
@@ -22,27 +22,29 @@ class GoldenLayoutComponent extends BaseComponent {
     }
 
     _activateLayout() {
-        var self = this;
+        var self = this
 
         this._layoutConfig = {
-            content: [{
-                type: 'column',
-                content: [
-                    {
-                        type: 'row',
-                        content: [
-                            {
-                                type: 'column',
-                                content: [
-                                    this._getLocationLayout('main'),
-                                    this._getLocationLayout('bottom')
-                                ]
-                            },
-                            this._getLocationLayout('right')
-                        ]
-                    }
-                ]
-            }]
+            content: [
+                {
+                    type: 'column',
+                    content: [
+                        {
+                            type: 'row',
+                            content: [
+                                {
+                                    type: 'column',
+                                    content: [
+                                        this._getLocationLayout('main'),
+                                        this._getLocationLayout('bottom'),
+                                    ],
+                                },
+                                this._getLocationLayout('right'),
+                            ],
+                        },
+                    ],
+                },
+            ],
         }
 
         this._layout = new GoldenLayout(this._layoutConfig, '#layoutContainer')
@@ -52,25 +54,27 @@ class GoldenLayoutComponent extends BaseComponent {
         }
 
         this._layout.on('componentCreated', (component) => {
-            self._triggerComponentResizeEvent(component);
+            self._triggerComponentResizeEvent(component)
 
-            let info = this._getComponent(component.config.component);
-            info.goldenComponent = component;
-            info.goldenContainer = component.container;
+            let info = this._getComponent(component.config.component)
+            info.goldenComponent = component
+            info.goldenContainer = component.container
 
             component.container.on('resize', function () {
-                self._triggerComponentResizeEvent(component);
-            });
-        });
+                self._triggerComponentResizeEvent(component)
+            })
+        })
 
         this._layout.on('tabCreated', (tab) => {
             var info = this._getComponent(tab.contentItem.config.component)
-            info.goldenTab = tab;
+            info.goldenTab = tab
 
             tab.closeElement.off('click').click((e) => {
-                const id = this._components.find(item => item.name === e.target.parentNode.title).id
-                this.hideComponent(id);
-            });
+                const id = this._components.find(
+                    (item) => item.name === e.target.parentNode.title
+                ).id
+                this.hideComponent(id)
+            })
         })
 
         this._layout.init()
@@ -78,8 +82,8 @@ class GoldenLayoutComponent extends BaseComponent {
         this.props.handleLayout(this)
 
         window.addEventListener('resize', () => {
-            this._layout.updateSize();
-        });
+            this._layout.updateSize()
+        })
     }
 
     _register(info) {
@@ -91,35 +95,37 @@ class GoldenLayoutComponent extends BaseComponent {
     }
 
     activateComponent(id) {
-        var info = this._getComponent(id);
+        var info = this._getComponent(id)
         if (!info || !info.goldenTab) {
-            return;
+            return
         }
 
-        var stack = info.goldenTab.contentItem.parent;
-        var stackComponent = _.head(stack.contentItems.filter(x => x.config.component === id));
+        var stack = info.goldenTab.contentItem.parent
+        var stackComponent = _.head(
+            stack.contentItems.filter((x) => x.config.component === id)
+        )
         if (stackComponent) {
-            stack.setActiveContentItem(stackComponent);
+            stack.setActiveContentItem(stackComponent)
         }
     }
 
     _getComponent(id) {
-        return _.filter(this._components, x => x.id === id)[0];
+        return _.filter(this._components, (x) => x.id === id)[0]
     }
 
     hideComponent(id) {
-        const info = this._getComponent(id);
-        info.goldenContainer.close();
+        const info = this._getComponent(id)
+        info.goldenContainer.close()
     }
 
     showComponent(id) {
-        const info = this._getComponent(id);
-        const componentLayout = this._getComponentLayout(info);
-        this._layout.root.contentItems[0].addChild(componentLayout);
+        const info = this._getComponent(id)
+        const componentLayout = this._getComponentLayout(info)
+        this._layout.root.contentItems[0].addChild(componentLayout)
     }
 
     _getLocationComponents(location) {
-        return _.filter(this._components, x => x.location === location)
+        return _.filter(this._components, (x) => x.location === location)
     }
 
     _getLocationLayout(location) {
@@ -132,13 +138,13 @@ class GoldenLayoutComponent extends BaseComponent {
         }
 
         var layout = {
-            type: 'stack'
+            type: 'stack',
         }
 
         if (location !== 'main') {
             layout.height = 20
         }
-        layout.content = _.map(components, x => this._getComponentLayout(x))
+        layout.content = _.map(components, (x) => this._getComponentLayout(x))
         return layout
     }
 
@@ -149,7 +155,7 @@ class GoldenLayoutComponent extends BaseComponent {
         layout.component = component.id
         layout.title = component.name
         layout.componentState = {}
-        layout.props = _.clone(this.props);
+        layout.props = _.clone(this.props)
         if (component.skipClose) {
             layout.isClosable = false
         }
@@ -160,7 +166,8 @@ class GoldenLayoutComponent extends BaseComponent {
             layout.height = component.height
         }
         if (component.allowVerticalScroll) {
-            layout.componentState.allowVerticalScroll = component.allowVerticalScroll
+            layout.componentState.allowVerticalScroll =
+                component.allowVerticalScroll
         }
         return layout
     }
@@ -173,18 +180,15 @@ class GoldenLayoutComponent extends BaseComponent {
         window.React = React
         window.ReactDOM = ReactDOM
 
-        return (
-            <div id="layoutContainer"/>
-        )
+        return <div id='layoutContainer' />
     }
 
     _triggerComponentResizeEvent(component) {
-        this._triggerEvent('layout-resize-' + component.config.component);
+        this._triggerEvent('layout-resize-' + component.config.component)
     }
 
     _triggerEvent(id) {
-        console.log('EVENT: ' + id);
-        $(document).trigger(id);
+        $(document).trigger(id)
     }
 }
 

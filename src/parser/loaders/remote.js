@@ -1,7 +1,7 @@
-import Promise, { resolve as _resolve } from "the-promise";
+import { resolve as _resolve, Promise } from "the-promise";
 import { trim, get, makeDict, isArray, defaults } from "the-lodash";
 import { connect } from "k8s-super-client";
-import K8sLoader from "./k8s";
+import { K8sLoader } from "./k8s";
 import { promises as fs } from "fs";
 import { basename } from "path";
 import { decode } from "base-64";
@@ -37,7 +37,7 @@ class RemoteLoader {
       httpAgent: {},
     };
 
-    return _resolve()
+    return Promise.resolve()
       .then(() => this._setup())
       .then(() => this._fetchEndpoint())
       .then((result) => {
@@ -86,7 +86,7 @@ class RemoteLoader {
   }
 
   _tryConnect(k8sConfig) {
-    return _resolve()
+    return Promise.resolve()
       .then(() => {
         this.logger.info("[run] Connecting to:", k8sConfig);
         return connect(this._logger, k8sConfig);
@@ -102,7 +102,7 @@ class RemoteLoader {
 
   _setup() {
     this.logger.info("[_setup] Config: ", this._config);
-    return _resolve();
+    return Promise.resolve();
   }
 
   _fetchEndpoint() {

@@ -19,7 +19,7 @@
   "dependencies": {
     "@kubevious/easy-data-store": "^1.0.9",
     "@kubevious/helper-backend": "^1.0.13",
-    "@kubevious/helpers": "^1.0.31",
+    "@kubevious/helpers": "^1.0.37",
     "@kubevious/kubik": "^1.0.5",
     "@kubevious/worldvious-client": "^1.0.6",
     "axios": "^0.19.2",

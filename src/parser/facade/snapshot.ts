@@ -21,7 +21,7 @@ export class Snapshot {
     return this._items;
   }
 
-  addItem(item: LogicItem) {
+  addItem(item: any) {
     this._items.push(item);
   }
 }

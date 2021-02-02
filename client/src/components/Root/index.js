@@ -151,7 +151,6 @@ class Root extends BaseComponent {
             showClustersPopup,
         } = this.state
 
-        console.log(showClustersPopup)
         return (
             <>
                 <SEO />

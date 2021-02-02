@@ -28,7 +28,7 @@ export class Context {
   private _worldvious: WorldviousClient;
   private _server: WebServer;
   private _areLoadersReady = false;
-  private _appContext: any;
+  _appContext: any;
   private _loaderInfo: any;
 
   constructor(logger: ILogger, appContext: any) {
@@ -165,47 +165,45 @@ export class Context {
 
   activateLoader(config: any) {
     this._logger.debug("[activateLoader]", config);
-    //   var loader = new RemoteLoader(this, config);
+    var loader = new RemoteLoader(this, config);
 
-    //   this._loaderInfo = {
-    //       loader: loader
-    //   }
+    this._loaderInfo = {
+      loader: loader,
+    };
 
-    return (
-      Promise.resolve()
-        //   .then(() => this._loaderInfo.loader.run())
-        .then(() => {
-          return {
-            success: true,
-          };
-        })
-        .catch((reason) => {
-          this.logger.error("Error connecting: ", reason);
-          this.logger.error("Error connecting: ", reason.message);
-          var messages = ["Unknown"];
-          if (reason) {
-            if (reason.messages) {
-              messages = reason.messages;
-            } else if (reason.message) {
-              messages = [reason.message];
-            }
+    return Promise.resolve()
+      .then(() => this._loaderInfo.loader.run())
+      .then((res) => {
+        return {
+          success: true,
+        };
+      })
+      .catch((reason) => {
+        this.logger.error("Error connecting: ", reason);
+        this.logger.error("Error connecting: ", reason.message);
+        var messages = ["Unknown"];
+        if (reason) {
+          if (reason.messages) {
+            messages = reason.messages;
+          } else if (reason.message) {
+            messages = [reason.message];
           }
-          return {
-            success: false,
-            messages: messages,
-          };
-        })
-    );
+        }
+        return {
+          success: false,
+          messages: messages,
+        };
+      });
   }
 
   stopLoaders() {
     this._logger.debug("[stopLoaders]");
     this._k8sClient = null;
-    //   if (this._loaderInfo) {
-    //       this._loaderInfo.loader.stop();
-    //       this.concreteRegistry.reset();
-    //       this._loaderInfo = null;
-    //   }
+    if (this._loaderInfo) {
+      this._loaderInfo.loader.stop();
+      this.concreteRegistry.reset();
+      this._loaderInfo = null;
+    }
   }
 
   setupK8sClient(client: any) {
