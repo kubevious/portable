@@ -1,110 +1,81 @@
-import _ from 'the-lodash';
-import { ConcreteItem } from '../../../concrete/item';
+import _ from "the-lodash";
+import { ConcreteItem } from "../../../concrete/item";
+import {
+  ConcreteParserInfo,
+  ConcreteTarget,
+  ConcreteProcessorHandlerArgs,
+  BaseParserBuilder,
+} from "../../../types";
 
-import { BaseParserInfo, BaseParserBuilder } from '../base/builder';
-
-import { ConcreteProcessorHandlerArgs } from './handler-args';
-
-export interface ConcreteParserInfo extends BaseParserInfo
-{
-    target: null | ConcreteTarget;
-
-    needAppScope?: boolean;
-    canCreateAppIfMissing? : boolean;
-    appNameCb?: (item : ConcreteItem) => string;
-
-    kind?: string | ((item: ConcreteItem) => string);
-
-    needNamespaceScope?: boolean;
-    namespaceNameCb? : (item : ConcreteItem) => string;
-
-    handler? : (args : ConcreteProcessorHandlerArgs) => void;
+export function ConcreteParser(): ConcreteParserBuilder {
+  return new ConcreteParserBuilder();
 }
 
-interface ConcreteTarget {
-    api: string,
-    kind: string
-}
+export class ConcreteParserBuilder implements BaseParserBuilder {
+  private _data: ConcreteParserInfo = {
+    targetKind: "concrete",
+    order: 0,
+    target: null,
+  };
 
-export function ConcreteParser() : ConcreteParserBuilder
-{
-    return new ConcreteParserBuilder();
-}
+  private _targets: (ConcreteTarget | null)[] = [];
 
-export class ConcreteParserBuilder implements BaseParserBuilder
-{
-    private _data : ConcreteParserInfo = {
-        targetKind: 'concrete',
-        order: 0,
-        target: null
-    };
+  constructor() {}
 
-    private _targets : (ConcreteTarget | null)[] = [];
+  target(value: null | ConcreteTarget) {
+    this._targets.push(value);
+    return this;
+  }
 
-    constructor()
-    {
-    }
+  order(value: number): ConcreteParserBuilder {
+    this._data.order = value;
+    return this;
+  }
 
-    target(value : null | ConcreteTarget)
-    {
-        this._targets.push(value);
-        return this;
-    }
+  needAppScope(value: boolean): ConcreteParserBuilder {
+    this._data.needAppScope = value;
+    return this;
+  }
 
-    order(value : number) : ConcreteParserBuilder
-    {
-        this._data.order = value;
-        return this;
-    }
+  canCreateAppIfMissing(value: boolean): ConcreteParserBuilder {
+    this._data.canCreateAppIfMissing = value;
+    return this;
+  }
 
-    needAppScope(value : boolean) : ConcreteParserBuilder
-    {
-        this._data.needAppScope = value;
-        return this;
-    }
+  appNameCb(value: (item: ConcreteItem) => string): ConcreteParserBuilder {
+    this._data.appNameCb = value;
+    return this;
+  }
 
-    canCreateAppIfMissing(value : boolean) : ConcreteParserBuilder
-    {
-        this._data.canCreateAppIfMissing = value;
-        return this;
-    }
+  kind(
+    value: string | ((item: ConcreteItem) => string)
+  ): ConcreteParserBuilder {
+    this._data.kind = value;
+    return this;
+  }
 
-    appNameCb(value : (item : ConcreteItem) => string) : ConcreteParserBuilder
-    {
-        this._data.appNameCb = value;
-        return this;
-    }
+  needNamespaceScope(value: boolean): ConcreteParserBuilder {
+    this._data.needNamespaceScope = value;
+    return this;
+  }
 
-    kind(value : string | ((item: ConcreteItem) => string)) : ConcreteParserBuilder
-    {
-        this._data.kind = value;
-        return this;
-    }
+  namespaceNameCb(
+    value: (item: ConcreteItem) => string
+  ): ConcreteParserBuilder {
+    this._data.namespaceNameCb = value;
+    return this;
+  }
 
-    needNamespaceScope(value : boolean) : ConcreteParserBuilder
-    {
-        this._data.needNamespaceScope = value;
-        return this;
-    }
+  handler(value: (args: ConcreteProcessorHandlerArgs) => void) {
+    this._data.handler = value;
+    return this;
+  }
 
-    namespaceNameCb(value : (item : ConcreteItem) => string) : ConcreteParserBuilder
-    {
-        this._data.namespaceNameCb = value;
-        return this;
-    }
-
-    handler(value : (args : ConcreteProcessorHandlerArgs) => void)
-    {
-        this._data.handler = value;
-        return this;
-    }
-
-    _extract() : ConcreteParserInfo[]
-    {
-        return this._targets.map(target => {
-            let data = _.clone(this._data);
-            data.target = target;
-            return data;
-        });
-    }
+  _extract(): ConcreteParserInfo[] {
+    return this._targets.map((target) => {
+      let data = _.clone(this._data);
+      data.target = target;
+      return data;
+    });
+  }
 }

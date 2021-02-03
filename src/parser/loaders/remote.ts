@@ -8,23 +8,7 @@ import { basename } from "path";
 import { decode } from "base-64";
 import { exec } from "child_process";
 import { Context } from "../context";
-
-export interface k8sConfig {
-  server: {} | null;
-  token: string | null;
-  httpAgent: {
-    ca?: string;
-    cert?: string;
-    key?: string;
-    rejectUnauthorized?: boolean;
-    servername?: string;
-  };
-}
-
-export interface options {
-  timeout?: number;
-  env?: {};
-}
+import { K8sConfig, Options } from "../../lib/types";
 
 class RemoteLoader {
   private _readyHandler?: ReadyHandler;
@@ -62,7 +46,7 @@ class RemoteLoader {
 
     this._errorMessages = [];
 
-    var k8sConfig: k8sConfig = {
+    var k8sConfig: K8sConfig = {
       server: null,
       token: null,
       httpAgent: {},
@@ -116,7 +100,7 @@ class RemoteLoader {
     }
   }
 
-  _tryConnect(k8sConfig: k8sConfig) {
+  _tryConnect(k8sConfig: K8sConfig) {
     return Promise.resolve()
       .then(() => {
         this.logger.info("[run] Connecting to:", k8sConfig);
@@ -226,7 +210,7 @@ class RemoteLoader {
     });
   }
 
-  _finalizeSetup(k8sConfig: k8sConfig) {
+  _finalizeSetup(k8sConfig: K8sConfig) {
     if (this._config.cluster["insecure-skip-tls-verify"]) {
       k8sConfig.httpAgent.rejectUnauthorized = false;
     }
@@ -260,7 +244,7 @@ class RemoteLoader {
     args: string,
     envDict?: {}
   ): Promise<string> {
-    var options: options = {};
+    var options: Options = {};
     options.timeout = 20 * 1000;
     if (_.isArray(args)) {
       args = args.join(" ");

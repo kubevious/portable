@@ -1,11 +1,6 @@
 import { Router } from "@kubevious/helper-backend/dist";
 import { Context } from "../context";
-import Joi from "joi";
-
-export interface ValueQuery {
-  key: string;
-  criteria: string;
-}
+import { ValueQuery } from "../types";
 
 module.exports = {
   url: "/api/v1/search",

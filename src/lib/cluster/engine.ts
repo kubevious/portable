@@ -3,37 +3,9 @@ import { ILogger } from "the-logger";
 import _ from "the-lodash";
 import { Promise } from "the-promise";
 import { Context } from "../context";
+import { Cluster, Config, K8config, Body } from "../types";
 const fs = require("fs").promises;
 const ClusterResolver = require("./resolver");
-
-export interface Config {
-  contexts?: [];
-  clusters?: [];
-  users?: [];
-}
-
-export interface Cluster {
-  name?: string;
-  kind?: string;
-  ready?: boolean;
-}
-
-export interface k8config {
-  name: any;
-  cluster: any;
-  user: any;
-  imageTag: null;
-  toolMappings: {};
-  kind: string;
-}
-
-export interface body {
-  config: string;
-  username: string;
-  password: string;
-  remember: boolean;
-  title: string;
-}
 
 export default class ClusterEngine {
   private _context: Context;
@@ -133,7 +105,7 @@ export default class ClusterEngine {
     });
   }
 
-  _determineKind(config: k8config) {
+  _determineKind(config: K8config) {
     const url = new URL(config.cluster.server);
 
     if (config.name == "docker-for-desktop") {
@@ -181,7 +153,7 @@ export default class ClusterEngine {
       });
   }
 
-  createConfig(data: body) {
+  createConfig(data: Body) {
     const configData: Config | {} = yaml.safeLoad(data.config) || {};
     return this._setConfig(configData).then(() => ({
       clusters: this._clustersList,

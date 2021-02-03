@@ -2,21 +2,20 @@ import Path from "path";
 import { ILogger } from "the-logger";
 import { Server } from "@kubevious/helper-backend";
 import { Context } from "../context";
-import express from "express";
+import express, { Express } from "express";
 import { Promise } from "the-promise";
 import morgan from "morgan";
 import fs from "fs";
-
-export interface Helpers {}
+import { Helpers } from "../../parser/logic/helpers";
 
 export class WebServer {
   private _logger: ILogger;
   private server: Server<Context, Helpers>;
   private helpers: Helpers;
-  _httpServer: any;
-  _isDev: any;
-  _app: any;
-  _context: any;
+  private _httpServer: any;
+  private _isDev: boolean;
+  private _app: Express;
+  private _context: Context;
 
   constructor(context: Context, port?: any) {
     this._port = port || 5001;
@@ -25,7 +24,7 @@ export class WebServer {
     this._app = express();
     this._httpServer = null;
     this._isDev = process.env.NODE_ENV === "development";
-    this.helpers = {};
+    this.helpers = new Helpers();
     this.server = new Server(
       this.logger,
       context,
@@ -54,7 +53,7 @@ export class WebServer {
 
     this._loadRouters();
 
-    this._app.use((req: any, res: any, next: any) => {
+    this._app.use((req, res, next) => {
       const body = {
         message: "Not Found",
         status: 404,
@@ -94,33 +93,33 @@ export class WebServer {
     }
   }
 
-  _loadRouter(name: any) {
+  _loadRouter(name: string) {
     this.logger.info("Loading router %s...", name);
     const routerModule = require("../routers/" + name);
 
     const router = express.Router();
 
     const wrappedRouter = {
-      get: (url: any, handler: any) => {
-        router.get(url, (req: any, res: any) => {
+      get: (url: string, handler: any) => {
+        router.get(url, (req, res) => {
           this._handleRoute(req, res, handler);
         });
       },
 
-      post: (url: any, handler: any) => {
-        router.post(url, (req: any, res: any) => {
+      post: (url: string, handler: any) => {
+        router.post(url, (req, res) => {
           this._handleRoute(req, res, handler);
         });
       },
 
-      put: (url: any, handler: any) => {
-        router.put(url, (req: any, res: any) => {
+      put: (url: string, handler: any) => {
+        router.put(url, (req, res) => {
           this._handleRoute(req, res, handler);
         });
       },
 
-      delete: (url: any, handler: any) => {
-        router.delete(url, (req: any, res: any) => {
+      delete: (url: string, handler: any) => {
+        router.delete(url, (req, res) => {
           this._handleRoute(req, res, handler);
         });
       },
@@ -131,10 +130,10 @@ export class WebServer {
       router: wrappedRouter,
       app: this._app,
       context: this._context,
-      reportError: (statusCode: any, message: any) => {
+      reportError: (statusCode: number, message: string) => {
         throw new RouterError(message, statusCode);
       },
-      reportUserError: (message: any) => {
+      reportUserError: (message: string) => {
         throw new RouterError(message, 400);
       },
     };
@@ -185,13 +184,13 @@ export class WebServer {
 }
 
 class RouterError extends Error {
-  statusCode(statusCode: any) {
+  statusCode() {
     throw new Error("Method not implemented.");
   }
-  constructor(message: any, statusCode: any) {
+  constructor(message: string, statusCode: number) {
     super(message);
     this.name = this.constructor.name;
     Error.captureStackTrace(this, this.constructor);
-    this.statusCode = statusCode;
+    this.statusCode();
   }
 }

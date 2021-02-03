@@ -1,25 +1,7 @@
-import { ILogger } from "the-logger";
-import { Context } from "../context";
-import { ProcessingTrackerScoper } from "@kubevious/helpers/dist/processing-tracker";
-import { RegistryState } from "@kubevious/helpers/dist/registry-state";
+import { ProcessorInfo, Handler } from "../types";
 
 export function Processor(): ProcessorBuilder {
   return new ProcessorBuilder();
-}
-
-export interface HandlerArgs {
-  logger: ILogger;
-  state: RegistryState;
-  tracker: ProcessingTrackerScoper;
-  context: Context;
-}
-
-export type Handler = (args: HandlerArgs) => any;
-
-export interface ProcessorInfo {
-  order: number;
-  isDisabled: boolean;
-  handler?: Handler;
 }
 
 export class ProcessorBuilder {

@@ -7,20 +7,17 @@ import * as Path from "path";
 
 import { RegistryState } from "@kubevious/helpers/dist/registry-state";
 import { RegistryBundleState } from "@kubevious/helpers/dist/registry-bundle-state";
-import {
-  ProcessorBuilder,
-  ProcessorInfo,
-  Handler as ProcessorHandler,
-} from "./builder";
+import { ProcessorBuilder } from "./builder";
 import { Snapshot } from "../../parser/facade/snapshot";
 
 import { Context } from "../context";
 import { ProcessingTrackerScoper } from "@kubevious/helpers/dist/processing-tracker";
+import { Handler } from "../types";
 
 interface ProcessorEntry {
   name: string;
   order: number;
-  handler: ProcessorHandler;
+  handler: Handler;
 }
 
 export class SnapshotProcessor {

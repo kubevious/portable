@@ -1,63 +1,58 @@
-import _ from 'the-lodash';
-import { ILogger } from 'the-logger';
-import { PropertyValueWithUnit } from '../helpers/resources';
+import _ from "the-lodash";
+import { ILogger } from "the-logger";
+import { PropertyValueWithUnit } from "../../../lib/types";
 
-import { ItemsScope } from './items';
+import { ItemsScope } from "./items";
 
-export class InfraScope
-{
-    private _parent : any;
-    private _logger : ILogger;
+export class InfraScope {
+  private _parent: any;
+  private _logger: ILogger;
 
-    private _items : ItemsScope;
+  private _items: ItemsScope;
 
-    private _nodeCount = 0;
-    private _nodeResources : Record<string, PropertyValueWithUnit> = {};
-    private _clusterResources : Record<string, PropertyValueWithUnit> = {};
+  private _nodeCount = 0;
+  private _nodeResources: Record<string, PropertyValueWithUnit> = {};
+  private _clusterResources: Record<string, PropertyValueWithUnit> = {};
 
-    constructor(parent: any)
-    {
-        this._parent = parent;
-        this._logger = parent.logger;
-        this._nodeCount = 0
-        this._nodeResources = {};
-        this._clusterResources = {};
+  constructor(parent: any) {
+    this._parent = parent;
+    this._logger = parent.logger;
+    this._nodeCount = 0;
+    this._nodeResources = {};
+    this._clusterResources = {};
 
-        this._items = new ItemsScope(this);
-    }
+    this._items = new ItemsScope(this);
+  }
 
-    get logger() {
-        return this._logger;
-    }
+  get logger() {
+    return this._logger;
+  }
 
-    get nodeCount() {
-        return this._nodeCount;
-    }
+  get nodeCount() {
+    return this._nodeCount;
+  }
 
-    get clusterResources() {
-        return this._clusterResources;
-    }
+  get clusterResources() {
+    return this._clusterResources;
+  }
 
-    get nodeResources() {
-        return this._nodeResources;
-    }
+  get nodeResources() {
+    return this._nodeResources;
+  }
 
-    get items() {
-        return this._items;
-    }
+  get items() {
+    return this._items;
+  }
 
-    increaseNodeCount()
-    {
-        this._nodeCount += 1;
-    }
+  increaseNodeCount() {
+    this._nodeCount += 1;
+  }
 
-    setClusterResources(value: Record<string, PropertyValueWithUnit>)
-    {
-        this._clusterResources = value;
-    }
+  setClusterResources(value: Record<string, PropertyValueWithUnit>) {
+    this._clusterResources = value;
+  }
 
-    setNodeResources(value: Record<string, PropertyValueWithUnit>)
-    {
-        this._nodeResources = value;
-    }
+  setNodeResources(value: Record<string, PropertyValueWithUnit>) {
+    this._nodeResources = value;
+  }
 }
