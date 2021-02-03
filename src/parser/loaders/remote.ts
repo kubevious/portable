@@ -1,20 +1,44 @@
-import { resolve as _resolve, Promise } from "the-promise";
-import { trim, get, makeDict, isArray, defaults } from "the-lodash";
-import { connect } from "k8s-super-client";
-import { K8sLoader } from "./k8s";
+import { Promise } from "the-promise";
+import { ILogger } from "the-logger";
+import _ from "the-lodash";
+const K8sClient = require("k8s-super-client");
+import { K8sLoader, ReadyHandler } from "./k8s";
 import { promises as fs } from "fs";
 import { basename } from "path";
 import { decode } from "base-64";
 import { exec } from "child_process";
+import { Context } from "../context";
+
+export interface k8sConfig {
+  server: {} | null;
+  token: string | null;
+  httpAgent: {
+    ca?: string;
+    cert?: string;
+    key?: string;
+    rejectUnauthorized?: boolean;
+    servername?: string;
+  };
+}
+
+export interface options {
+  timeout?: number;
+  env?: {};
+}
 
 class RemoteLoader {
-  constructor(context, config) {
+  private _readyHandler?: ReadyHandler;
+  private _context: Context;
+  private _logger: ILogger;
+  private _loader: any;
+  private _config: any;
+  private _errorMessages: string[];
+  constructor(context: Context, config: any) {
     this._context = context;
     this._logger = context.logger.sublogger("RemoteLoader");
     this._loader = null;
     this._config = config;
     this._errorMessages = [];
-
     this.logger.info("Constructed");
   }
 
@@ -26,12 +50,19 @@ class RemoteLoader {
     return this._errorMessages;
   }
 
+  setupReadyHandler(handler: ReadyHandler) {
+    this._readyHandler = handler;
+    if (this._loader) {
+      this._loader.setupReadyHandler(this._readyHandler);
+    }
+  }
+
   run() {
     this.logger.info("[run] ", this._config);
 
     this._errorMessages = [];
 
-    var k8sConfig = {
+    var k8sConfig: k8sConfig = {
       server: null,
       token: null,
       httpAgent: {},
@@ -85,11 +116,11 @@ class RemoteLoader {
     }
   }
 
-  _tryConnect(k8sConfig) {
+  _tryConnect(k8sConfig: k8sConfig) {
     return Promise.resolve()
       .then(() => {
         this.logger.info("[run] Connecting to:", k8sConfig);
-        return connect(this._logger, k8sConfig);
+        return K8sClient.connect(this._logger, k8sConfig);
       })
       .then((client) => {
         var info = {
@@ -149,8 +180,8 @@ class RemoteLoader {
           ).then((result) => {
             var doc = JSON.parse(result);
             var tokenKey = authConfig["token-key"];
-            tokenKey = trim(tokenKey, "{}.");
-            var token = get(doc, tokenKey);
+            tokenKey = _.trim(tokenKey, "{}.");
+            var token = _.get(doc, tokenKey);
             return token;
           });
         }
@@ -186,7 +217,7 @@ class RemoteLoader {
     return null;
   }
 
-  _readFromFile(filePath) {
+  _readFromFile(filePath: string) {
     this.logger.info("Loading from: %s", filePath);
     return fs.readFile(filePath, "utf8").catch((reason) => {
       this.logger.error("Failed to load from: %s. Details: ", filePath, reason);
@@ -195,7 +226,7 @@ class RemoteLoader {
     });
   }
 
-  _finalizeSetup(k8sConfig) {
+  _finalizeSetup(k8sConfig: k8sConfig) {
     if (this._config.cluster["insecure-skip-tls-verify"]) {
       k8sConfig.httpAgent.rejectUnauthorized = false;
     }
@@ -205,7 +236,7 @@ class RemoteLoader {
     }
   }
 
-  _executeTool(toolPath, args, envArray) {
+  _executeTool(toolPath: string, args: string, envArray?: []) {
     var toolName;
     if (this._config.toolMappings[toolPath]) {
       toolName = this._config.toolMappings[toolPath];
@@ -215,7 +246,7 @@ class RemoteLoader {
 
     var envDict = {};
     if (envArray) {
-      envDict = makeDict(
+      envDict = _.makeDict(
         envArray,
         (x) => x.name,
         (x) => x.value
@@ -224,10 +255,14 @@ class RemoteLoader {
     return this._executeCommand(toolName, args, envDict);
   }
 
-  _executeCommand(program, args, envDict) {
-    var options = {};
+  _executeCommand(
+    program: string,
+    args: string,
+    envDict?: {}
+  ): Promise<string> {
+    var options: options = {};
     options.timeout = 20 * 1000;
-    if (isArray(args)) {
+    if (_.isArray(args)) {
       args = args.join(" ");
     }
     var cmd = program;
@@ -235,7 +270,7 @@ class RemoteLoader {
       cmd = program + " " + args;
     }
     if (envDict) {
-      envDict = defaults(envDict, process.env);
+      envDict = _.defaults(envDict, process.env);
       options.env = envDict;
     }
     this.logger.info("[_executeCommand] running: %s, options:", cmd, options);
