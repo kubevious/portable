@@ -9,5 +9,5 @@ docker build \
     --build-arg INSTALL_AWS=true \
     --build-arg INSTALL_GCLOUD=true \
     --build-arg INSTALL_DO=true \
-    -t kubevious/portable:dev \
+    -t kubevious/portable \
     .
