@@ -1,16 +1,49 @@
-const yaml = require("js-yaml");
+import yaml from "js-yaml";
+import { ILogger } from "the-logger";
 import _ from "the-lodash";
 import { Promise } from "the-promise";
+import { Context } from "../context";
 const fs = require("fs").promises;
-const Path = require("path");
 const ClusterResolver = require("./resolver");
 
+export interface Config {
+  contexts?: [];
+  clusters?: [];
+  users?: [];
+}
+
+export interface Cluster {
+  name?: string;
+  kind?: string;
+  ready?: boolean;
+}
+
+export interface k8config {
+  name: any;
+  cluster: any;
+  user: any;
+  imageTag: null;
+  toolMappings: {};
+  kind: string;
+}
+
+export interface body {
+  config: string;
+  username: string;
+  password: string;
+  remember: boolean;
+  title: string;
+}
+
 export default class ClusterEngine {
-  constructor(context) {
+  private _context: Context;
+  private _logger: ILogger;
+  private _clustersDict: Record<string | number, any>;
+  private _clustersList: Cluster[];
+  private _selectedClusterConfig: Cluster | null;
+  constructor(context: Context) {
     this._context = context;
     this._logger = context.logger.sublogger("ClusterEngine");
-    this._token = null;
-    this._caData = null;
 
     this._clustersDict = {};
     this._clustersList = [];
@@ -23,13 +56,13 @@ export default class ClusterEngine {
   }
 
   init() {
-    var configFilePath = process.env.KUBECONFIG || ".kube/config";
-    return this._loadConfigFile(configFilePath).then((data) => {
+    var configFilePath = process.env.KUBECONFIG || "~/.kube/config";
+    return this._loadConfigFile(configFilePath).then((data: Config) => {
       return this._setConfig(data);
     });
   }
 
-  _setConfig(config) {
+  _setConfig(config: Config) {
     return Promise.resolve()
       .then(() => {
         config = config || {};
@@ -62,7 +95,8 @@ export default class ClusterEngine {
         );
       })
       .then(() => {
-        this._clustersList = _.values(this._clustersDict).map((x) => ({
+        this._clustersList = _.values(this._clustersDict).map((x: any) => ({
+          // Cluster
           name: x.name,
           kind: x.kind,
           ready: x.ready,
@@ -71,7 +105,11 @@ export default class ClusterEngine {
       });
   }
 
-  _buildClusterConfig(contextConfig, usersDict, clustersDict) {
+  _buildClusterConfig(
+    contextConfig: any,
+    usersDict: Record<string | number, any>,
+    clustersDict: Record<string | number, any>
+  ) {
     var config = {
       name: contextConfig.name,
       cluster:
@@ -81,12 +119,13 @@ export default class ClusterEngine {
       user: usersDict[contextConfig.context.user] || null,
       imageTag: null,
       toolMappings: {},
+      kind: "", // "docker" | "minikube" | "aks" | "gcp" | "do" | "aws" | "k8s"
     };
     config.kind = this._determineKind(config);
     return config;
   }
 
-  _processCluster(clusterConfig) {
+  _processCluster(clusterConfig: Record<string | number, any>) {
     this.logger.info("[_processCluster] ", clusterConfig);
     var resolver = new ClusterResolver(this.logger, clusterConfig);
     return resolver.resolve().then(() => {
@@ -94,7 +133,7 @@ export default class ClusterEngine {
     });
   }
 
-  _determineKind(config) {
+  _determineKind(config: k8config) {
     const url = new URL(config.cluster.server);
 
     if (config.name == "docker-for-desktop") {
@@ -127,14 +166,14 @@ export default class ClusterEngine {
     return "k8s";
   }
 
-  _loadConfigFile(fileName) {
+  _loadConfigFile(fileName: string) {
     return fs
       .readFile(fileName, "utf8")
-      .then((content) => {
+      .then((content: string) => {
         const doc = yaml.safeLoad(content);
         return doc;
       })
-      .catch((reason) => {
+      .catch((reason: string) => {
         this.logger.error("Failed to load %s. Details: ", fileName, reason);
         console.log("Make sure that ~/.kube/config file is properly mounted.");
         console.log("Visit https://github.com/kubevious/portable for details");
@@ -142,8 +181,8 @@ export default class ClusterEngine {
       });
   }
 
-  createConfig(data) {
-    const configData = yaml.safeLoad(data.config);
+  createConfig(data: body) {
+    const configData: Config | {} = yaml.safeLoad(data.config) || {};
     return this._setConfig(configData).then(() => ({
       clusters: this._clustersList,
       success: true,
@@ -154,7 +193,7 @@ export default class ClusterEngine {
     return this._clustersList;
   }
 
-  fetchDetails(name) {
+  fetchDetails(name: string) {
     var clusterConfig = this._clustersDict[name];
     if (!clusterConfig) {
       return null;
@@ -165,6 +204,7 @@ export default class ClusterEngine {
       kind: clusterConfig.kind,
       ready: clusterConfig.ready,
       messages: clusterConfig.messages,
+      runCommands: {},
     };
 
     if (!clusterConfig.ready) {
@@ -174,7 +214,7 @@ export default class ClusterEngine {
     return details;
   }
 
-  _generateRunCommands(clusterConfig) {
+  _generateRunCommands(clusterConfig: Record<string | number, any>) {
     var mappings = {
       "/root/.kube/config": {
         needWrite: false,
@@ -205,7 +245,11 @@ export default class ClusterEngine {
     return commands;
   }
 
-  _generateRunCommandForOS(os, mappings, clusterConfig) {
+  _generateRunCommandForOS(
+    os: string,
+    mappings: any,
+    clusterConfig: Record<string | number, any>
+  ) {
     var separator = "\\";
     if (os == ClusterResolver.OS_WIN) {
       separator = "^";
@@ -249,7 +293,7 @@ export default class ClusterEngine {
     return null;
   }
 
-  setActiveCluster(clusterName) {
+  setActiveCluster(clusterName: string) {
     var config = this._clustersDict[clusterName] || null;
     if (!config) {
       return {
