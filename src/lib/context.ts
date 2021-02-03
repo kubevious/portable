@@ -47,8 +47,8 @@ export class Context {
   private _seriesResamplerHelper: SeriesResampler;
 
   private _notificationsApp: NotificationsApp;
-  _clusterEngine: ClusterEngine;
-  _parserContext: any;
+  private _clusterEngine: ClusterEngine;
+  private _parserContext: ParserContext;
 
   constructor(backend: Backend) {
     this._backend = backend;
