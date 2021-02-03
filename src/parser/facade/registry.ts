@@ -67,12 +67,12 @@ export class FacadeRegistry {
       items.length
     );
     var snapshot = this._transformItems(date, items);
-    return this._context._appContext.facadeRegistry.acceptCurrentSnapshot(
+    return this._context.appContext.facadeRegistry.acceptCurrentSnapshot(
       snapshot
     );
   }
 
-  _transformItems(date: Date, items: LogicItem[]) {
+  _transformItems(date: Date, items: LogicItem[]): Snapshot {
     var snapshot = new Snapshot(date);
 
     for (var item of items) {

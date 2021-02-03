@@ -1,6 +1,6 @@
 import { ILogger } from "the-logger";
 import { Context } from "../context";
-import { ProcessingTracker } from "@kubevious/helpers/dist/processing-tracker";
+import { ProcessingTrackerScoper } from "@kubevious/helpers/dist/processing-tracker";
 import { RegistryState } from "@kubevious/helpers/dist/registry-state";
 
 export function Processor(): ProcessorBuilder {
@@ -10,7 +10,7 @@ export function Processor(): ProcessorBuilder {
 export interface HandlerArgs {
   logger: ILogger;
   state: RegistryState;
-  tracker: ProcessingTracker;
+  tracker: ProcessingTrackerScoper;
   context: Context;
 }
 

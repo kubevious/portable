@@ -12,6 +12,7 @@ import {
   ProcessorInfo,
   Handler as ProcessorHandler,
 } from "./builder";
+import { Snapshot } from "../../parser/facade/snapshot";
 
 import { Context } from "../context";
 import { ProcessingTrackerScoper } from "@kubevious/helpers/dist/processing-tracker";
@@ -78,45 +79,63 @@ export class SnapshotProcessor {
     }
   }
 
-  process(tracker: ProcessingTrackerScoper, extraParams?: any) {
-    return tracker.scope("SnapshotProcessor::process", (innerTracker) => {
-      var registryState: RegistryState | null = null;
-      var bundle: RegistryBundleState | null = null;
-      return Promise.resolve()
-        .then(() =>
-          this._runProcessors(registryState!, extraParams, innerTracker)
-        )
-        .then(() => {
-          return innerTracker.scope("buildBundle", () => {
-            bundle = registryState!.buildBundle();
-          });
-        })
-        .then(() => {
-          return bundle!;
-        });
-    });
+  process(snapshotInfo: Snapshot, tracker: ProcessingTrackerScoper) {
+    if (!tracker) {
+      tracker = this._context.tracker;
+    }
+
+    return tracker.scope(
+      "SnapshotProcessor::process",
+      (innerTracker: ProcessingTrackerScoper) => {
+        var registryState: RegistryState;
+        var bundle: RegistryBundleState;
+        return (
+          Promise.resolve()
+            .then(() => this._makeState(snapshotInfo, tracker))
+            .then((result) => {
+              registryState = result;
+            })
+            .then(() => this._runProcessors(registryState, tracker))
+            // .then(() => {
+            //     return tracker.scope("finalizeState", () => {
+            //         registryState.finalizeState(); // this function now is not exist on the "@kubevious/helpers/dist/registry-state"
+            //     });
+            // })
+            .then(() => {
+              return innerTracker.scope("buildBundle", () => {
+                bundle = registryState!.buildBundle();
+              });
+            })
+            .then(() => {
+              return {
+                registryState: registryState,
+                bundle: bundle,
+              };
+            })
+        );
+      }
+    );
   }
 
+  private _makeState(snapshotInfo: Snapshot, tracker: ProcessingTrackerScoper) {
+    return tracker.scope("_makeState", () => {
+      var registryState = new RegistryState(snapshotInfo);
+      return registryState;
+    });
+  }
   private _runProcessors(
     registryState: RegistryState,
-    extraParams: any,
     tracker: ProcessingTrackerScoper
   ) {
     return tracker.scope("handlers", (procTracker) => {
       return Promise.serial(this._processors, (processor) => {
         return procTracker.scope(processor.name, (innerTracker) => {
-          var params;
-          if (extraParams) {
-            params = _.clone(extraParams);
-          } else {
-            params = {};
-          }
-          params = _.defaults(params, {
+          var params = {
             logger: this.logger,
             context: this._context,
             state: registryState,
             tracker: innerTracker,
-          });
+          };
 
           return processor.handler(params);
         });

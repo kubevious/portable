@@ -16,7 +16,6 @@ export class K8sLoader {
   private _logger: ILogger;
 
   private _client: any;
-  private _info: any;
   private _apiTargets: Record<string, any> = {};
   private _readyHandler?: ReadyHandler;
 
@@ -25,7 +24,6 @@ export class K8sLoader {
     this._context = context;
 
     this._client = client;
-    this._info = info;
 
     this.logger.info("Constructed");
 

@@ -15,7 +15,8 @@ import { WorldviousClient } from "@kubevious/worldvious-client";
 import { DebugObjectLogger } from "./utils/debug-object-logger";
 
 import { LogicProcessor } from "./logic/processor";
-import { WebServer } from "./server";
+
+import { Context as BackendContext } from "../lib/context";
 
 import VERSION from "../version";
 
@@ -28,13 +29,12 @@ export class Context {
   private _logicProcessor: LogicProcessor;
   private _facadeRegistry: FacadeRegistry;
   private _worldvious: WorldviousClient;
-  private _server: WebServer;
   private _areLoadersReady = false;
-  private _appContext: any; // this from ../lib/context.ts
+  private _appContext: BackendContext;
   private _loaderInfo: { loader: RemoteLoader } | null;
   private _debugObjectLogger: DebugObjectLogger;
 
-  constructor(logger: ILogger, appContext: any) {
+  constructor(logger: ILogger, appContext: BackendContext) {
     this._logger = logger.sublogger("ParserContext");
     this._appContext = appContext;
     this._loaderInfo = null;
@@ -49,8 +49,6 @@ export class Context {
 
     this._worldvious = new WorldviousClient(this._logger, "parser", VERSION);
     this._debugObjectLogger = new DebugObjectLogger(this);
-
-    this._server = new WebServer(this);
   }
 
   get logger(): ILogger {
@@ -116,8 +114,7 @@ export class Context {
 
     return Promise.resolve()
       .then(() => this._worldvious.init())
-      .then(() => this._processLoaders())
-      .then(() => this._server.run());
+      .then(() => this._processLoaders());
   }
 
   private _setupTracker() {

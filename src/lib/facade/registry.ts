@@ -5,12 +5,11 @@ import { ILogger } from "the-logger";
 import { Context } from "../context";
 import { RegistryBundleState } from "@kubevious/helpers/dist/registry-bundle-state";
 import { ProcessingTrackerScoper } from "@kubevious/helpers/dist/processing-tracker";
-
+import { Snapshot } from "../../parser/facade/snapshot";
 export class FacadeRegistry {
   private _logger: ILogger;
   private _context: Context;
-  _configMap: {};
-  _latestSnapshot: ProcessingTrackerScoper | null;
+  private _latestSnapshot: Snapshot | null;
   private _processTimer!: NodeJS.Timeout | null;
   private _isProcessing!: boolean;
 
@@ -18,7 +17,6 @@ export class FacadeRegistry {
     this._context = context;
     this._logger = context.logger.sublogger("FacadeRegistry");
 
-    this._configMap = {};
     this._latestSnapshot = null;
   }
 
@@ -30,13 +28,22 @@ export class FacadeRegistry {
     return this._context.debugObjectLogger;
   }
 
-  acceptCurrentSnapshot(snapshotInfo: ProcessingTrackerScoper) {
+  acceptCurrentSnapshot(snapshotInfo: Snapshot) {
     this._latestSnapshot = snapshotInfo;
     this._triggerProcess();
   }
 
-  _triggerProcess() {
+  private _triggerProcess() {
     this._logger.verbose("[_triggerProcess] Begin");
+
+    if (this._processTimer) {
+      this._logger.verbose("[_triggerProcess] Timer scheduled...");
+      return;
+    }
+    if (this._isProcessing) {
+      this._logger.verbose("[_triggerProcess] Is Processing...");
+      return;
+    }
 
     this._processTimer = setTimeout(() => {
       this._logger.verbose("[_triggerProcess] Timer Triggered...");
@@ -57,18 +64,9 @@ export class FacadeRegistry {
           this._isProcessing = false;
         });
     }, 1000);
-
-    if (this._processTimer) {
-      this._logger.verbose("[_triggerProcess] Timer scheduled...");
-      return;
-    }
-    if (this._isProcessing) {
-      this._logger.verbose("[_triggerProcess] Is Processing...");
-      return;
-    }
   }
 
-  _processCurrentSnapshot(snapshotInfo: ProcessingTrackerScoper) {
+  _processCurrentSnapshot(snapshotInfo: Snapshot) {
     return this._context.tracker.scope(
       "FacadeRegistry::_processCurrentSnapshot",
       (tracker) => {

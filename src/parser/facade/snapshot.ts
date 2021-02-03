@@ -1,9 +1,10 @@
+import { SnapshotItemInfo } from "@kubevious/helpers/dist/snapshot/types";
 import _ from "the-lodash";
 import { LogicItem } from "../logic/item";
 
 export class Snapshot {
   _date: Date;
-  _items: LogicItem[];
+  _items: SnapshotItemInfo[];
   constructor(date: Date) {
     this._date = date;
     this._items = [];
