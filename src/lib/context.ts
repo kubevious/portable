@@ -20,7 +20,7 @@ import { WebSocket } from "./server/websocket";
 
 import { SeriesResampler } from "@kubevious/helpers/dist/history/series-resampler";
 
-import VERSION from "../version";
+import { VERSION } from "../version";
 
 const SERVER_PORT = 5001;
 export class Context {

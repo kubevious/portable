@@ -1,6 +1,7 @@
 import { Promise } from "the-promise";
-const fs = require("fs");
-const Path = require("path");
+import { ILogger } from "the-logger";
+import fs from "fs";
+import Path from "path";
 import _ from "the-lodash";
 
 const OS_DEFAULT = "default";
@@ -10,7 +11,13 @@ const OS_WIN = "Windows";
 const OS_LIST = [OS_MAC, OS_LINUX, OS_WIN];
 
 class ClusterResolver {
-  constructor(logger, config) {
+  private _logger: ILogger;
+  private _config: Record<string | number, any>;
+  private _dataLocations: string[];
+  private _toolLocations: string[];
+  private _toolConfigs: any;
+  private _isRunningOnHost: boolean;
+  constructor(logger: ILogger, config: Record<string | number, any>) {
     this._logger = logger;
     this._config = config;
 
@@ -64,7 +71,7 @@ class ClusterResolver {
       },
     };
 
-    this._toolConfigs["gcloud.cmd"] = this._toolConfigs["gcloud"];
+    this._toolConfigs.gcloud["cmd"] = this._toolConfigs["gcloud"];
 
     this._isRunningOnHost = process.env.KUBEVIOUS_ON_HOST == "true";
   }
@@ -104,7 +111,7 @@ class ClusterResolver {
       });
   }
 
-  _registerDataFile(location) {
+  _registerDataFile(location: string) {
     var srcFilePath = _.get(this._config, location);
     this.logger.info("[_registerFile] probe: %s => %s", location, srcFilePath);
 
@@ -128,7 +135,7 @@ class ClusterResolver {
     }
   }
 
-  _registerTool(location) {
+  _registerTool(location: string) {
     var toolPath = _.get(this._config, location);
     this.logger.info("[_registerTool] probe: %s => %s", location, toolPath);
     if (!toolPath) {
@@ -166,7 +173,7 @@ class ClusterResolver {
     return this._valideToolConfig(toolName, toolConfig);
   }
 
-  _valideToolConfig(toolName, toolConfig) {
+  _valideToolConfig(toolName: string, toolConfig: any) {
     if (!toolConfig) {
       return;
     }
@@ -183,7 +190,7 @@ class ClusterResolver {
     }
   }
 
-  _mapFile(srcFilePath, rootDir) {
+  _mapFile(srcFilePath: string, rootDir: string) {
     if (this._isRunningOnHost) {
       return srcFilePath;
     }
@@ -193,7 +200,7 @@ class ClusterResolver {
     return filePath;
   }
 
-  _reportError(msg) {
+  _reportError(msg: string) {
     this._config.ready = false;
     if (this._config.messages.length == 0) {
       this._config.messages.push(
