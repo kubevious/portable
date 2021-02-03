@@ -1,7 +1,10 @@
 import { ILogger } from "the-logger";
 import { Promise } from "the-promise";
 
-import { ProcessingTracker } from "@kubevious/helpers/dist/processing-tracker";
+import {
+  Handler,
+  ProcessingTracker,
+} from "@kubevious/helpers/dist/processing-tracker";
 
 import { ConcreteRegistry } from "./concrete/registry";
 import RemoteLoader from "./loaders/remote";
@@ -17,7 +20,6 @@ import { WebServer } from "./server";
 import VERSION from "../version";
 
 export class Context {
-  [x: string]: any;
   private _logger: ILogger;
   private _tracker: ProcessingTracker;
   private _loaders: any[] = [];
@@ -28,8 +30,9 @@ export class Context {
   private _worldvious: WorldviousClient;
   private _server: WebServer;
   private _areLoadersReady = false;
-  _appContext: any;
-  private _loaderInfo: any;
+  private _appContext: any; // this from ../lib/context.ts
+  private _loaderInfo: { loader: RemoteLoader } | null;
+  private _debugObjectLogger: DebugObjectLogger;
 
   constructor(logger: ILogger, appContext: any) {
     this._logger = logger.sublogger("ParserContext");
@@ -48,10 +51,6 @@ export class Context {
     this._debugObjectLogger = new DebugObjectLogger(this);
 
     this._server = new WebServer(this);
-  }
-
-  get backend() {
-    return this._backend;
   }
 
   get logger(): ILogger {
@@ -98,11 +97,11 @@ export class Context {
     return Promise.resolve().then(() => this.facadeRegistry.init());
   }
 
-  addLoader(loader: any) {
+  addLoader(loader: RemoteLoader) {
     var loaderInfo = {
       loader: loader,
       isReady: false,
-      readyHandler: (value: any) => {
+      readyHandler: (value: boolean) => {
         loaderInfo.isReady = value;
         this._logger.debug("[readyHandler] %s", value);
         this._checkLoadersReady();
@@ -128,7 +127,7 @@ export class Context {
       this.tracker.enablePeriodicDebugOutput(30);
     }
 
-    this.tracker.registerListener((extractedData: any) => {
+    this.tracker.registerListener((extractedData: Handler) => {
       this._worldvious.acceptMetrics(extractedData);
     });
   }
@@ -172,8 +171,8 @@ export class Context {
     };
 
     return Promise.resolve()
-      .then(() => this._loaderInfo.loader.run())
-      .then((res) => {
+      .then(() => this._loaderInfo?.loader.run())
+      .then(() => {
         return {
           success: true,
         };
@@ -198,15 +197,10 @@ export class Context {
 
   stopLoaders() {
     this._logger.debug("[stopLoaders]");
-    this._k8sClient = null;
     if (this._loaderInfo) {
       this._loaderInfo.loader.stop();
       this.concreteRegistry.reset();
       this._loaderInfo = null;
     }
-  }
-
-  setupK8sClient(client: any) {
-    this._k8sClient = client;
   }
 }
