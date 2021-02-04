@@ -15,10 +15,12 @@ import { AlertCounter } from "@kubevious/helpers/dist/snapshot/types";
 
 export class SearchEngine {
   private _logger: ILogger;
+  private _context: Context;
   private _index?: FlexSearchIndex<any>;
   private _rawItems: RegistryBundleNode[] = [];
 
   constructor(context: Context) {
+    this._context = context;
     this._logger = context.logger.sublogger("SearchEngine");
 
     this._reset();
