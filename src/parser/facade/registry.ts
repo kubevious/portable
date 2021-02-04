@@ -46,7 +46,7 @@ export class FacadeRegistry {
 
     return Promise.resolve()
       .then(() => {
-        if (this._context.areLoadersReady) {
+        if (!this._context.areLoadersReady) {
           this._context.logicProcessor.process();
         }
       })

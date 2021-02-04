@@ -1,7 +1,7 @@
-import Diagram from '../Diagram';
-import Properties from '../Properties';
-import Alerts from '../Alerts';
-import Summary from '../Summary';
+import Diagram from '../Diagram'
+import Properties from '../Properties'
+import Alerts from '../Alerts'
+import Summary from '../Summary'
 
 class RegisterComponents {
     constructor(parent) {
@@ -16,14 +16,14 @@ class RegisterComponents {
             component: Summary,
             location: 'main',
             title: 'Summary',
-            allowVerticalScroll: false
+            allowVerticalScroll: false,
         })
         this._parent._register({
             name: 'Universe',
             component: Diagram,
             location: 'main',
             title: 'Universe',
-            skipClose: true
+            skipClose: true,
         })
         this._parent._register({
             name: 'Properties',
@@ -31,14 +31,14 @@ class RegisterComponents {
             location: 'right',
             title: 'Properties',
             width: 25,
-            allowVerticalScroll: true
+            allowVerticalScroll: true,
         })
         this._parent._register({
             name: 'Alerts',
             component: Alerts,
             location: 'bottom',
             title: 'Alerts',
-            allowVerticalScroll: true
+            allowVerticalScroll: true,
         })
     }
 }

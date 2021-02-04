@@ -5,6 +5,8 @@
 import React from 'react'
 import BaseComponent from '../../HOC/BaseComponent'
 import PropertiesContents from '../Properties/PropertiesContents'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import './styles.scss'
 import { isEmptyObject } from '../../utils/util'
 
@@ -41,6 +43,9 @@ class Summary extends BaseComponent {
         }
         return (
             <div id='summaryComponent' className='loading-placeholder'>
+                <div className='loading-icon'>
+                    <FontAwesomeIcon icon={faSpinner} spin />
+                </div>
                 Loading...
             </div>
         )

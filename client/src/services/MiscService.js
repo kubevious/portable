@@ -38,16 +38,6 @@ class MiscService extends BaseService {
                 })
             })
             .then(() => {
-                return this._client
-                    .get('/api/v1/metrics')
-                    .then((result) => {
-                        info = _.concat(info, result.data.metrics)
-                    })
-                    .catch((reason) => {
-                        console.error(reason)
-                    })
-            })
-            .then(() => {
                 cb(info)
             })
     }

@@ -92,6 +92,7 @@ export class Context {
   }
 
   init() {
+    this.run();
     return Promise.resolve().then(() => this.facadeRegistry.init());
   }
 

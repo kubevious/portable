@@ -161,11 +161,11 @@ export class Context {
 
     return Promise.resolve()
       .then(() => this._clusterEngine.init())
-      .then(() => this.parserContext.init())
       .then(() => this._worldvious.init())
       .then(() => this._server.run())
       .then(() => this._websocket.run())
       .then(() => this._notificationsApp.init())
+      .then(() => this.parserContext.init())
       .catch((reason) => {
         this.logger.error(reason);
         process.exit(1);

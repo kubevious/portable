@@ -79,9 +79,6 @@ sync "src/components/Properties/KeyValueList/styles.scss" "src/components/Proper
 
 sync "src/components/Properties/PropertiesContents/index.js" "src/components/Properties/PropertiesContents/index.js"
 
-sync "src/components/Properties/PropertiesCounters/index.js" "src/components/Properties/PropertiesCounters/index.js"
-sync "src/components/Properties/PropertiesCounters/styles.scss" "src/components/Properties/PropertiesCounters/styles.scss"
-
 sync "src/components/Properties/PropertiesObjectList/index.js" "src/components/Properties/PropertiesObjectList/index.js"
 
 sync "src/components/Properties/PropertiesTable/index.js" "src/components/Properties/PropertiesTable/index.js"
@@ -97,9 +94,6 @@ sync "src/components/SEO/index.js" "src/components/SEO/index.js"
 
 sync "src/components/Snooze/index.js" "src/components/Snooze/index.js"
 sync "src/components/Snooze/styles.scss" "src/components/Snooze/styles.scss"
-
-sync "src/components/Summary/index.js" "src/components/Summary/index.js"
-sync "src/components/Summary/styles.scss" "src/components/Summary/styles.scss"
 
 sync "src/components/UiLogs/index.js" "src/components/UiLogs/index.js"
 # Finish copying components
