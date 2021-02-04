@@ -258,7 +258,7 @@ class RemoteLoader {
       options.env = envDict;
     }
     this.logger.info("[_executeCommand] running: %s, options:", cmd, options);
-    return new Promise((resolve, reject) => {
+    return Promise.construct((resolve, reject) => {
       exec(cmd, options, (error, stdout, stderr) => {
         if (error) {
           this.logger.error("[_executeCommand] failed: %s", error.message);
