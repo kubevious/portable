@@ -1,6 +1,0 @@
-kind: Namespace
-apiVersion: v1
-metadata:
-  name: test-egress-isolated-ns
-  labels:
-    name: test-egress-isolated-ns
