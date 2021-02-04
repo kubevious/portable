@@ -1,9 +1,9 @@
 import _ from "the-lodash";
 import { ILogger } from "the-logger";
 import { ItemId } from "../../lib/types";
+import { ApiGroup } from "../types";
 
 import { Context } from "../context";
-import { ApiGroup } from "../types";
 
 import { API_GROUPS } from "./api-groups";
 

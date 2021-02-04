@@ -44,5 +44,3 @@ export const API_GROUPS: ApiGroup[] = [
     kinds: ["NetworkPolicy"],
   },
 ];
-
-// export const API_GROUPS;

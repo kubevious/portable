@@ -1,13 +1,9 @@
 import _ from "the-lodash";
 
 import { LogicProcessor } from "../";
-
 import { LogicScope } from "../../scope";
-
 import { LogicItem } from "../../item";
-
 import { ConcreteItem } from "../../../concrete/item";
-
 import {
   ConcreteParserInfo,
   ConcreteProcessorHandlerArgs,

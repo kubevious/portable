@@ -9,13 +9,14 @@ import { LogicScope } from "../../scope";
 
 import { ConcreteItem } from "../../../concrete/item";
 
-import { constructArgs } from "./handler-args";
 import {
   BaseParserExecutor,
   ConcreteParserInfo,
   ConcreteProcessorVariableArgs,
   ConcreteProcessorRuntimeData,
 } from "../../../types";
+
+import { constructArgs } from "./handler-args";
 
 export class ConcreteParserExecutor implements BaseParserExecutor {
   private _context: Context;

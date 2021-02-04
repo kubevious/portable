@@ -1,11 +1,11 @@
 import _ from "the-lodash";
+import { LogicItem } from "../../item";
 import {
   BaseParserBuilder,
   LogicParserInfo,
   LogicProcessorHandlerArgs,
   LogicTarget,
 } from "../../../types";
-import { LogicItem } from "../../item";
 
 export class LogicParserBuilder implements BaseParserBuilder {
   private _data: LogicParserInfo = {

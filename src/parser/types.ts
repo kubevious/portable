@@ -200,11 +200,11 @@ export interface ScopeProcessorHandlerArgs {
 }
 
 export interface ScopeProcessorVariableArgs {
-  // namespaceName? : string | null;
-  // namespaceScope? : NamespaceScope | null;
-  // appName? : string | null;
-  // appScope?: AppScope | null;
-  // app?: LogicItem | null;
+  namespaceName?: string | null;
+  namespaceScope?: NamespaceScope | null;
+  appName?: string | null;
+  appScope?: AppScope | null;
+  app?: LogicItem | null;
 }
 
 export interface ScopeProcessorRuntimeData {

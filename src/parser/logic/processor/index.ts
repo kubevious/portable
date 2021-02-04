@@ -12,9 +12,6 @@ import { LogicScope } from "../scope";
 import { Helpers } from "../helpers";
 import { LogicItem } from "../item";
 
-import { ConcreteParserExecutor } from "./concrete/executor";
-import { LogicParserExecutor } from "./logic/executor";
-import { ScopeParserExecutor } from "./scope/executor";
 import {
   BaseParserExecutor,
   BaseParserBuilder,
@@ -22,6 +19,10 @@ import {
   LogicParserInfo,
   ScopeParserInfo,
 } from "../../types";
+
+import { ConcreteParserExecutor } from "./concrete/executor";
+import { LogicParserExecutor } from "./logic/executor";
+import { ScopeParserExecutor } from "./scope/executor";
 
 export class LogicProcessor {
   private _context: Context;
