@@ -19,8 +19,6 @@ function sync {
 # Copying components
 sync "src/components/About/index.js" "src/components/About/index.js"
 
-sync "src/components/Alerts/index.js" "src/components/Alerts/index.js"
-sync "src/components/Alerts/styles.scss" "src/components/Alerts/styles.scss"
 sync "src/components/Alerts/AlertView/index.js" "src/components/Alerts/AlertView/index.js"
 
 sync "src/components/BurgerMenu/index.js" "src/components/BurgerMenu/index.js"
@@ -36,8 +34,6 @@ sync "src/components/Diagram/packer.growing.js" "src/components/Diagram/packer.g
 sync "src/components/DnComponent/index.js" "src/components/DnComponent/index.js"
 sync "src/components/DnComponent/styles.scss" "src/components/DnComponent/styles.scss"
 
-sync "src/components/DnShortcutComponent/styles.scss" "src/components/DnShortcutComponent/styles.scss"
-
 sync "src/components/ErrorBox/index.js" "src/components/ErrorBox/index.js"
 sync "src/components/ErrorBox/styles.scss" "src/components/ErrorBox/styles.scss"
 
@@ -49,9 +45,6 @@ sync "src/components/Feedback/styles.scss" "src/components/Feedback/styles.scss"
 sync "src/components/GenerateDnPath/index.js" "src/components/GenerateDnPath/index.js"
 
 sync "src/components/GoldenLayout/styles.scss" "src/components/GoldenLayout/styles.scss"
-
-sync "src/components/Header/index.js" "src/components/Header/index.js"
-sync "src/components/Header/styles.scss" "src/components/Header/styles.scss"
 
 sync "src/components/MessageNotification/index.js" "src/components/MessageNotification/index.js"
 sync "src/components/MessageNotification/styles.scss" "src/components/MessageNotification/styles.scss"
@@ -86,8 +79,6 @@ sync "src/components/Properties/KeyValueList/styles.scss" "src/components/Proper
 
 sync "src/components/Properties/PropertiesContents/index.js" "src/components/Properties/PropertiesContents/index.js"
 
-sync "src/components/Properties/PropertiesAlertList/index.js" "src/components/Properties/PropertiesAlertList/index.js"
-
 sync "src/components/Properties/PropertiesCounters/index.js" "src/components/Properties/PropertiesCounters/index.js"
 sync "src/components/Properties/PropertiesCounters/styles.scss" "src/components/Properties/PropertiesCounters/styles.scss"
 
@@ -98,7 +89,6 @@ sync "src/components/Properties/PropertiesTable/styles.scss" "src/components/Pro
 
 sync "src/components/Properties/PropertyGroup/index.js" "src/components/Properties/PropertyGroup/index.js"
 
-sync "src/components/Root/index.js" "src/components/Root/index.js"
 sync "src/components/Root/styles.scss" "src/components/Root/styles.scss"
 
 sync "src/components/Search/styles.scss" "src/components/Search/styles.scss"
@@ -121,14 +111,12 @@ sync "src/HOC/BaseComponent.js" "src/HOC/BaseComponent.js"
 # Copying services
 sync "src/services/BackendClient.js" "src/services/BackendClient.js"
 sync "src/services/BaseService.js" "src/services/BaseService.js"
-sync "src/services/DiagramService.js" "src/services/DiagramService.js"
 sync "src/services/MiscService.js" "src/services/MiscService.js"
 sync "src/services/WebSocketService.js" "src/services/WebSocketService.js"
 # Finish copying services
 
 # Copying services-mock
 sync "src/services-mock/MockMiscService.js" "src/services-mock/MockMiscService.js"
-sync "src/services-mock/MockWebSocketService.js" "src/services-mock/MockWebSocketService.js"
 # Finish copying services-mock
 
 #Copying state
@@ -157,8 +145,6 @@ sync "src/boot/targetSnippets.js" "src/boot/targetSnippets.js"
 # Finish copying utils
 
 sync "src/BaseRootApiService.js" "src/BaseRootApiService.js"
-sync "src/configureService.js" "src/configureService.js"
-sync "src/index.scss" "src/index.scss"
 sync "src/version.js" "src/version.js"
 
 if [[ global_status -ne 0 ]]; then

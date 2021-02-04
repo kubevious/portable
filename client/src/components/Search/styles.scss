@@ -89,6 +89,10 @@
                 outline: none;
             }
 
+            &::-webkit-details-marker {
+                order: 1;
+            }
+
             &.is-active::after {
                 content: '';
                 position: relative;

@@ -21,7 +21,7 @@ class Properties extends BaseComponent {
             selectedDn: null,
             dnParts: [],
             dnKind: null,
-            selectedObjectProps: []
+            selectedObjectProps: [],
         }
 
         this._renderContent = this._renderContent.bind(this)
@@ -30,14 +30,15 @@ class Properties extends BaseComponent {
     propertyExpanderHandleClick(event) {
         var target = event.currentTarget
         target.classList.toggle('active')
-        var contentsElem = target.parentElement.getElementsByClassName('expander-contents')[0]
+        var contentsElem = target.parentElement.getElementsByClassName(
+            'expander-contents'
+        )[0]
         contentsElem.classList.toggle('expander-open')
     }
 
     _renderPropertiesNodeDn() {
-
         return (
-            <div className="properties-owner">
+            <div className='properties-owner'>
                 <DnPath dnParts={this.state.dnParts} includeLogo bigLogo />
             </div>
         )
@@ -46,13 +47,15 @@ class Properties extends BaseComponent {
     _renderContent() {
         const { selectedDn, dnKind } = this.state
 
-        const propertyGroups = _.orderBy(this.state.selectedObjectProps, x => {
-            if (x.order) {
-                return x.order
+        const propertyGroups = _.orderBy(
+            this.state.selectedObjectProps,
+            (x) => {
+                if (x.order) {
+                    return x.order
+                }
+                return 100
             }
-            return 100
-        })
-
+        )
 
         return (
             <>
@@ -63,13 +66,17 @@ class Properties extends BaseComponent {
                         <PropertyGroup
                             key={index}
                             title={item.title}
-                            extraClassTitle={(isExpanded ? 'active' : '')}
-                            extraClassContents={(isExpanded ? 'expander-open' : '')}
+                            extraClassTitle={isExpanded ? 'active' : ''}
+                            extraClassContents={
+                                isExpanded ? 'expander-open' : ''
+                            }
                             dn={selectedDn}
                             dnKind={dnKind}
                             groupName={item.id}
                             group={item}
-                            propertyExpanderHandleClick={this.propertyExpanderHandleClick}
+                            propertyExpanderHandleClick={
+                                this.propertyExpanderHandleClick
+                            }
                         />
                     )
                 })}
@@ -81,36 +88,39 @@ class Properties extends BaseComponent {
         const { selectedDn, selectedObjectProps } = this.state
 
         if (!selectedDn && !selectedObjectProps) {
-            return <div className="message-empty">No object selected.</div>
+            return <div className='message-empty'>No object selected.</div>
         }
 
-        return <>
-            {selectedDn && this._renderPropertiesNodeDn()}
-            {selectedObjectProps && this._renderContent()}
-        </>
+        return (
+            <>
+                {selectedDn && this._renderPropertiesNodeDn()}
+                {selectedObjectProps && this._renderContent()}
+            </>
+        )
     }
 
     componentDidMount() {
-        this.subscribeToSharedState(['selected_dn', 'selected_object_props'],
+        this.subscribeToSharedState(
+            ['selected_dn', 'selected_object_props'],
             ({ selected_dn, selected_object_props }) => {
-
-                let dnParts = [];
+                let dnParts = []
                 if (selected_dn) {
-                    dnParts = DnUtils.parseDn(selected_dn);
+                    dnParts = DnUtils.parseDn(selected_dn)
                 }
 
-                let dnKind = null;
+                let dnKind = null
                 if (dnParts.length > 0) {
-                    dnKind = _.last(dnParts).kind;
+                    dnKind = _.last(dnParts).kind
                 }
 
                 this.setState({
                     selectedDn: selected_dn,
                     dnParts: dnParts,
                     dnKind: dnKind,
-                    selectedObjectProps: selected_object_props
+                    selectedObjectProps: selected_object_props,
                 })
-            })
+            }
+        )
     }
 
     render() {
@@ -118,9 +128,9 @@ class Properties extends BaseComponent {
 
         return (
             <div
-                id="propertiesComponent"
+                id='propertiesComponent'
                 className={cx('properties', {
-                'empty': !selectedDn && !selectedObjectProps,
+                    empty: !selectedDn && !selectedObjectProps,
                 })}
             >
                 {this.renderUserView()}

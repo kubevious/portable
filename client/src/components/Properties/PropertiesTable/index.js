@@ -12,7 +12,6 @@ import './styles.scss'
 import PropertiesValue from '../helpers'
 
 const PropertiesTable = ({ config, options, state }) => {
-
     const tableHeaders = () => {
         return config.headers.map((x) => {
             let column = {}
@@ -72,8 +71,8 @@ const PropertiesTable = ({ config, options, state }) => {
     )
 
     return (
-        <div className="PropertiesTable-container">
-            <table className="table table-striped table-dark">
+        <div className='PropertiesTable-container'>
+            <table className='table table-striped table-dark'>
                 <thead>
                     <tr>
                         {tableHeaders().map((item) => (

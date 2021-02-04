@@ -27,11 +27,11 @@ class Summary extends BaseComponent {
         const { data } = this.state
         if (!isEmptyObject(data)) {
             return (
-                <div id="summaryComponent" className="summary">
+                <div id='summaryComponent' className='summary'>
                     {Object.values(data).map((block) => (
-                        <div className="summary-container" key={block.id}>
+                        <div className='summary-container' key={block.id}>
                             <label>{block.title}</label>
-                            <div className="summary-container-inner">
+                            <div className='summary-container-inner'>
                                 <PropertiesContents group={block} />
                             </div>
                         </div>
@@ -39,7 +39,11 @@ class Summary extends BaseComponent {
                 </div>
             )
         }
-        return <div id="summaryComponent" className="loading-placeholder">Loading...</div>
+        return (
+            <div id='summaryComponent' className='loading-placeholder'>
+                Loading...
+            </div>
+        )
     }
 }
 

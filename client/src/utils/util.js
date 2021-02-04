@@ -4,25 +4,27 @@
 
 export const isEmptyObject = (obj) => {
     for (let key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key))
-            return false
+        if (Object.prototype.hasOwnProperty.call(obj, key)) return false
     }
     return true
 }
 
 export const isEmptyArray = (arr) => {
-    return !arr || arr.length === 0;
+    return !arr || arr.length === 0
 }
 
 export const getRandomInt = () => {
-    return Math.floor(Math.random(1) * Math.floor(1048576));
+    return Math.floor(Math.random(1) * Math.floor(1048576))
 }
 
 export const uniqueMessages = (messages) => {
     let temp = []
 
-    messages.map(item => {
-        const element = temp.find(tempI => tempI.severity === item.severity && tempI.msg === item.msg)
+    messages.map((item) => {
+        const element = temp.find(
+            (tempI) =>
+                tempI.severity === item.severity && tempI.msg === item.msg
+        )
 
         if (!element) {
             temp.push(item)
@@ -35,8 +37,8 @@ export const uniqueMessages = (messages) => {
 export const uniqueObjects = (objects) => {
     let temp = []
 
-    objects.map(item => {
-        const element = temp.find(tempI => tempI.dn === item.dn)
+    objects.map((item) => {
+        const element = temp.find((tempI) => tempI.dn === item.dn)
 
         if (!element) {
             temp.push(item)
@@ -61,5 +63,5 @@ export const sortSeverity = (a, b) => {
 export const insertToArray = (arr, index, item) => [
     ...arr.slice(0, index),
     item,
-    ...arr.slice(index)
+    ...arr.slice(index),
 ]

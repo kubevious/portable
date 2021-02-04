@@ -12,7 +12,6 @@ import Config from '../Config'
 import PropertiesTable from '../PropertiesTable'
 
 const PropertiesContents = ({ group, dn }) => {
-
     switch (group.kind) {
         case 'counters':
             return <PropertiesCounters config={group.config} />
@@ -25,7 +24,9 @@ const PropertiesContents = ({ group, dn }) => {
         case 'dn-list':
             return <DnList config={group.config} />
         case 'yaml':
-            return <Config config={group.config} language={group.kind} dn={dn} />
+            return (
+                <Config config={group.config} language={group.kind} dn={dn} />
+            )
         case 'table':
             return <PropertiesTable config={group.config} />
         default:

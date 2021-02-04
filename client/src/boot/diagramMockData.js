@@ -30,6 +30,7 @@ export const GRAPH_DATA = {
                     name: 'xnamespace',
                 },
             },
+            markers: ['marker-1', 'marker-2'],
             children: [
                 {
                     rn: 'app-[kubevious]',
@@ -864,6 +865,7 @@ export const GRAPH_DATA = {
                     order: 100,
                     alertCount: {},
                     flags: {},
+                    markers: ['marker-1', 'marker-2'],
                     children: [
                         {
                             rn: 'launcher-[Deployment]',
@@ -1053,6 +1055,7 @@ export const GRAPH_DATA = {
                     order: 100,
                     alertCount: {},
                     flags: {},
+                    markers: ['marker-3'],
                     children: [
                         {
                             rn: 'launcher-[Deployment]',
@@ -1061,6 +1064,7 @@ export const GRAPH_DATA = {
                             order: 100,
                             alertCount: {},
                             flags: {},
+                            markers: ['marker-4'],
                             children: [
                                 {
                                     rn: 'replicaset-[765d65995c]',

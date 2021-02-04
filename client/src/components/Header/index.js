@@ -146,6 +146,9 @@ class Header extends BaseComponent {
         return (
             <div className='header'>
                 <a className='logo' href='/' />
+                <div className='loading-icon'>
+                    {isLoading && <FontAwesomeIcon icon={faSpinner} spin />}
+                </div>
                 <div className='selected-cluster'>
                     {!cluster && (
                         <div className='cluster'>

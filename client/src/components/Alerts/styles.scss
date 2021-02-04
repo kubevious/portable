@@ -64,6 +64,11 @@
         width: 40%;
         word-break: break-word;
 
+        &.rule:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
         .dn-container {
             width: 60%;
         }
