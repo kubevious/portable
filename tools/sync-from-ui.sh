@@ -19,8 +19,6 @@ function sync {
 # Copying components
 sync "src/components/About/index.js" "src/components/About/index.js"
 
-sync "src/components/Alerts/AlertView/index.js" "src/components/Alerts/AlertView/index.js"
-
 sync "src/components/BurgerMenu/index.js" "src/components/BurgerMenu/index.js"
 sync "src/components/BurgerMenu/styles.scss" "src/components/BurgerMenu/styles.scss"
 
@@ -105,7 +103,6 @@ sync "src/HOC/BaseComponent.js" "src/HOC/BaseComponent.js"
 # Copying services
 sync "src/services/BackendClient.js" "src/services/BackendClient.js"
 sync "src/services/BaseService.js" "src/services/BaseService.js"
-sync "src/services/MiscService.js" "src/services/MiscService.js"
 sync "src/services/WebSocketService.js" "src/services/WebSocketService.js"
 # Finish copying services
 
