@@ -2,58 +2,63 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../parser.git/src/logic/parsers/030_app-controllers.ts                                       ***/
 
-import _ from "the-lodash";
-import { ConcreteParser } from "../parser-builder";
+import _ from 'the-lodash';
+import { ConcreteParser } from '../parser-builder';
 
 export default ConcreteParser()
-  .order(30)
-  .target({
-    api: "apps",
-    kind: "Deployment",
-  })
-  .target({
-    api: "apps",
-    kind: "DaemonSet",
-  })
-  .target({
-    api: "apps",
-    kind: "StatefulSet",
-  })
-  .target({
-    api: "batch",
-    kind: "Job",
-  })
-  .needAppScope(true)
-  .canCreateAppIfMissing(true)
-  .appNameCb((item) => {
-    return item.config.metadata.name;
-  })
-  .handler(({ scope, item, app, appScope, namespaceScope }) => {
-    app.associateAppScope(appScope);
+    .order(30)
+    .target({
+        api: "apps",
+        kind: "Deployment"
+    })
+    .target({
+        api: "apps",
+        kind: "DaemonSet"
+    })
+    .target({
+        api: "apps",
+        kind: "StatefulSet"
+    })
+    .target({
+        api: "batch",
+        kind: "Job"
+    })
+    .needAppScope(true)
+    .canCreateAppIfMissing(true)
+    .appNameCb((item) => {
+        return item.config.metadata.name; 
+    })
+    .handler(({ scope, item, app, appScope, namespaceScope }) => {
 
-    var labelsMap = _.get(item.config, "spec.template.metadata.labels");
-    if (labelsMap) {
-      namespaceScope.registerAppScopeLabels(appScope, labelsMap);
-    }
+        app.associateAppScope(appScope);
 
-    var launcher = app.fetchByNaming("launcher", item.config.kind);
-    scope.setK8sConfig(launcher, item.config);
-    namespaceScope.registerAppOwner(launcher);
-    launcher.associateAppScope(appScope);
+        var labelsMap = _.get(item.config, 'spec.template.metadata.labels');
+        if (labelsMap) {
+            namespaceScope.registerAppScopeLabels(appScope, labelsMap);
+        }
 
-    appScope.properties["Launcher"] = item.config.kind;
+        var launcher = app.fetchByNaming("launcher", item.config.kind);
+        scope.setK8sConfig(launcher, item.config);
+        namespaceScope.registerAppOwner(launcher);
+        launcher.associateAppScope(appScope);
 
-    if (item.config.kind == "Deployment" || item.config.kind == "StatefulSet") {
-      appScope.properties["Replicas"] = _.get(item.config, "spec.replicas");
-    }
+        appScope.properties['Launcher'] = item.config.kind;
 
-    app.addProperties({
-      kind: "key-value",
-      id: "properties",
-      title: "Properties",
-      order: 5,
-      config: appScope.properties,
-    });
+        if (item.config.kind == "Deployment" || 
+            item.config.kind == "StatefulSet")
+        {
+            appScope.properties['Replicas'] = _.get(item.config, 'spec.replicas');
+        }
 
-    app.addProperties(launcher.getProperties("labels"));
-  });
+        app.addProperties({
+            kind: "key-value",
+            id: "properties",
+            title: "Properties",
+            order: 5,
+            config: appScope.properties
+        });  
+
+        app.addProperties(launcher.getProperties('labels'));
+
+    })
+    ;

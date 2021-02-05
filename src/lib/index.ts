@@ -2,12 +2,12 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../backend.git/src/index.ts                                                                  ***/
 
-import { Backend } from "@kubevious/helper-backend";
-import { Context } from "./context";
+import { Backend } from '@kubevious/helper-backend'
+import { Context } from './context'
 
 const backend = new Backend("backend");
 
 backend.initialize(() => {
-  const context = new Context(backend);
-  return context.run();
+    const context = new Context(backend);
+    return context.run();
 });

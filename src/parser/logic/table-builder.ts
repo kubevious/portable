@@ -2,45 +2,52 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../parser.git/src/logic/table-builder.ts                                                     ***/
 
-export class TableBuilder {
-  private _headers: (
-    | string
-    | { id: string; label?: string; kind?: string }
-  )[] = [];
-  private _rows: any[] = [];
+export class TableBuilder
+{
+    private _headers: (string | { id: string, label? : string, kind? : string })[] = [];
+    private _rows: any[] = [];
 
-  constructor() {}
+    constructor()
+    {
 
-  column(id: string, label?: string, kind?: string) {
-    if (label && kind) {
-      this._headers.push({
-        id: id,
-        label: label,
-        kind: kind,
-      });
-    } else {
-      this._headers.push(id);
     }
-    return this;
-  }
 
-  row(data: Record<string, any>) {
-    this._rows.push(data);
-    return this;
-  }
+    column(id: string, label? : string, kind? : string)
+    {
+        if (label && kind)
+        {
+            this._headers.push({
+                id: id,
+                label: label,
+                kind: kind
+            });
+        }
+        else
+        {
+            this._headers.push(id);
+        }
+        return this;
+    }
 
-  get rowCount(): number {
-    return this._rows.length;
-  }
+    row(data: Record<string, any>)
+    {
+        this._rows.push(data);
+        return this;
+    }
 
-  get hasRows(): boolean {
-    return this._rows.length > 0;
-  }
+    get rowCount() : number {
+        return this._rows.length;
+    }
 
-  extract() {
-    return {
-      headers: this._headers,
-      rows: this._rows,
-    };
-  }
+    get hasRows() : boolean {
+        return this._rows.length > 0;
+    }
+
+    extract() {
+        return {
+            headers: this._headers,
+            rows: this._rows
+        }
+    }
 }
+

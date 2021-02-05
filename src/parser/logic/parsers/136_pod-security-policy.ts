@@ -2,38 +2,38 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../parser.git/src/logic/parsers/136_pod-security-policy.ts                                   ***/
 
-import _ from "the-lodash";
-import { ScopeParser } from "../parser-builder";
+import _ from 'the-lodash';
+import { ScopeParser } from '../parser-builder';
 
 export default ScopeParser()
-  .order(136)
-  .target({
-    namespaced: false,
-    scopeKind: "PodSecurityPolicy",
-  })
-  .kind("psp")
-  .handler(({ scope, itemScope, createK8sItem, createAlert, helpers }) => {
-    if (itemScope.isNotUsed) {
-      var rawContainer = scope.fetchNamespaceRawContainer(
-        "",
-        "PodSecurityPolicies"
-      );
-      var logicItem = createK8sItem(rawContainer);
-      itemScope.registerItem(logicItem);
-      createAlert("Unused", "warn", itemScope.kind + " not used.");
-    }
+    .order(136)
+    .target({
+        namespaced: false,
+        scopeKind: 'PodSecurityPolicy'
+    })
+    .kind('psp')
+    .handler(({ scope, itemScope, createK8sItem, createAlert, helpers }) => {
 
-    itemScope
-      .buildProperties()
-      .fromConfig("Priviledged", "spec.allowPrivilegeEscalation", false)
-      .fromConfig("Capabilities", "spec.allowedCapabilities")
-      .fromConfig("seLinux", "spec.seLinux.rule")
-      .fromConfig("RunAsUser", "spec.runAsUser.rule")
-      .fromConfig("FSGroup", "spec.fsGroup.rule")
-      .fromConfig("Groups", "spec.supplementalGroups.rule")
-      .fromConfig("ReadOnlyRootFS", "spec.readOnlyRootFilesystem", false)
-      .fromConfig("Volumes", "spec.volumes", [])
-      .build();
+        if (itemScope.isNotUsed)
+        {
+            var rawContainer = scope.fetchNamespaceRawContainer("", "PodSecurityPolicies");
+            var logicItem = createK8sItem(rawContainer);
+            itemScope.registerItem(logicItem);
+            createAlert('Unused', 'warn', itemScope.kind + ' not used.');
+        }
 
-    helpers.common.determineSharedFlag(itemScope);
-  });
+        itemScope.buildProperties()
+            .fromConfig('Priviledged', 'spec.allowPrivilegeEscalation', false)
+            .fromConfig('Capabilities', 'spec.allowedCapabilities')
+            .fromConfig('seLinux', 'spec.seLinux.rule')
+            .fromConfig('RunAsUser', 'spec.runAsUser.rule')
+            .fromConfig('FSGroup', 'spec.fsGroup.rule')
+            .fromConfig('Groups', 'spec.supplementalGroups.rule')
+            .fromConfig('ReadOnlyRootFS', 'spec.readOnlyRootFilesystem', false)
+            .fromConfig('Volumes', 'spec.volumes', [])
+            .build()
+
+            helpers.common.determineSharedFlag(itemScope);
+
+    })
+    ;

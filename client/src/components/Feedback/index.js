@@ -256,8 +256,6 @@ class Feedback extends BaseComponent {
                         </div>
                     </div>
                 )
-            default:
-                return null
         }
     }
 

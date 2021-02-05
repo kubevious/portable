@@ -2,30 +2,34 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../parser.git/src/logic/polishers/033_container-radioactive.ts                               ***/
 
-import _ from "the-lodash";
-import { LogicParser } from "../parser-builder";
+import _ from 'the-lodash';
+import { LogicParser } from '../parser-builder';
 
 export default LogicParser()
-  .order(33)
-  .target({
-    path: ["ns", "app", "cont"],
-  })
-  .handler(({ item }) => {
-    var radioactiveProps: Record<string, any> = {};
+    .order(33)
+    .target({
+        path: ["ns", "app", "cont"]
+    })
+    .handler(({ item }) => {
 
-    if (_.get(item.config, "securityContext.privileged")) {
-      radioactiveProps["privileged"] = true;
-    }
+        var radioactiveProps : Record<string, any> = {};
 
-    if (_.keys(radioactiveProps).length > 0) {
-      item.setPropagatableFlag("radioactive");
+        if (_.get(item.config, 'securityContext.privileged')) {
+            radioactiveProps['privileged'] = true;
+        }
 
-      item.addProperties({
-        kind: "key-value",
-        id: "radioactive",
-        title: "Radioactivity",
-        order: 7,
-        config: radioactiveProps,
-      });
-    }
-  });
+        if (_.keys(radioactiveProps).length > 0)
+        {
+            item.setPropagatableFlag("radioactive");
+
+            item.addProperties({
+                kind: "key-value",
+                id: "radioactive",
+                title: "Radioactivity",
+                order: 7,
+                config: radioactiveProps
+            });
+        }
+
+    })
+    ;

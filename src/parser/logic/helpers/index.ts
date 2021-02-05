@@ -2,14 +2,17 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../parser.git/src/logic/helpers/index.ts                                                     ***/
 
-import { RoleHelper } from "./roles";
-import { ResourceHelpers } from "./resources";
-import { CommonUtils } from "./common";
+import { RoleHelper } from './roles'
+import { ResourceHelpers } from './resources'
+import { CommonUtils } from './common';
 
 export class Helpers {
-  public roles: RoleHelper = new RoleHelper();
-  public resources: ResourceHelpers = new ResourceHelpers();
-  public common: CommonUtils = new CommonUtils();
 
-  constructor() {}
+    public roles : RoleHelper = new RoleHelper();
+    public resources : ResourceHelpers = new ResourceHelpers();
+    public common : CommonUtils = new CommonUtils();
+
+    constructor() {
+
+    }
 }

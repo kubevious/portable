@@ -2,30 +2,33 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../backend.git/src/utils/debug-object-logger.ts                                              ***/
 
-import _ from "the-lodash";
-import { ILogger } from "the-logger";
-import { Context } from "../context";
+import _ from 'the-lodash';
+import { ILogger } from 'the-logger';
+import { Context } from '../context';
 
-export class DebugObjectLogger {
-  private _logger: ILogger;
+export class DebugObjectLogger
+{
+    private _logger : ILogger;
 
-  constructor(context: Context) {
-    this._logger = context.logger;
-  }
-
-  dump(name: string, iteration: number, obj: any) {
-    if (!process.env.LOG_TO_FILE) {
-      return;
+    constructor(context : Context)
+    {
+        this._logger = context.logger;
     }
 
-    if (!obj) {
-      return;
-    }
+    dump(name: string, iteration: number, obj: any)
+    {
+        if (!process.env.LOG_TO_FILE) {
+            return;
+        }
 
-    var writer = this._logger.outputStream(name + iteration + ".json");
-    if (writer) {
-      writer.write(_.cloneDeep(obj));
-      writer.close();
+        if (!obj) {
+            return;
+        }
+
+        var writer = this._logger.outputStream(name + iteration + ".json");
+        if (writer) {
+            writer.write(_.cloneDeep(obj));
+            writer.close();
+        }
     }
-  }
 }

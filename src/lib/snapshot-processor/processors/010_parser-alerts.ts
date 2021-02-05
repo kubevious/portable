@@ -2,16 +2,19 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../backend.git/src/snapshot-processor/processors/010_parser-alerts.ts                        ***/
 
-import { Processor } from "../builder";
+import { Processor } from '../builder'
 
 export default Processor()
-  .order(10)
-  .handler(({ logger, state }) => {
-    state.postProcessAlerts((dn, alerts) => {
-      for (var alert of alerts) {
-        alert.source = {
-          kind: "parser",
-        };
-      }
-    });
-  });
+    .order(10)
+    .handler(({logger, state}) => {
+
+        state.postProcessAlerts((dn, alerts) => {
+            for(var alert of alerts)
+            {
+                alert.source = {
+                    kind: 'parser'
+                };
+            }
+        })
+
+    })

@@ -2,35 +2,30 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../parser.git/src/logic/parsers/110_config-map.ts                                            ***/
 
-import _ from "the-lodash";
-import { ConcreteParser } from "../parser-builder";
+import _ from 'the-lodash';
+import { ConcreteParser } from '../parser-builder';
 
 export default ConcreteParser()
-  .order(110)
-  .target({
-    api: "v1",
-    kind: "ConfigMap",
-  })
-  .kind("configmap")
-  .needNamespaceScope(true)
-  .handler(
-    ({
-      logger,
-      scope,
-      item,
-      createK8sItem,
-      createAlert,
-      namespaceScope,
-      helpers,
-    }) => {
-      var configMapScope = namespaceScope.items.getByConcrete(item)!;
+    .order(110)
+    .target({
+        api: "v1",
+        kind: "ConfigMap"
+    })
+    .kind('configmap')
+    .needNamespaceScope(true)
+    .handler(({ logger, scope, item, createK8sItem, createAlert, namespaceScope, helpers }) => {
 
-      helpers.common.determineSharedFlag(configMapScope);
+        var configMapScope = namespaceScope.items.getByConcrete(item)!;
 
-      if (configMapScope.isNotUsed) {
-        var rawContainer = scope.fetchRawContainer(item, "ConfigMaps");
-        createK8sItem(rawContainer);
-        createAlert("Unused", "warn", "ConfigMap not used.");
-      }
-    }
-  );
+        helpers.common.determineSharedFlag(configMapScope);
+
+        if (configMapScope.isNotUsed)
+        {
+            var rawContainer = scope.fetchRawContainer(item, "ConfigMaps");
+            createK8sItem(rawContainer);
+            createAlert('Unused', 'warn', 'ConfigMap not used.');
+        }
+
+    })
+    ;
+    

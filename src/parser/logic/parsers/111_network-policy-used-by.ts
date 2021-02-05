@@ -2,15 +2,19 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../parser.git/src/logic/parsers/111_network-policy-used-by.ts                                ***/
 
-import _ from "the-lodash";
-import { ScopeParser } from "../parser-builder";
+import _ from 'the-lodash';
+import { ScopeParser } from '../parser-builder';
+
 
 export default ScopeParser()
-  .order(111)
-  .target({
-    namespaced: true,
-    scopeKind: "NetworkPolicy",
-  })
-  .handler(({ itemScope, helpers }) => {
-    helpers.common.determineSharedFlag(itemScope);
-  });
+    .order(111)
+    .target({
+        namespaced: true,
+        scopeKind: 'NetworkPolicy'
+    })
+    .handler(({ itemScope, helpers }) => {
+        
+        helpers.common.determineSharedFlag(itemScope);
+
+    })
+    ;

@@ -2,42 +2,40 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../parser.git/src/logic/parsers/110_persistent-volume-claim.ts                               ***/
 
-import _ from "the-lodash";
-import { ConcreteParser } from "../parser-builder";
+import _ from 'the-lodash';
+import { ConcreteParser } from '../parser-builder';
 
 export default ConcreteParser()
-  .order(110)
-  .target({
-    api: "v1",
-    kind: "PersistentVolumeClaim",
-  })
-  .kind("pvc")
-  .needNamespaceScope(true)
-  .handler(
-    ({ scope, item, createK8sItem, createAlert, namespaceScope, helpers }) => {
-      var pvcScope = namespaceScope.items.getByConcrete(item)!;
+    .order(110)
+    .target({
+        api: "v1",
+        kind: "PersistentVolumeClaim"
+    })
+    .kind('pvc')
+    .needNamespaceScope(true)
+    .handler(({ scope, item, createK8sItem, createAlert, namespaceScope, helpers }) => {
 
-      helpers.common.determineSharedFlag(pvcScope);
+        var pvcScope = namespaceScope.items.getByConcrete(item)!;
 
-      if (pvcScope.isNotUsed) {
-        var rawContainer = scope.fetchRawContainer(
-          item,
-          "PersistentVolumeClaims"
-        );
-        var pvcItem = createK8sItem(rawContainer);
-        createAlert("Unused", "warn", "PersistentVolumeClaim not attached.");
-        pvcScope.registerItem(pvcItem);
-      }
+        helpers.common.determineSharedFlag(pvcScope);
 
-      pvcScope
-        .buildProperties()
-        .fromConfig("StorageClass", "spec.storageClassName")
-        .fromConfig("Status", "status.phase")
-        .fromConfig("Finalizers", "metadata.finalizers")
-        .fromConfig("Capacity Requested", "spec.resources.requests.storage")
-        .fromConfig("Capacity Provided", "status.capacity.storage")
-        .fromConfig("Access Modes", "spec.accessModes")
-        .fromConfig("Volume Mode", "spec.volumeMode")
-        .build();
-    }
-  );
+        if (pvcScope.isNotUsed)
+        {
+            var rawContainer = scope.fetchRawContainer(item, "PersistentVolumeClaims");
+            var pvcItem = createK8sItem(rawContainer);
+            createAlert('Unused', 'warn', 'PersistentVolumeClaim not attached.');
+            pvcScope.registerItem(pvcItem);
+        }
+
+        pvcScope.buildProperties()
+            .fromConfig('StorageClass', 'spec.storageClassName')
+            .fromConfig('Status', 'status.phase')
+            .fromConfig('Finalizers', 'metadata.finalizers')
+            .fromConfig('Capacity Requested', 'spec.resources.requests.storage')
+            .fromConfig('Capacity Provided', 'status.capacity.storage')
+            .fromConfig('Access Modes', 'spec.accessModes')
+            .fromConfig('Volume Mode', 'spec.volumeMode')
+            .build()
+
+    })
+    ;
