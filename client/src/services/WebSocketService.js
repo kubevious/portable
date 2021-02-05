@@ -2,28 +2,33 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../ui.git/src/src/services/WebSocketService.js                                               ***/
 
-import WebSocketSubscriptionClient from 'websocket-subscription-client'
+import WebSocketSubscriptionClient from 'websocket-subscription-client';
 import _ from 'the-lodash'
 
-class WebSocketService {
-    constructor() {
-        this._socket = new WebSocketSubscriptionClient('/socket')
-        this._socket.run()
+class WebSocketService
+{
+    constructor()
+    {
+        this._socket = new WebSocketSubscriptionClient('/socket');
+        this._socket.run();
     }
 
-    close() {
-        this._socket.close()
+    close()
+    {
+        this._socket.close();
     }
 
-    subscribe(target, cb) {
-        return this._socket.subscribe(target, (value) => {
-            cb(value)
-        })
+    subscribe(target, cb)
+    {
+        return this._socket.subscribe(target, value => {
+            cb(value);
+        });
     }
 
-    scope(cb) {
-        return this._socket.scope(cb)
+    scope(cb)
+    {
+        return this._socket.scope(cb);
     }
 }
 
-export default WebSocketService
+export default WebSocketService;

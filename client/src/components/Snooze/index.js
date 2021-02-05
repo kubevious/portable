@@ -22,56 +22,58 @@ class Snooze extends BaseComponent {
     }
 
     get id() {
-        return this.props.id
+        return this.props.id;
     }
 
     get kind() {
-        return this.props.kind
+        return this.props.kind;
     }
 
     handleMarkAsRead(e) {
-        this._submit(e, null)
+        this._submit(e, null);
     }
 
     handleSnooze(e, days) {
-        this._submit(e, days)
+        this._submit(e, days);
     }
 
-    _submit(e, days) {
+    _submit(e, days)
+    {
         const data = {
             kind: this.kind,
             id: this.id,
-            days: days,
+            days: days
         }
 
-        this.service.submitSnooze(data, () => {})
+        this.service.submitSnooze(data, () => {
+            
+        })
     }
 
     render() {
         return (
-            <div className='snooze-btn'>
-                {this.kind == 'message' && (
-                    <>
-                        <button
-                            className='button light'
-                            onClick={this.handleMarkAsRead}
-                        >
-                            Mark as read
-                        </button>
-                    </>
-                )}
+            <div className="snooze-btn">
+                { (this.kind == 'message') && <>
+                    <button
+                        className="button light"
+                        onClick={this.handleMarkAsRead}
+                    >
+                        Mark as read
+                    </button>
+                </>
+                }
                 {this.state.isSnoozed ? (
                     <>
                         <button
-                            name='tomorrow'
-                            className='button light left-btn'
+                            name="tomorrow"
+                            className="button light left-btn"
                             onClick={(e) => this.handleSnooze(e, 1)}
                         >
                             Tomorrow
                         </button>
                         <button
-                            name='week'
-                            className='button light right-btn'
+                            name="week"
+                            className="button light right-btn"
                             onClick={(e) => this.handleSnooze(e, 7)}
                         >
                             In a week
@@ -79,7 +81,7 @@ class Snooze extends BaseComponent {
                     </>
                 ) : (
                     <button
-                        className='button light'
+                        className="button light"
                         onClick={() => this.setState({ isSnoozed: true })}
                     >
                         Remind later

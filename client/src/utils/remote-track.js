@@ -2,8 +2,8 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../ui.git/src/src/utils/remote-track.js                                                      ***/
 
-import { v4 as uuidv4 } from 'uuid'
-import { isEmptyObject } from './util'
+import { v4 as uuidv4 } from 'uuid';
+import { isEmptyObject } from './util';
 
 class RemoteTrack {
     constructor(sharedState) {
@@ -41,7 +41,7 @@ class RemoteTrack {
     }
 
     detectLoading(id) {
-        delete this._requests[id]
+        delete this._requests[id];
 
         if (isEmptyObject(this._requests)) {
             this._sharedState.set('is_loading', false)

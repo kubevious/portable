@@ -2,9 +2,9 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../ui.git/src/src/components/CopyClipboard/index.js                                          ***/
 
-import React, { useState } from 'react'
-import { faClone as farClone } from '@fortawesome/free-regular-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useState } from 'react';
+import { faClone as farClone } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './styles.scss'
 
@@ -26,20 +26,14 @@ const CopyClipboard = ({ text }) => {
     }
 
     return (
-        <div className='icon-wrapper'>
-            {copied && (
-                <div className='copied-container'>
-                    Copied to clipboard
-                    <div className='caret' />
-                </div>
-            )}
+        <div className="icon-wrapper">
+            {copied && <div className="copied-container">
+                Copied to clipboard
+                <div className="caret" />
+            </div>}
 
-            <FontAwesomeIcon
-                className='copy-icon'
-                icon={farClone}
-                onClick={() => copyText()}
-                title='Copy to clipboard'
-            />
+            <FontAwesomeIcon className="copy-icon" icon={farClone} onClick={() => copyText()}
+                             title="Copy to clipboard" />
         </div>
     )
 }

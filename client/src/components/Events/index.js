@@ -6,7 +6,9 @@ import React, { PureComponent } from 'react'
 
 class Events extends PureComponent {
     render() {
-        return <div>Events</div>
+        return(
+            <div>Events</div>
+        )
     }
 }
 

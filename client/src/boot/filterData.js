@@ -2,7 +2,7 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../ui.git/src/src/boot/filterData.js                                                         ***/
 
-const alertsEnum = Object.freeze({ 0: 'at-most', 1: 'at-least' })
+const alertsEnum = Object.freeze({ 0: 'at-most', 1: 'at-least'})
 
 export const FILTERS_LIST = [
     {
@@ -11,13 +11,13 @@ export const FILTERS_LIST = [
         values: [
             {
                 title: 'Label',
-                payload: 'key',
+                payload: 'key'
             },
             {
                 title: 'Value',
-                payload: 'value',
-            },
-        ],
+                payload: 'value'
+            }
+        ]
     },
     {
         payload: 'annotations',
@@ -25,13 +25,13 @@ export const FILTERS_LIST = [
         values: [
             {
                 title: 'Annotation',
-                payload: 'key',
+                payload: 'key'
             },
             {
                 title: 'Value',
-                payload: 'value',
-            },
-        ],
+                payload: 'value'
+            }
+        ]
     },
     {
         payload: 'error',
@@ -41,17 +41,17 @@ export const FILTERS_LIST = [
                 title: 'With errors',
                 payload: {
                     kind: alertsEnum[1],
-                    count: 1,
-                },
+                    count: 1
+                }
             },
             {
                 title: 'Without errors',
                 payload: {
                     kind: alertsEnum[0],
-                    count: 0,
-                },
-            },
-        ],
+                    count: 0
+                }
+            }
+        ]
     },
     {
         payload: 'warn',
@@ -61,16 +61,16 @@ export const FILTERS_LIST = [
                 title: 'With warnings',
                 payload: {
                     kind: alertsEnum[1],
-                    count: 1,
-                },
+                    count: 1
+                }
             },
             {
                 title: 'Without warnings',
                 payload: {
                     kind: alertsEnum[0],
-                    count: 0,
-                },
-            },
-        ],
+                    count: 0
+                }
+            }
+        ]
     },
 ]

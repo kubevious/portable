@@ -14,15 +14,16 @@ class Diagram extends BaseComponent {
     constructor(props) {
         super(props)
 
-        this.view = null
+        this.view = null;
 
         this.registerService({ kind: 'diagram' })
 
-        this.subscribeToSharedState('diagram_data', (diagram_data) => {
-            if (diagram_data) {
-                this._acceptSourceData(diagram_data)
-            }
-        })
+        this.subscribeToSharedState('diagram_data',
+            (diagram_data) => {
+                if (diagram_data) {
+                    this._acceptSourceData(diagram_data);
+                }
+            })
     }
 
     componentDidMount() {
@@ -36,7 +37,7 @@ class Diagram extends BaseComponent {
     }
 
     selectDiagramItem(dn) {
-        this.view.selectNodeByDn(dn)
+        this.view.selectNodeByDn(dn);
     }
 
     _acceptSourceData(sourceData) {
@@ -69,7 +70,7 @@ class Diagram extends BaseComponent {
     }
 
     _setupView() {
-        this.view = new VisualView(d3.select('#diagram'), this.sharedState)
+        this.view = new VisualView(d3.select('#diagram'), this.sharedState);
         this.view.skipShowRoot()
         this.view.setup()
         this._renderData()
@@ -82,12 +83,15 @@ class Diagram extends BaseComponent {
         if (this._sourceData) {
             this.view.acceptSourceData(this._sourceData)
         }
-        this.view.updateAll(true)
+        this.view.updateAll(true);
     }
 
     render() {
-        return <div id='diagram' className='diagram' />
+        return (
+            <div id="diagram" className="diagram"/>
+        )
     }
+
 }
 
 export default Diagram

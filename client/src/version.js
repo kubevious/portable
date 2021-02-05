@@ -2,4 +2,4 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../ui.git/src/src/version.js                                                                 ***/
 
-module.exports = 'v4.5.6'
+module.exports = "v4.5.6";

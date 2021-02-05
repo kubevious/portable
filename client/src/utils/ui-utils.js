@@ -4,25 +4,22 @@
 
 import _ from 'the-lodash'
 import moment from 'moment'
-import {
-    prettyKind as helperPrettyKind,
-    FLAG_TOOLTIPS,
-} from '@kubevious/helpers/dist/docs'
+import { prettyKind as helperPrettyKind, FLAG_TOOLTIPS } from '@kubevious/helpers/dist/docs'
 
 export const prettyKind = (kind) => {
-    var value = helperPrettyKind(kind)
+    var value = helperPrettyKind(kind);
     if (!value) {
-        value = _.upperFirst(kind)
+        value = _.upperFirst(kind);
     }
-    return value
+    return value;
 }
 
 export const flagTooltip = (name) => {
-    var value = FLAG_TOOLTIPS[name]
+    var value = FLAG_TOOLTIPS[name];
     if (!value) {
-        value = null
+        value = null;
     }
-    return value
+    return value;
 }
 
 export function getNodeLogoUrl(kind) {

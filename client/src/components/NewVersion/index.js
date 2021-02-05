@@ -15,20 +15,20 @@ const NewVersion = ({ info }) => {
         version = 'v' + version
     }
     return (
-        <div className='separate-container new-version-inner'>
+        <div className="separate-container new-version-inner">
             <h3>
                 {info.name} ({version}) Available!
             </h3>
             <a
                 href={info.url}
-                target='_blank'
-                className='install-btn button success'
+                target="_blank"
+                className="install-btn button success"
             >
                 Install Now
             </a>
             <div>
                 or visit:
-                <a href={info.url} target='_blank' className='target-link'>
+                <a href={info.url} target="_blank" className="target-link">
                     {info.url}
                 </a>
             </div>

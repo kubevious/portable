@@ -40,16 +40,22 @@ class PropertyGroup extends BaseComponent {
         }
     }
 
-    openMaximized() {
-        const { dn, group } = this.props
+    openMaximized()
+    {
+        const {
+            dn,
+            group,
+        } = this.props
 
         this.sharedState.set('popup_window', {
             title: 'Properties: ' + group,
             content:
                 group.kind !== 'yaml' ? (
-                    <div className={`Property-wrapper p-40 overflow-hide`}>
+                    <div
+                        className={`Property-wrapper p-40 overflow-hide`}
+                    >
                         {dn && (
-                            <div className='container-header'>
+                            <div className="container-header">
                                 <DnComponent dn={dn} />
                                 <h3>{group.title}</h3>
                             </div>
@@ -57,7 +63,10 @@ class PropertyGroup extends BaseComponent {
                         <PropertiesContents group={group} />
                     </div>
                 ) : (
-                    <PropertiesContents group={group} dn={dn} />
+                    <PropertiesContents
+                        group={group}
+                        dn={dn}
+                    />
                 ),
         })
     }
@@ -73,37 +82,37 @@ class PropertyGroup extends BaseComponent {
         } = this.props
 
         return (
-            <div className='property-group'>
+            <div className="property-group">
                 <button
-                    id='expander'
+                    id="expander"
                     className={`expander ${extraClassTitle}`}
                     tag={groupName}
                     onClick={propertyExpanderHandleClick}
                 >
                     {title}
-                    <span className='property-group-openclose' />
+                    <span className="property-group-openclose" />
                     <span
-                        className='property-group-popup'
+                        className="property-group-popup"
                         tag={groupName}
                         onClick={(e) => {
-                            this.openMaximized()
+                            this.openMaximized();
                         }}
                     />
                     {this.tooltip && (
                         <>
                             <span
-                                className='property-group-info'
-                                data-toggle='property-tooltiptext'
-                                data-placement='top'
+                                className="property-group-info"
+                                data-toggle="property-tooltiptext"
+                                data-placement="top"
                             />
-                            <span className='property-tooltiptext'>
+                            <span className="property-tooltiptext">
                                 {this.tooltip}
                             </span>
                         </>
                     )}
                 </button>
-                <div className='scrollbar dark'>
-                    <div className='force-overflow'>
+                <div className="scrollbar dark">
+                    <div className="force-overflow">
                         <div
                             className={`expander-contents ${extraClassContents}`}
                         >

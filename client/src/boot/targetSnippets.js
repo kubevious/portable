@@ -11,5 +11,5 @@ export const snippets = [
     { text: 'labels', displayText: 'labels' },
     { text: 'label', displayText: 'label' },
     { text: 'name', displayText: 'name' },
-    { text: 'debugOutput', displayText: 'debugOutput' },
+    { text: 'debugOutput', displayText: 'debugOutput' }
 ]

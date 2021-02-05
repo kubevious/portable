@@ -71,10 +71,5 @@
         "tabWidth": 4,
         "semi": false,
         "singleQuote": true
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "pretty-quick --staged"
-        }
     }
 }
