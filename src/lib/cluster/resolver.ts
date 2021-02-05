@@ -4,13 +4,14 @@ import fs from "fs";
 import Path from "path";
 import _ from "the-lodash";
 
-const OS_DEFAULT = "default";
-const OS_MAC = "Mac OS X";
-const OS_LINUX = "Linux";
-const OS_WIN = "Windows";
-const OS_LIST = [OS_MAC, OS_LINUX, OS_WIN];
+export enum OS_LIST {
+  OS_MAC = "Mac OS X",
+  OS_LINUX = "Linux",
+  OS_WIN = "Windows",
+  OS_DEFAULT = "default",
+}
 
-class ClusterResolver {
+export default class ClusterResolver {
   private _logger: ILogger;
   private _config: Record<string | number, any>;
   private _dataLocations: string[];
@@ -38,9 +39,9 @@ class ClusterResolver {
           "/root/.config/doctl/config.yaml": {
             needWrite: false,
             os: {
-              [OS_DEFAULT]: "~/.config/doctl/config.yaml",
-              [OS_MAC]: "~/Library/Application\\ Support/doctl/config.yaml",
-              [OS_WIN]: "%USERPROFILE%/AppData/Local/doctl/config/config.yaml",
+              [OS_LIST.OS_DEFAULT]: "~/.config/doctl/config.yaml",
+              [OS_LIST.OS_MAC]: "~/Library/Application\\ Support/doctl/config.yaml",
+              [OS_LIST.OS_WIN]: "%USERPROFILE%/AppData/Local/doctl/config/config.yaml",
             },
           },
         },
@@ -51,8 +52,8 @@ class ClusterResolver {
           "/root/.config/gcloud": {
             needWrite: true,
             os: {
-              [OS_DEFAULT]: "~/.config/gcloud",
-              [OS_WIN]: "%USERPROFILE%/AppData/Roaming/gcloud",
+              [OS_LIST.OS_DEFAULT]: "~/.config/gcloud",
+              [OS_LIST.OS_WIN]: "%USERPROFILE%/AppData/Roaming/gcloud",
             },
           },
         },
@@ -63,8 +64,8 @@ class ClusterResolver {
           "/root/.aws/credentials": {
             needWrite: false,
             os: {
-              [OS_DEFAULT]: "~/.aws/credentials",
-              [OS_WIN]: "%USERPROFILE%/.aws/credentials",
+              [OS_LIST.OS_DEFAULT]: "~/.aws/credentials",
+              [OS_LIST.OS_WIN]: "%USERPROFILE%/.aws/credentials",
             },
           },
         },
@@ -123,7 +124,7 @@ class ClusterResolver {
     this._config.fileMappings[filePath] = {
       needWrite: false,
       os: {
-        [OS_DEFAULT]: srcFilePath,
+        [OS_LIST.OS_DEFAULT]: srcFilePath,
       },
     };
 
@@ -212,9 +213,3 @@ class ClusterResolver {
 }
 
 module.exports = ClusterResolver;
-
-module.exports.OS_MAC = OS_MAC;
-module.exports.OS_LINUX = OS_LINUX;
-module.exports.OS_WIN = OS_WIN;
-module.exports.OS_DEFAULT = OS_DEFAULT;
-module.exports.OS_LIST = OS_LIST;

@@ -5,7 +5,7 @@ import { Promise } from "the-promise";
 import { Context } from "../context";
 import { Cluster, Config, K8config, Body } from "../types";
 const fs = require("fs").promises;
-const ClusterResolver = require("./resolver");
+import ClusterResolver, { OS_LIST } from "./resolver";
 
 export default class ClusterEngine {
   private _context: Context;
@@ -191,8 +191,8 @@ export default class ClusterEngine {
       "/root/.kube/config": {
         needWrite: false,
         os: {
-          [ClusterResolver.OS_DEFAULT]: "~/.kube/config",
-          [ClusterResolver.OS_WIN]: "%USERPROFILE%/.kube/config",
+          [OS_LIST.OS_DEFAULT]: "~/.kube/config",
+          [OS_LIST.OS_WIN]: "%USERPROFILE%/.kube/config",
         },
       },
     };
@@ -205,7 +205,7 @@ export default class ClusterEngine {
 
     var commands = [];
 
-    for (var x of ClusterResolver.OS_LIST) {
+    for (var x of Object.values(OS_LIST)) {
       commands.push({
         os: x,
         command: this._generateRunCommandForOS(x, mappings, clusterConfig),
@@ -223,7 +223,7 @@ export default class ClusterEngine {
     clusterConfig: Record<string | number, any>
   ) {
     var separator = "\\";
-    if (os == ClusterResolver.OS_WIN) {
+    if (os == OS_LIST.OS_WIN) {
       separator = "^";
     }
     var cmd =
@@ -233,7 +233,7 @@ export default class ClusterEngine {
       var mappingInfo = mappings[x];
       var sourcePath = mappingInfo.os[os];
       if (!sourcePath) {
-        sourcePath = mappingInfo.os[ClusterResolver.OS_DEFAULT];
+        sourcePath = mappingInfo.os[OS_LIST.OS_DEFAULT];
       }
       if (sourcePath) {
         var binding = sourcePath + ":" + x;
