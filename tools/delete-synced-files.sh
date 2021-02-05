@@ -33,13 +33,4 @@ function cleanup {
 
 cleanup "${MY_DIR}/../src"
 
-cleanup "${MY_DIR}/../client/public"
-cleanup "${MY_DIR}/../client/node_modules"
-cleanup "${MY_DIR}/../client/src/assets"
-cleanup "${MY_DIR}/../client/src/boot"
-cleanup "${MY_DIR}/../client/src/HOC"
-cleanup "${MY_DIR}/../client/src/utils"
-cleanup "${MY_DIR}/../client/src/styles"
-cleanup "${MY_DIR}/../client/src/state"
-cleanup "${MY_DIR}/../client/src/services-mock"
-cleanup "${MY_DIR}/../client/src/sevices"
+cleanup "${MY_DIR}/../client"
