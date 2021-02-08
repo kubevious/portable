@@ -6,10 +6,10 @@ cd $MY_DIR
 cd $MY_DIR/src
 rm -rf node_modules/
 npm install
-npm update @kubevious/helpers @kubevious/kubik websocket-subscription-server the-promise the-lodash
+npm update @kubevious/helpers websocket-subscription-server the-promise the-lodash the-logger k8s-super-client
 
 cd $MY_DIR/client
 rm -rf node_modules/
 npm install
 npm install --save-dev
-npm update @kubevious/helpers websocket-subscription-client the-promise the-lodash k8s-super-client
+npm update the-lodash @kubevious/helpers
