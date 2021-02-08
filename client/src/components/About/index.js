@@ -19,10 +19,10 @@ const About = ({ result }) => {
                 </tr>
                 </thead>
                 <tbody>
-                {!isEmptyArray(result) && Object.entries(result).map(item => (
-                    <tr key={item[1]}>
-                        <td>{item[0]}</td>
-                        <td>{item[1]}</td>
+                {!isEmptyArray(result) && result.map((item, index) => (
+                    <tr key={index}>
+                        <td>{(item.category ? item.category + ' :: ' : '' ) + item.name}</td>
+                        <td>{item.value}</td>
                     </tr>
                 ))}
                 </tbody>

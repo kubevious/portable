@@ -2,6 +2,8 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../ui.git/src/src/services/BaseService.js                                                    ***/
 
+const _ = require('the-lodash');
+
 class BaseService {
     constructor(client, sharedState, socket, options)
     {
@@ -63,6 +65,18 @@ class BaseService {
         var handler = this.socket.subscribe(target, cb);
         this._socketHandlers.push(handler);
         return handler;
+    }
+
+    _subscribeSocketToSharedState(name, socketTarget, defaultValue)
+    {
+        this.sharedState.set(name, defaultValue);
+
+        this._socketSubscribe(socketTarget, value => {
+            if (_.isNullOrUndefined(value)) {
+                value = defaultValue;
+            }
+            this.sharedState.set(name, value)
+        });
     }
 
     _socketScope(cb)

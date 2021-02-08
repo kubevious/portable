@@ -9,31 +9,35 @@ log_header "Sync from Kubevious"
 
 global_status=0
 function sync {
-    ./copy-file-from-source.sh "$1" "$2" "kubevious"
+    ./copy-file-from-source.sh "$1" "$2" "backend"
     local status=$?
     if [[ ${status} -ne 0 ]]; then
         global_status=1
     fi
 }
 
-sync "index.js" "index.js"
+#Copying utils
+sync "utils/debug-object-logger.ts" "src/lib/utils/debug-object-logger.ts"
+sync "utils/name-helpers.ts" "src/lib/utils/name-helpers.ts"
+# Finish copying utils
 
-sync "lib/snapshot-processor.js" "lib/snapshot-processor.js"
-sync "lib/snapshot-processors/010_parser-alerts.js" "lib/snapshot-processors/010_parser-alerts.js"
-sync "lib/snapshot-processors/200_children-count.js" "lib/snapshot-processors/200_children-count.js"
+#Copying snapshot-processor/processor
+sync "snapshot-processor/processors/010_parser-alerts.ts" "src/lib/snapshot-processor/processors/010_parser-alerts.ts"
+sync "snapshot-processor/processors/200_summary.ts" "src/lib/snapshot-processor/processors/200_summary.ts"
+# Finish copying snapshot-processor/processor
 
-sync "lib/registry/registry.js" "lib/registry/registry.js"
+#Copying server
+sync "server/websocket.ts" "src/lib/server/websocket.ts"
+# Finish copying server
 
-sync "lib/search/engine.js" "lib/search/engine.js"
+#Copying search
+sync "search/autocomplete-builder.ts" "src/lib/search/autocomplete-builder.ts"
+sync "search/results.ts" "src/lib/search/results.ts"
+# Finish copying search
 
-sync "lib/utils/debug-object-logger.js" "lib/utils/debug-object-logger.js"
-sync "lib/utils/name-helpers.js" "lib/utils/name-helpers.js"
-
-sync "lib/routers/top.js" "lib/routers/top.js"
-sync "lib/routers/diagram.js" "lib/routers/diagram.js"
-
-sync "lib/websocket/server.js" "lib/websocket/server.js"
-
+#Copying registry
+sync "registry/registry.ts" "src/lib/registry/registry.ts"
+# Finish copying registry
 
 if [[ global_status -ne 0 ]]; then
     log_error "[sync-from-kubevious] failed"

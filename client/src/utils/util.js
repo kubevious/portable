@@ -57,3 +57,9 @@ export const sortSeverity = (a, b) => {
 
     return 0
 }
+
+export const insertToArray = (arr, index, item) => [
+    ...arr.slice(0, index),
+    item,
+    ...arr.slice(index)
+]

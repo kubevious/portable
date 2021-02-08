@@ -19,22 +19,22 @@ import 'codemirror/theme/darcula.css'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/yaml/yaml'
 
-const Config = ({ group, dn }) => {
+const Config = ({ config, dn, language }) => {
     const [indent, setIndent] = useState(2)
     const [editMode, setEditMode] = useState(false)
 
-    const [code, setCode] = useState(jsyaml.safeDump(group.config, { indent }))
+    const [code, setCode] = useState(jsyaml.safeDump(config, { indent }))
     const [editedConfig, setEditedConfig] = useState(code)
 
     const [fileName, setFileName] = useState('config.yaml')
     const [kubectlCommand, setKubectlCommand] = useState('')
 
     useEffect(() => {
-        var namespace = _.get(group.config, 'metadata.namespace');
+        var namespace = _.get(config, 'metadata.namespace');
         var nameParts = [];
-        nameParts.push(_.get(group.config, 'kind'));
+        nameParts.push(_.get(config, 'kind'));
         nameParts.push(namespace);
-        nameParts.push(_.get(group.config, 'metadata.name'));
+        nameParts.push(_.get(config, 'metadata.name'));
         nameParts = nameParts.filter(x => x);
 
         if (nameParts.length === 0) {
@@ -54,28 +54,35 @@ const Config = ({ group, dn }) => {
     }, [])
 
     useEffect(() => {
-        setCode(jsyaml.safeDump(jsyaml.load(code), { indent }))
+        setCode(jsyaml.safeDump(config, { indent }))
         setEditedConfig(jsyaml.safeDump(jsyaml.load(editedConfig), { indent }))
-    }, [indent])
+    }, [indent, config])
 
     const handleEditedMode = () => {
         setEditMode(!editMode)
 
-        if (!editMode) {
-            const conf = _.cloneDeep(group.config)
-            _.unset(conf, ['metadata', 'uid'])
-            _.unset(conf, ['metadata', 'selfLink'])
-            _.unset(conf, ['metadata', 'resourceVersion'])
-            _.unset(conf, ['metadata', 'generation'])
-            _.unset(conf, ['metadata', 'creationTimestamp'])
-            _.unset(conf, ['status'])
+        const PATHS_TO_UNSET = [
+            'metadata.uid',
+            'metadata.selfLink',
+            'metadata.resourceVersion',
+            'metadata.generation',
+            'metadata.creationTimestamp',
+            'metadata.managedFields',
+            'status'
+        ]
 
+        if (!editMode) {
+            const conf = _.cloneDeep(config)
+            for(let p of PATHS_TO_UNSET)
+            {
+                _.unset(conf, p);
+            }
             setEditedConfig(jsyaml.safeDump(conf, { indent }))
         }
     }
 
     const renderCode = () => {
-        const result = hljs.highlight(group.kind, code)
+        const result = hljs.highlight(language, code)
 
         return (
             <pre>

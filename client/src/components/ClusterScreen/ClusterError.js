@@ -14,8 +14,10 @@ const ClusterError = ({
             <div className='error-box'>
                 {!isEmptyArray(error.messages) && (
                     <div className='error-messages'>
-                        {error.messages.map((msg) => (
-                            <div className='message'>{msg}</div>
+                        {error.messages.map((msg, i) => (
+                            <div key={i} className='message'>
+                                {msg}
+                            </div>
                         ))}
                     </div>
                 )}

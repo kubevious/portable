@@ -1,0 +1,15 @@
+.btn-group {
+  display: flex;
+
+  button {
+      margin-right: 10px;
+
+      &:last-child {
+          margin-right: 0;
+      }
+  }
+}
+
+input[type='file'] {
+  display: none;
+}

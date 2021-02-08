@@ -8,4 +8,6 @@ export NODE_ENV=development
 export KUBECONFIG=~/.kube/config
 export KUBEVIOUS_ON_HOST=true
 
-cd src && npm run dev
+cd src
+npm run build
+npm run dev

@@ -14,4 +14,4 @@ docker run --rm -it \
     -v ~/.aws/credentials:/root/.aws/credentials:ro \
     -v ~/.azure/azureProfile.json:/root/.azure/azureProfile.json:ro \
     -e NODE_ENV=development \
-    kubevious/portable:dev
+    kubevious/portable

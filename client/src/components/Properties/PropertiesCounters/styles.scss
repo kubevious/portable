@@ -1,0 +1,48 @@
+.counters-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    .counter-block {
+        width: 150px;
+        height: 150px;
+        border: 1px solid gray;
+        background-color: #35373E;
+        margin: 20px 40px 20px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .counter-value {
+            flex-basis: 40%;
+            margin-top: 20px;
+            display: flex;
+            align-items: baseline;
+            font-family: 'Montserrat';
+            word-break: break-all;
+            padding: 0 10px;
+            text-align: center;
+
+            span {
+                font-weight: 600;
+                font-size: 32px;
+                line-height: 24px;
+
+                span {
+                    color: #AAAAAA;
+                    font-weight: 400;
+                    font-size: 16px;
+                    padding-left: 5px;
+                    word-break: keep-all;
+                }
+            }
+        }
+
+        label {
+            flex-basis: 20%;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            color: #DDDDDD
+        }
+    }
+}

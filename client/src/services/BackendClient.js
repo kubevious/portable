@@ -59,7 +59,16 @@ class BackendClient {
                 return result;
             })
             .catch(reason => {
-                operation.fail({ data: reason.response.data, status: reason.response.status })
+                let data = null;
+                let status = null;
+                if (reason.response) {
+                    data = reason.response.data;
+                    status = reason.response.status;
+                } else {
+                    data = reason.message;
+                    status = 0;
+                }
+                operation.fail({ data: data, status: status })
                 throw reason;
             });
     }

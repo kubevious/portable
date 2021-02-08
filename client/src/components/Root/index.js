@@ -4,13 +4,14 @@ import GoldenLayoutComponent from '../GoldenLayout'
 import Popup from '../Popup'
 import Header from '../Header'
 import BaseComponent from '../../HOC/BaseComponent'
+import SEO from '../SEO'
 import FieldsSaver from '../../utils/save-fields'
-import ErrorBox from '../ErrorBox';
-import ClusterScreen from '../ClusterScreen';
+import ErrorBox from '../ErrorBox'
+import ClusterScreen from '../ClusterScreen'
 
 class Root extends BaseComponent {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             showPopup: false,
@@ -19,53 +20,59 @@ class Root extends BaseComponent {
             windows: [],
             isError: false,
             error: null,
-            cluster: null,
-            showClustersPopup: true
+            showClustersPopup: true,
         }
 
         this._fieldsSaver = new FieldsSaver('Diagram')
 
-        this.handleShowPopup = this.handleShowPopup.bind(this)
-        this.handleClosePopup = this.handleClosePopup.bind(this)
-        this.handlePopupContent = this.handlePopupContent.bind(this)
         this.handleLayout = this.handleLayout.bind(this)
         this.handleChangeWindow = this.handleChangeWindow.bind(this)
         this.closeError = this.closeError.bind(this)
         this.handleOpenCluster = this.handleOpenCluster.bind(this)
         this.handleCloseClusters = this.handleCloseClusters.bind(this)
 
-        this.subscribeToSharedState('selected_dn',
-            (selected_dn) => {
-                this._fieldsSaver.setValue({ selected_dn })
-            })
-    }
-
-    handleShowPopup() {
-        this.setState({ showPopup: true })
-    }
-
-    handleClosePopup() {
-        this.setState({ showPopup: false })
-    }
-
-    handlePopupContent(content) {
-        this.setState({ popupContent: content })
+        this.subscribeToSharedState(
+            [
+                'selected_dn',
+                'time_machine_enabled',
+                'time_machine_target_date',
+                'time_machine_date_to',
+                'time_machine_duration',
+            ],
+            ({
+                selected_dn,
+                time_machine_enabled,
+                time_machine_target_date,
+                time_machine_date_to,
+                time_machine_duration,
+            }) => {
+                this._fieldsSaver.setValue({
+                    selected_dn,
+                    time_machine_enabled,
+                    time_machine_target_date,
+                    time_machine_date_to,
+                    time_machine_duration,
+                })
+            }
+        )
     }
 
     handleLayout(value) {
         this.setState({
-            layout: value, windows: value._components
-                .filter(item => !item.skipClose)
-                .map(component => ({ ...component, isVisible: true })),
+            layout: value,
+            windows: value._components
+                .filter((item) => !item.skipClose)
+                .map((component) => ({ ...component, isVisible: true })),
         })
 
-        this.subscribeToSharedState(['selected_dn', 'auto_pan_to_selected_dn'],
+        this.subscribeToSharedState(
+            ['selected_dn', 'auto_pan_to_selected_dn'],
             ({ selected_dn, auto_pan_to_selected_dn }) => {
                 if (selected_dn) {
                     value.activateComponent('universeComponent')
                 }
-            },
-        );
+            }
+        )
     }
 
     closeError() {
@@ -76,30 +83,47 @@ class Root extends BaseComponent {
     handleChangeWindow(e) {
         const { windows, layout } = this.state
 
-        const windowId = e.target.getAttribute('tool-window-id');
-        const isVisible = document.getElementById(windowId) !== null;
+        const windowId = e.target.getAttribute('tool-window-id')
+        const isVisible = document.getElementById(windowId) !== null
 
         this.setState({
-            windows: windows.map(component => component.id === windowId ? {
-                ...component,
-                isVisible: isVisible
-            } : component)
+            windows: windows.map((component) =>
+                component.id === windowId
+                    ? {
+                          ...component,
+                          isVisible: isVisible,
+                      }
+                    : component
+            ),
         })
 
         if (isVisible) {
-            layout.hideComponent(windowId);
+            layout.hideComponent(windowId)
         } else {
-            layout.showComponent(windowId);
+            layout.showComponent(windowId)
         }
     }
 
     componentDidMount() {
-        this.subscribeToSharedState(['is_error', 'error'], ({ is_error, error }) => {
-            this.setState({ error: error, isError: is_error })
-        })
+        this.subscribeToSharedState(
+            ['is_error', 'error'],
+            ({ is_error, error }) => {
+                this.setState({ error: error, isError: is_error })
+            }
+        )
 
-        this.subscribeToSharedState('selected_cluster', (selected_cluster) => {
-            this.setState({ cluster: selected_cluster })
+        this.subscribeToSharedState('popup_window', (popup_window) => {
+            if (popup_window) {
+                this.setState({
+                    showPopup: true,
+                    popupContent: popup_window.content,
+                })
+            } else {
+                this.setState({
+                    showPopup: false,
+                    popupContent: null,
+                })
+            }
         })
     }
 
@@ -108,47 +132,64 @@ class Root extends BaseComponent {
     }
 
     handleCloseClusters() {
-        this.setState({ showClustersPopup: false })
+        this.setState({
+            showClustersPopup: false,
+        })
     }
 
     render() {
-        const { showPopup, popupContent, windows, isError, error, cluster, showClustersPopup } = this.state
+        const {
+            showPopup,
+            popupContent,
+            windows,
+            isError,
+            error,
+            showClustersPopup,
+        } = this.state
 
         return (
             <>
-                <div className="mobile-wrapper">
-                    <div className="logo" />
-                    <div className="available-msg">
-                        Sorry!<br /><br />
-                        Kubevious works with Desktop browsers only.<br /><br />
-                        <a href="https://kubevious.io/youtube.html" className="link-cta">See Demo in Youtube</a>
+                <SEO />
+                <div className='mobile-wrapper'>
+                    <div className='logo' />
+                    <div className='available-msg'>
+                        Sorry!
+                        <br />
+                        <br />
+                        Kubevious works with Desktop browsers only.
+                        <br />
+                        <br />
+                        <a
+                            href='https://kubevious.io/youtube.html'
+                            className='link-cta'
+                        >
+                            See Demo in Youtube
+                        </a>
                     </div>
                 </div>
-                <div className="wrapper">
+                <div className='wrapper'>
                     <Header
-                        handleShowPopup={this.handleShowPopup}
-                        handlePopupContent={this.handlePopupContent}
-                        handleClosePopup={this.handleClosePopup}
                         handleChangeWindow={this.handleChangeWindow}
                         handleOpenCluster={this.handleOpenCluster}
                         windows={windows}
                     />
 
-                    {showClustersPopup && <ClusterScreen handleCloseClusters={this.handleCloseClusters} />}
+                    {showClustersPopup && (
+                        <ClusterScreen
+                            handleCloseClusters={this.handleCloseClusters}
+                        />
+                    )}
 
                     <GoldenLayoutComponent
                         diagramSource={this.diagramSource}
                         handleLayout={this.handleLayout}
-                        handleShowPopup={this.handleShowPopup}
-                        handlePopupContent={this.handlePopupContent}
-                        closePopup={this.handleClosePopup}
                     />
 
-                    {showPopup && <Popup closePopup={this.handleClosePopup}>
-                        {popupContent}
-                    </Popup>}
+                    {showPopup && <Popup popupContent={popupContent} />}
 
-                    {isError && <ErrorBox error={error} closeError={this.closeError} />}
+                    {isError && (
+                        <ErrorBox error={error} closeError={this.closeError} />
+                    )}
                 </div>
             </>
         )

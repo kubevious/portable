@@ -1,0 +1,47 @@
+
+.cluster {
+  margin-top: 10px;
+  padding-left: 15px;
+  border-left: 1px solid white;
+  display: flex;
+
+  div {
+    font-family: Montserrat, sans-serif !important;
+  }
+
+  .selected-text {
+    color: #7d8d9c;
+    margin-right: 10px;
+  }
+
+  .cluster-logo {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    background: white;
+    padding: 2px;
+    object-fit: contain;
+    border-radius: 3px;
+    border: 1px solid #1e1e1e;
+  }
+
+  .not-selected-text,
+  .cluster-name {
+    text-decoration: none;
+    color: #449aff;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  .btn-cluster {
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('/img/cluster.svg');
+    margin-left: 10px;
+  }
+}

@@ -8,4 +8,4 @@ winpty docker run --rm -it \
     -v "c:\Users\MI\.kube":/root/.kube \
     -v "c:\Users\MI\.aws\credentials":/root/.aws/credentials \
     -e NODE_ENV=development \
-    kubevious/portable:dev
+    kubevious/portable

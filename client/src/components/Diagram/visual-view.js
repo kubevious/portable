@@ -50,7 +50,7 @@ class VisualView {
     {
         var dict = this.sharedState.get('diagram_expanded_dns');
         dict[dn] = value;
-        this.sharedState.set('diagram_expanded_dns', dict, { skipCompare: true });
+        this.sharedState.set('diagram_expanded_dns', dict);
     }
 
     _measureText(text, fontSpec) {
@@ -664,22 +664,6 @@ class VisualView {
                 return x.x()
             })
             .attr('y', x => x.y())
-
-        d3
-            .select(visualNode.node)
-            .selectAll('.node-marker')
-            .transition()
-            .duration(duration)
-            .attr('transform', x => x.transform())
-
-        d3
-            .select(visualNode.node)
-            .selectAll('.node-marker')
-            .selectAll('.marker-text')
-            .html(x => x.html())
-            .transition()
-            .duration(duration)
-            .attr('fill', x => x.fill())
 
         d3
             .select(visualNode.node)
