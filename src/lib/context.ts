@@ -5,7 +5,7 @@ import { Backend } from "@kubevious/helper-backend";
 import { ProcessingTracker } from "@kubevious/helpers/dist/processing-tracker";
 
 import { FacadeRegistry } from "./facade/registry";
-import ClusterEngine from "./cluster/engine";
+import { ClusterEngine } from "./cluster/engine";
 import { SearchEngine } from "./search/engine";
 import { AutocompleteBuilder } from "./search/autocomplete-builder";
 import { Registry } from "./registry/registry";
@@ -20,7 +20,7 @@ import { WebSocket } from "./server/websocket";
 
 import { SeriesResampler } from "@kubevious/helpers/dist/history/series-resampler";
 
-import { VERSION } from "../version";
+import VERSION from "../version";
 
 const SERVER_PORT = 5001;
 export class Context {
@@ -55,7 +55,6 @@ export class Context {
     this._logger = backend.logger.sublogger("Context");
 
     this._logger.info("Version: %s", VERSION);
-    require("./art");
 
     this._tracker = new ProcessingTracker(this.logger.sublogger("Tracker"));
     this._worldvious = new WorldviousClient(this.logger, "backend", VERSION);

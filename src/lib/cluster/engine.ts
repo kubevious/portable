@@ -5,9 +5,9 @@ import { Promise } from "the-promise";
 import { Context } from "../context";
 import { Cluster, Config, K8config, Body } from "../types";
 const fs = require("fs").promises;
-import ClusterResolver, { OS_LIST } from "./resolver";
+import { ClusterResolver, OS_LIST } from "./resolver";
 
-export default class ClusterEngine {
+export class ClusterEngine {
   private _context: Context;
   private _logger: ILogger;
   private _clustersDict: Record<string | number, any>;
@@ -28,13 +28,13 @@ export default class ClusterEngine {
   }
 
   init() {
-    var configFilePath = process.env.KUBECONFIG || "~/.kube/config";
+    let configFilePath = process.env.KUBECONFIG || "~/.kube/config";
     return this._loadConfigFile(configFilePath).then((data: Config) => {
       return this._setConfig(data);
     });
   }
 
-  _setConfig(config: Config) {
+  private _setConfig(config: Config) {
     return Promise.resolve()
       .then(() => {
         config = config || {};
@@ -42,12 +42,12 @@ export default class ClusterEngine {
         config.clusters = config.clusters || [];
         config.users = config.users || [];
 
-        var usersDict = _.makeDict(
+        let usersDict = _.makeDict(
           config.users,
           (x) => x.name,
           (x) => x.user
         );
-        var clustersDict = _.makeDict(
+        let clustersDict = _.makeDict(
           config.clusters,
           (x) => x.name,
           (x) => x.cluster
@@ -77,12 +77,12 @@ export default class ClusterEngine {
       });
   }
 
-  _buildClusterConfig(
+  private _buildClusterConfig(
     contextConfig: any,
     usersDict: Record<string | number, any>,
     clustersDict: Record<string | number, any>
   ) {
-    var config = {
+    let config = {
       name: contextConfig.name,
       cluster:
         clustersDict[contextConfig.context.user] ||
@@ -97,15 +97,15 @@ export default class ClusterEngine {
     return config;
   }
 
-  _processCluster(clusterConfig: Record<string | number, any>) {
+  private _processCluster(clusterConfig: Record<string | number, any>) {
     this.logger.info("[_processCluster] ", clusterConfig);
-    var resolver = new ClusterResolver(this.logger, clusterConfig);
+    let resolver = new ClusterResolver(this.logger, clusterConfig);
     return resolver.resolve().then(() => {
       this.logger.info("[_processCluster] PostResolve: ", clusterConfig);
     });
   }
 
-  _determineKind(config: K8config) {
+  private _determineKind(config: K8config) {
     const url = new URL(config.cluster.server);
 
     if (config.name == "docker-for-desktop") {
@@ -138,7 +138,7 @@ export default class ClusterEngine {
     return "k8s";
   }
 
-  _loadConfigFile(fileName: string) {
+  private _loadConfigFile(fileName: string) {
     return fs
       .readFile(fileName, "utf8")
       .then((content: string) => {
@@ -166,12 +166,12 @@ export default class ClusterEngine {
   }
 
   fetchDetails(name: string) {
-    var clusterConfig = this._clustersDict[name];
+    let clusterConfig = this._clustersDict[name];
     if (!clusterConfig) {
       return null;
     }
 
-    var details = {
+    let details = {
       name: clusterConfig.name,
       kind: clusterConfig.kind,
       ready: clusterConfig.ready,
@@ -186,26 +186,30 @@ export default class ClusterEngine {
     return details;
   }
 
-  _generateRunCommands(clusterConfig: Record<string | number, any>) {
-    var mappings = {
+  private _generateRunCommands(clusterConfig: Record<string | number, any>) {
+
+    this.logger.info("[_generateRunCommands] ClusterConfig: ", clusterConfig);
+
+    let osConfigs : Record<string, string> = {};
+    osConfigs[OS_LIST.OS_DEFAULT] = "~/.kube/config";
+    osConfigs[OS_LIST.OS_WIN] = "%USERPROFILE%/.kube/config";
+
+    let mappings = {
       "/root/.kube/config": {
         needWrite: false,
-        os: {
-          [OS_LIST.OS_DEFAULT]: "~/.kube/config",
-          [OS_LIST.OS_WIN]: "%USERPROFILE%/.kube/config",
-        },
+        os: osConfigs
       },
     };
 
-    this.logger.info("[_generateRunCommands] ClusterConfig: ", clusterConfig);
+    this.logger.info("[_generateRunCommands] Initial Mappings: ", mappings);
 
     mappings = _.defaults(mappings, clusterConfig.fileMappings);
 
     this.logger.info("[_generateRunCommands] Combined Mappings: ", mappings);
 
-    var commands = [];
+    let commands = [];
 
-    for (var x of Object.values(OS_LIST)) {
+    for (let x of Object.values(OS_LIST)) {
       commands.push({
         os: x,
         command: this._generateRunCommandForOS(x, mappings, clusterConfig),
@@ -217,26 +221,28 @@ export default class ClusterEngine {
     return commands;
   }
 
-  _generateRunCommandForOS(
+  private _generateRunCommandForOS(
     os: string,
     mappings: any,
     clusterConfig: Record<string | number, any>
   ) {
-    var separator = "\\";
+    this.logger.info("[_generateRunCommandForOS] mappings: ", mappings);
+
+    let separator = "\\";
     if (os == OS_LIST.OS_WIN) {
       separator = "^";
     }
-    var cmd =
+    let cmd =
       `docker run --rm -it ${separator}\n` + `  -p 5001:5001 ${separator}\n`;
 
-    for (var x of _.keys(mappings)) {
-      var mappingInfo = mappings[x];
-      var sourcePath = mappingInfo.os[os];
+    for (let x of _.keys(mappings)) {
+      let mappingInfo = mappings[x];
+      let sourcePath = mappingInfo.os[os];
       if (!sourcePath) {
         sourcePath = mappingInfo.os[OS_LIST.OS_DEFAULT];
       }
       if (sourcePath) {
-        var binding = sourcePath + ":" + x;
+        let binding = sourcePath + ":" + x;
         if (!mappingInfo.needWrite) {
           binding += ":ro";
         }
@@ -266,7 +272,7 @@ export default class ClusterEngine {
   }
 
   setActiveCluster(clusterName: string) {
-    var config = this._clustersDict[clusterName] || null;
+    let config = this._clustersDict[clusterName] || null;
     if (!config) {
       return {
         success: false,
@@ -294,5 +300,3 @@ export default class ClusterEngine {
     );
   }
 }
-
-module.exports = ClusterEngine;

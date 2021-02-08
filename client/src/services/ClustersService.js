@@ -14,7 +14,9 @@ class ClustersService extends BaseService {
     }
 
     activateCluster(data, cb) {
-        return this._client.post('/active', data).then((result) => {
+        return this._client.post('/active', {
+            name: data.name
+        }).then((result) => {
             cb(result.data)
         })
     }

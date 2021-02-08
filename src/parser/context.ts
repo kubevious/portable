@@ -18,7 +18,7 @@ import { LogicProcessor } from "./logic/processor";
 
 import { Context as BackendContext } from "../lib/context";
 
-import { VERSION } from "../version";
+import VERSION from "../version";
 
 export class Context {
   private _logger: ILogger;

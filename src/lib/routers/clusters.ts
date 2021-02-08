@@ -1,52 +1,52 @@
 import _ from "the-lodash";
 import { Context } from "../context";
 import { Router } from "@kubevious/helper-backend";
+import Joi from "joi";
+import { Body } from "../types";
 
-module.exports = {
-  url: "/api/clusters",
+export default function (router: Router, context: Context) {
+    router.url("/api/clusters");
 
-  setup: ({
-    router,
-    logger,
-    context,
-  }: {
-    router: Router;
-    logger?: any; //ILogger
-    context: Context;
-  }) => {
-    const reportUserError = (message: string) => {
-      throw new Error(message);
-    };
-
-    router.get("/", function (req, res) {
-      return context.clusterEngine.fetchList();
+    router.get("/", (req, res) => {
+        return context.clusterEngine.fetchList();
     });
 
-    router.get("/info/:name", function (req, res) {
-      return context.clusterEngine.fetchDetails(req.params.name);
+    router.get("/info/:name", (req, res) => {
+        return context.clusterEngine.fetchDetails(req.params.name);
+    })
+    .paramsSchema(
+        Joi.object({
+            name: Joi.string().required(),
+        })
+    );
+
+    router.get("/active", (req, res) => {
+        return context.clusterEngine.getActiveCluster();
     });
 
-    router.get("/active", function (req, res) {
-      return context.clusterEngine.getActiveCluster();
-    });
+    router.post("/active", (req, res) => {
+        return context.clusterEngine.setActiveCluster(req.body.name);
+    })
+    .bodySchema(
+        Joi.object({
+            name: Joi.string().required(),
+        })
+    );
 
-    router.post("/active", function (req, res) {
-      if (!req.body.name) {
-        reportUserError("Missing name.");
-      }
-      return context.clusterEngine.setActiveCluster(req.body.name);
-    });
+    router.get("/create-config", (req, res) => {
+        const config = <Body>req.body;
 
-    router.get("/notifications", function (req, res) {
-      return context.notificationsApp.notificationItems;
-    });
-
-    router.post("/create-config", function (req, res) {
-      if (!req.body.config) {
-        reportUserError("Missing config");
-      }
-
-      return context.clusterEngine.createConfig(req.body);
-    });
-  },
-};
+        return context.clusterEngine.createConfig(config);
+    })
+    .bodySchema(
+        Joi.object({
+            config: Joi.object({
+                config: Joi.string().required(),
+                username: Joi.string().required(),
+                password: Joi.string().required(),
+                remember: Joi.boolean().required(),
+                title: Joi.string().required(),
+            }).required(),
+        })
+    );
+}

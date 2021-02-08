@@ -48,6 +48,11 @@ export class NotificationsApp {
     });
   }
 
+  snooze(kind: string, id: string, days?: number)
+  {
+      return Promise.resolve();
+  }
+
   private _decideNotifications() {
     if (!this._isDictLoaded) {
       return;

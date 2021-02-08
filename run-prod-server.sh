@@ -3,11 +3,12 @@ MY_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE
 MY_DIR="$(dirname $MY_PATH)"
 cd $MY_DIR
 
-export LOG_TO_FILE=false
+export LOG_TO_FILE=true
 export NODE_ENV=production
 export KUBECONFIG=~/.kube/config
 export KUBEVIOUS_ON_HOST=true
+export LOG_LEVEL=error
 
 cd src
 npm run build
-npm run dev
+npm run server

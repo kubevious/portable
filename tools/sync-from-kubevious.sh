@@ -16,8 +16,6 @@ function sync {
     fi
 }
 
-sync "index.ts" "src/lib/index.ts"
-
 #Copying utils
 sync "utils/debug-object-logger.ts" "src/lib/utils/debug-object-logger.ts"
 sync "utils/name-helpers.ts" "src/lib/utils/name-helpers.ts"

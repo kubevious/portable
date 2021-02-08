@@ -11,7 +11,7 @@ export enum OS_LIST {
   OS_DEFAULT = "default",
 }
 
-export default class ClusterResolver {
+export class ClusterResolver {
   private _logger: ILogger;
   private _config: Record<string | number, any>;
   private _dataLocations: string[];
@@ -90,8 +90,7 @@ export default class ClusterResolver {
         if (this._isRunningOnHost) {
           return;
         }
-        console.log(this._config, _.startsWith(server, "https://127.0.0.1:"));
-        var server = this._config.cluster.server;
+        let server = this._config.cluster.server;
         if (_.startsWith(server, "https://127.0.0.1:")) {
           this._config.cluster.server = server.replace(
             "https://127.0.0.1:",
@@ -113,14 +112,14 @@ export default class ClusterResolver {
   }
 
   _registerDataFile(location: string) {
-    var srcFilePath = _.get(this._config, location);
+    let srcFilePath = _.get(this._config, location);
     this.logger.info("[_registerFile] probe: %s => %s", location, srcFilePath);
 
     if (!srcFilePath) {
       return;
     }
 
-    var filePath = this._mapFile(srcFilePath, "/data");
+    let filePath = this._mapFile(srcFilePath, "/data");
     this._config.fileMappings[filePath] = {
       needWrite: false,
       os: {
@@ -130,20 +129,20 @@ export default class ClusterResolver {
 
     _.set(this._config, location, filePath);
 
-    var exists = fs.existsSync(filePath);
+    let exists = fs.existsSync(filePath);
     if (!exists) {
       this._reportError('"' + filePath + '" not found.');
     }
   }
 
   _registerTool(location: string) {
-    var toolPath = _.get(this._config, location);
+    let toolPath = _.get(this._config, location);
     this.logger.info("[_registerTool] probe: %s => %s", location, toolPath);
     if (!toolPath) {
       return;
     }
 
-    var toolName;
+    let toolName;
     if (toolPath.includes("\\")) {
       toolName = Path.win32.basename(toolPath);
     } else {
@@ -156,7 +155,7 @@ export default class ClusterResolver {
       return;
     }
 
-    var toolConfig = this._toolConfigs[toolName];
+    let toolConfig = this._toolConfigs[toolName];
     if (toolConfig) {
       if (!this._config.imageTag) {
         if (toolConfig.imageTag) {
@@ -165,8 +164,8 @@ export default class ClusterResolver {
       }
     }
 
-    var filePath = this._mapFile(toolName, "/tools");
-    var exists = fs.existsSync(filePath);
+    let filePath = this._mapFile(toolName, "/tools");
+    let exists = fs.existsSync(filePath);
     if (!exists) {
       this._reportError('Tool not found: "' + toolName + '"');
     }
@@ -181,10 +180,10 @@ export default class ClusterResolver {
 
     this.logger.info("[_valideToolConfig] %s:", toolName, toolConfig);
 
-    for (var configPath of _.keys(toolConfig.mappings)) {
+    for (let configPath of _.keys(toolConfig.mappings)) {
       this._config.fileMappings[configPath] = toolConfig.mappings[configPath];
 
-      var exists = fs.existsSync(configPath);
+      let exists = fs.existsSync(configPath);
       if (!exists) {
         this._reportError(toolName + ' config not found: "' + configPath + '"');
       }
@@ -197,7 +196,7 @@ export default class ClusterResolver {
     }
     srcFilePath = _.replace(srcFilePath, ":", "");
     srcFilePath = _.replace(srcFilePath, "\\", "/");
-    var filePath = Path.join(rootDir, srcFilePath);
+    let filePath = Path.join(rootDir, srcFilePath);
     return filePath;
   }
 
@@ -211,5 +210,3 @@ export default class ClusterResolver {
     this._config.messages.push(msg);
   }
 }
-
-module.exports = ClusterResolver;
