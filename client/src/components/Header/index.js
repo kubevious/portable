@@ -9,9 +9,9 @@ import Notifications from '../Notifications'
 import BaseComponent from '../../HOC/BaseComponent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import moment from 'moment'
 
 import './styles.scss'
+import './customStyles.scss'
 
 class Header extends BaseComponent {
     constructor(props) {

@@ -58,7 +58,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: -webkit-fill-available;
+    height: calc(100% - 60px);
     font-size: 18px;
     margin: 30px 50px;
     font-family: 'Montserrat', sans-serif;

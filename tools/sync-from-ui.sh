@@ -22,6 +22,8 @@ sync "src/components/About/index.js" "src/components/About/index.js"
 sync "src/components/BurgerMenu/index.js" "src/components/BurgerMenu/index.js"
 sync "src/components/BurgerMenu/styles.scss" "src/components/BurgerMenu/styles.scss"
 
+sync "src/components/Alerts/styles.scss" "src/components/Alerts/styles.scss"
+
 sync "src/components/CopyClipboard/index.js" "src/components/CopyClipboard/index.js"
 sync "src/components/CopyClipboard/styles.scss" "src/components/CopyClipboard/styles.scss"
 
@@ -34,6 +36,10 @@ sync "src/components/Diagram/packer.growing.js" "src/components/Diagram/packer.g
 
 sync "src/components/DnComponent/index.js" "src/components/DnComponent/index.js"
 sync "src/components/DnComponent/styles.scss" "src/components/DnComponent/styles.scss"
+
+sync "src/components/DnShortcutComponent/styles.scss" "src/components/DnShortcutComponent/styles.scss"
+
+sync "src/components/Header/styles.scss" "src/components/Header/styles.scss"
 
 sync "src/components/ErrorBox/index.js" "src/components/ErrorBox/index.js"
 sync "src/components/ErrorBox/styles.scss" "src/components/ErrorBox/styles.scss"
@@ -139,6 +145,7 @@ sync "src/boot/targetSnippets.js" "src/boot/targetSnippets.js"
 # Finish copying utils
 
 sync "src/BaseRootApiService.js" "src/BaseRootApiService.js"
+sync "src/index.scss" "src/index.scss"
 sync "src/version.js" "src/version.js"
 
 if [[ global_status -ne 0 ]]; then

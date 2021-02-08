@@ -1,6 +1,5 @@
 import React from 'react'
 import BaseComponent from '../../HOC/BaseComponent'
-import './styles.scss'
 import { isEmptyArray } from '../../utils/util'
 import cx from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,6 +7,9 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import ClusterList from './ClusterList'
 import ClusterError from './ClusterError'
 import CustomConfig from './CustomConfig'
+
+import './styles.scss'
+import './customStyles.scss'
 
 class ClusterScreen extends BaseComponent {
     constructor(props) {
