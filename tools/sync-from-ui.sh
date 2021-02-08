@@ -26,7 +26,7 @@ sync "src/components/CopyClipboard/index.js" "src/components/CopyClipboard/index
 sync "src/components/CopyClipboard/styles.scss" "src/components/CopyClipboard/styles.scss"
 
 sync "src/components/Summary/index.js" "src/components/Summary/index.js"
-sync "src/components/Summary/styles.scss" "src/components/SummaryCopyClipboard/styles.scss"
+sync "src/components/Summary/styles.scss" "src/components/Summary/styles.scss"
 
 sync "src/components/Diagram/index.js" "src/components/Diagram/index.js"
 sync "src/components/Diagram/styles.scss" "src/components/Diagram/styles.scss"
