@@ -1,0 +1,57 @@
+version: "1.0"
+stages:
+  - "clone"
+  - "build"
+steps:
+
+  clone_init:
+    title: Init Clone
+    stage: clone
+    image: codefresh/cli
+    shell: bash
+    commands:
+      - export PRODUCT_NAME="portable"
+      - cf_export PRODUCT_NAME="${PRODUCT_NAME}"
+      - cf_export GITHUB_TOKEN=$(codefresh get context github --decrypt -o yaml | yq -y .spec.data.auth.password)
+      
+  main_clone:
+    type: "git-clone"
+    title: Clone Main Repo
+    description: "Cloning main repository..."
+    repo: "kubevious/${{CF_REPO_NAME}}"
+    revision: "${{CF_BRANCH}}"
+    stage: clone
+
+  build_base:
+    title: "Building Base Image"
+    type: build
+    image_name: "kubevious/${{PRODUCT_NAME}}"
+    stage: build
+    disable_push: true
+
+  build_aws:
+    title: "Building AWS Image"
+    type: build
+    image_name: "kubevious/${{PRODUCT_NAME}}"
+    stage: build
+    disable_push: true
+    build_arguments:
+      - INSTALL_AWS=true
+
+  build_gcloud:
+    title: "Building GCLOUD Image"
+    type: build
+    image_name: "kubevious/${{PRODUCT_NAME}}"
+    stage: build
+    disable_push: true
+    build_arguments:
+      - INSTALL_GCLOUD=true
+
+  build_do:
+    title: "Building DO Image"
+    type: build
+    image_name: "kubevious/${{PRODUCT_NAME}}"
+    stage: build
+    disable_push: true
+    build_arguments:
+      - INSTALL_DO=true
