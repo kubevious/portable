@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@kubevious/helper-backend": "^1.0.17",
+    "@kubevious/helper-logic-processor": "^1.0.9",
     "@kubevious/helpers": "^1.0.49",
     "@kubevious/worldvious-client": "^1.0.6",
     "base-64": "^0.1.0",

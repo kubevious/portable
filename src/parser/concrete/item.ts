@@ -1,9 +1,11 @@
 import _ from "the-lodash";
 import { ILogger, DumpWriter } from "the-logger";
-import { ItemId } from "../../lib/types";
 import { ConcreteRegistry } from "./registry";
 
-export class ConcreteItem {
+import { ItemId, IConcreteItem } from '@kubevious/helper-logic-processor'
+
+export class ConcreteItem implements IConcreteItem
+{
   private _registry: ConcreteRegistry;
   private _id: ItemId;
   private _config: any;

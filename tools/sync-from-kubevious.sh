@@ -22,6 +22,8 @@ sync "utils/name-helpers.ts" "src/lib/utils/name-helpers.ts"
 # Finish copying utils
 
 #Copying snapshot-processor/processor
+sync "snapshot-processor/index.ts" "src/lib/snapshot-processor/index.ts"
+sync "snapshot-processor/builder.ts" "src/lib/snapshot-processor/builder.ts"
 sync "snapshot-processor/processors/010_parser-alerts.ts" "src/lib/snapshot-processor/processors/010_parser-alerts.ts"
 sync "snapshot-processor/processors/200_summary.ts" "src/lib/snapshot-processor/processors/200_summary.ts"
 # Finish copying snapshot-processor/processor

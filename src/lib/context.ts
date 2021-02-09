@@ -164,7 +164,7 @@ export class Context {
       .then(() => this._server.run())
       .then(() => this._websocket.run())
       .then(() => this._notificationsApp.init())
-      .then(() => this.parserContext.init())
+      .then(() => this.parserContext.run())
       .catch((reason) => {
         this.logger.error(reason);
         process.exit(1);

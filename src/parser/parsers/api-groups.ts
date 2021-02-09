@@ -1,4 +1,4 @@
-import { ApiGroup } from "../types";
+import { ApiGroup } from "./types";
 
 export const API_GROUPS: ApiGroup[] = [
   {

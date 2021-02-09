@@ -71,15 +71,6 @@ export interface ProcessorInfo {
   isDisabled: boolean;
   handler?: Handler;
 }
-
-export interface ItemId {
-  infra: string;
-  api: string;
-  kind: string;
-  namespace?: string;
-  name: string;
-}
-
 export interface K8sConfig {
   server: {} | null;
   token: string | null;
