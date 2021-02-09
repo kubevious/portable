@@ -41,7 +41,7 @@ export class WebServer
         
         return this.server.run()
             .then(() => {
-                console.log(`Ready at http://localhost:${this.server.port}`)
+                console.log(`Running at http://localhost:${this.server.port}`)
                 return this.server;
             });
     }

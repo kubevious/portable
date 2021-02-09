@@ -1,3 +1,5 @@
+import VERSION from "./version";
+
 const DATA = `
                                                               NKXW              
                                                            WXx:,;oKW            
@@ -26,7 +28,9 @@ const DATA = `
                 Nl...............'oXWKkxxkKWXo'...............oN                
                 Nl...............lXWO;....;kWXl...............oN                
                 Nl..............'dWWd'.....lNWd'.............'oN                
-                WKOkkkkkkkkkkkkkOXWWKOkkkkkKW XOOOOOOOOOOOOOOOKW                
-`;
+                WKOkkkkkkkkkkkkkOXWWKOkkkkkKW XOOOOOOOOOOOOOOOKW`;
+
 
 console.log(DATA);
+console.log(`                Kubevious Portable v${VERSION} (https://kubevious.io)`)
+console.log('');

@@ -146,7 +146,6 @@ sync "src/boot/targetSnippets.js" "src/boot/targetSnippets.js"
 
 sync "src/BaseRootApiService.js" "src/BaseRootApiService.js"
 sync "src/index.scss" "src/index.scss"
-sync "src/version.js" "src/version.js"
 
 if [[ global_status -ne 0 ]]; then
     log_error "[sync-from-ui] failed"

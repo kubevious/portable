@@ -11,11 +11,6 @@ class MiscService extends BaseService {
     fetchAbout(cb) {
         let info = []
 
-        info.push({
-            name: 'UI Version',
-            value: require('../version'),
-        })
-
         return Promise.resolve()
             .then(() => {
                 return this._client
@@ -29,7 +24,7 @@ class MiscService extends BaseService {
             })
             .then((result) => {
                 info.push({
-                    name: 'Backend Version',
+                    name: 'Portable Version',
                     value: result,
                 })
             })
