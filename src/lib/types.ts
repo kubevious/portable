@@ -21,7 +21,7 @@ export interface AlertsPayload {
   count: number;
 }
 
-export interface Config {
+export interface KubeConfig {
   contexts?: [];
   clusters?: [];
   users?: [];
@@ -33,14 +33,6 @@ export interface Cluster {
   ready?: boolean;
 }
 
-export interface K8config {
-  name: any;
-  cluster: any;
-  user: any;
-  imageTag: null;
-  toolMappings: {};
-  kind: string;
-}
 
 export interface Body {
   config: string;

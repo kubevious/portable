@@ -3,21 +3,21 @@ import { ILogger } from "the-logger";
 import _ from "the-lodash";
 import { Promise } from "the-promise";
 import { Context } from "../context";
-import { Cluster, Config, K8config, Body } from "../types";
+import { Cluster, KubeConfig, Body } from "../types";
 const fs = require("fs").promises;
-import { ClusterResolver, OS_LIST } from "./resolver";
+import { ClusterResolver  } from "./resolver";
+import { ClusterConfig, OS_LIST } from "./types";
 
 export class ClusterEngine {
   private _context: Context;
   private _logger: ILogger;
-  private _clustersDict: Record<string | number, any>;
+  private _clustersDict: Record<string, ClusterConfig> = {};
   private _clustersList: Cluster[];
   private _selectedClusterConfig: Cluster | null;
   constructor(context: Context) {
     this._context = context;
     this._logger = context.logger.sublogger("ClusterEngine");
 
-    this._clustersDict = {};
     this._clustersList = [];
 
     this._selectedClusterConfig = null;
@@ -29,12 +29,12 @@ export class ClusterEngine {
 
   init() {
     let configFilePath = process.env.KUBECONFIG || "~/.kube/config";
-    return this._loadConfigFile(configFilePath).then((data: Config) => {
+    return this._loadConfigFile(configFilePath).then((data: KubeConfig) => {
       return this._setConfig(data);
     });
   }
 
-  private _setConfig(config: Config) {
+  private _setConfig(config: KubeConfig) {
     return Promise.resolve()
       .then(() => {
         config = config || {};
@@ -67,7 +67,7 @@ export class ClusterEngine {
         );
       })
       .then(() => {
-        this._clustersList = _.values(this._clustersDict).map((x: any) => ({
+        this._clustersList = _.values(this._clustersDict).map((x) => ({
           // Cluster
           name: x.name,
           kind: x.kind,
@@ -82,22 +82,23 @@ export class ClusterEngine {
     usersDict: Record<string | number, any>,
     clustersDict: Record<string | number, any>
   ) {
-    let config = {
+    let config : ClusterConfig = {
       name: contextConfig.name,
-      cluster:
-        clustersDict[contextConfig.context.user] ||
-        clustersDict[contextConfig.context.cluster] ||
-        null,
+      cluster: clustersDict[contextConfig.context.cluster] || null,
       user: usersDict[contextConfig.context.user] || null,
       imageTag: null,
       toolMappings: {},
-      kind: "", // "docker" | "minikube" | "aks" | "gcp" | "do" | "aws" | "k8s"
+      kind: "",
+      ready: true,
+      messages: [],
+      fileMappings: {},
+      hostOverride: null
     };
     config.kind = this._determineKind(config);
     return config;
   }
 
-  private _processCluster(clusterConfig: Record<string | number, any>) {
+  private _processCluster(clusterConfig: ClusterConfig) {
     this.logger.info("[_processCluster] ", clusterConfig);
     let resolver = new ClusterResolver(this.logger, clusterConfig);
     return resolver.resolve().then(() => {
@@ -105,8 +106,8 @@ export class ClusterEngine {
     });
   }
 
-  private _determineKind(config: K8config) {
-    const url = new URL(config.cluster.server);
+  private _determineKind(config: ClusterConfig) {
+    const url = new URL(config.cluster!['server']);
 
     if (config.name == "docker-for-desktop") {
       return "docker";
@@ -133,6 +134,10 @@ export class ClusterEngine {
         if (config.user["exec"]["command"] == "aws") {
           return "aws";
         }
+
+        if (config.user["exec"]["command"] == "aws-iam-authenticator") {
+          return "aws";
+        }
       }
     }
     return "k8s";
@@ -154,7 +159,7 @@ export class ClusterEngine {
   }
 
   createConfig(data: Body) {
-    const configData: Config | {} = yaml.safeLoad(data.config) || {};
+    const configData: KubeConfig | {} = yaml.safeLoad(data.config) || {};
     return this._setConfig(configData).then(() => ({
       clusters: this._clustersList,
       success: true,
@@ -279,6 +284,7 @@ export class ClusterEngine {
         messages: ["Unknown cluster: " + clusterName],
       };
     }
+    this.logger.info("[setActiveCluster] config: ", config);
     if (!config.ready) {
       return {
         success: false,

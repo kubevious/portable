@@ -3,22 +3,18 @@ import { ILogger } from "the-logger";
 import fs from "fs";
 import Path from "path";
 import _ from "the-lodash";
-
-export enum OS_LIST {
-  OS_MAC = "Mac OS X",
-  OS_LINUX = "Linux",
-  OS_WIN = "Windows",
-  OS_DEFAULT = "default",
-}
+import { ClusterConfig, OS_LIST, ToolConfig } from "./types";
+import { TOOL_CONFIGS } from "./tools";
+import { exist } from "joi";
 
 export class ClusterResolver {
   private _logger: ILogger;
-  private _config: Record<string | number, any>;
+  private _config: ClusterConfig;
   private _dataLocations: string[];
   private _toolLocations: string[];
-  private _toolConfigs: any;
   private _isRunningOnHost: boolean;
-  constructor(logger: ILogger, config: Record<string | number, any>) {
+
+  constructor(logger: ILogger, config: ClusterConfig) {
     this._logger = logger;
     this._config = config;
 
@@ -31,48 +27,6 @@ export class ClusterResolver {
       "user.exec.command",
       "user['auth-provider'].config['cmd-path']",
     ];
-
-    this._toolConfigs = {
-      doctl: {
-        imageTag: "do",
-        mappings: {
-          "/root/.config/doctl/config.yaml": {
-            needWrite: false,
-            os: {
-              [OS_LIST.OS_DEFAULT]: "~/.config/doctl/config.yaml",
-              [OS_LIST.OS_MAC]: "~/Library/Application\\ Support/doctl/config.yaml",
-              [OS_LIST.OS_WIN]: "%USERPROFILE%/AppData/Local/doctl/config/config.yaml",
-            },
-          },
-        },
-      },
-      gcloud: {
-        imageTag: "gcp",
-        mappings: {
-          "/root/.config/gcloud": {
-            needWrite: true,
-            os: {
-              [OS_LIST.OS_DEFAULT]: "~/.config/gcloud",
-              [OS_LIST.OS_WIN]: "%USERPROFILE%/AppData/Roaming/gcloud",
-            },
-          },
-        },
-      },
-      aws: {
-        imageTag: "aws",
-        mappings: {
-          "/root/.aws/credentials": {
-            needWrite: false,
-            os: {
-              [OS_LIST.OS_DEFAULT]: "~/.aws/credentials",
-              [OS_LIST.OS_WIN]: "%USERPROFILE%/.aws/credentials",
-            },
-          },
-        },
-      },
-    };
-
-    this._toolConfigs.gcloud["cmd"] = this._toolConfigs["gcloud"];
 
     this._isRunningOnHost = process.env.KUBEVIOUS_ON_HOST == "true";
   }
@@ -90,9 +44,9 @@ export class ClusterResolver {
         if (this._isRunningOnHost) {
           return;
         }
-        let server = this._config.cluster.server;
+        let server = this._config.cluster!.server;
         if (_.startsWith(server, "https://127.0.0.1:")) {
-          this._config.cluster.server = server.replace(
+          this._config.cluster!.server = server.replace(
             "https://127.0.0.1:",
             "https://host.docker.internal:"
           );
@@ -108,10 +62,11 @@ export class ClusterResolver {
         return Promise.serial(this._toolLocations, (x) =>
           this._registerTool(x)
         );
-      });
+      })
+      ;
   }
 
-  _registerDataFile(location: string) {
+  private _registerDataFile(location: string) {
     let srcFilePath = _.get(this._config, location);
     this.logger.info("[_registerFile] probe: %s => %s", location, srcFilePath);
 
@@ -129,13 +84,13 @@ export class ClusterResolver {
 
     _.set(this._config, location, filePath);
 
-    let exists = fs.existsSync(filePath);
+    let exists = this._checkFile(filePath);
     if (!exists) {
       this._reportError('"' + filePath + '" not found.');
     }
   }
 
-  _registerTool(location: string) {
+  private _registerTool(location: string) {
     let toolPath = _.get(this._config, location);
     this.logger.info("[_registerTool] probe: %s => %s", location, toolPath);
     if (!toolPath) {
@@ -155,7 +110,7 @@ export class ClusterResolver {
       return;
     }
 
-    let toolConfig = this._toolConfigs[toolName];
+    let toolConfig = TOOL_CONFIGS[toolName];
     if (toolConfig) {
       if (!this._config.imageTag) {
         if (toolConfig.imageTag) {
@@ -165,7 +120,7 @@ export class ClusterResolver {
     }
 
     let filePath = this._mapFile(toolName, "/tools");
-    let exists = fs.existsSync(filePath);
+    let exists = this._checkFile(filePath);
     if (!exists) {
       this._reportError('Tool not found: "' + toolName + '"');
     }
@@ -173,7 +128,7 @@ export class ClusterResolver {
     return this._valideToolConfig(toolName, toolConfig);
   }
 
-  _valideToolConfig(toolName: string, toolConfig: any) {
+  private _valideToolConfig(toolName: string, toolConfig: ToolConfig) {
     if (!toolConfig) {
       return;
     }
@@ -183,14 +138,14 @@ export class ClusterResolver {
     for (let configPath of _.keys(toolConfig.mappings)) {
       this._config.fileMappings[configPath] = toolConfig.mappings[configPath];
 
-      let exists = fs.existsSync(configPath);
+      let exists = this._checkFile(configPath);
       if (!exists) {
         this._reportError(toolName + ' config not found: "' + configPath + '"');
       }
     }
   }
 
-  _mapFile(srcFilePath: string, rootDir: string) {
+  private _mapFile(srcFilePath: string, rootDir: string) {
     if (this._isRunningOnHost) {
       return srcFilePath;
     }
@@ -200,7 +155,7 @@ export class ClusterResolver {
     return filePath;
   }
 
-  _reportError(msg: string) {
+  private _reportError(msg: string) {
     this._config.ready = false;
     if (this._config.messages.length == 0) {
       this._config.messages.push(
@@ -208,5 +163,12 @@ export class ClusterResolver {
       );
     }
     this._config.messages.push(msg);
+  }
+
+  private _checkFile(filePath: string) : boolean
+  {
+    let exists = fs.existsSync(filePath);
+    this.logger.info("[_checkFile] %s , exists: %s", filePath, exists);
+    return exists;
   }
 }
