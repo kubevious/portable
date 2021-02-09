@@ -1,7 +1,7 @@
 import _ from "the-lodash";
 import { ILogger } from "the-logger";
-import { ItemId } from "../../lib/types";
-import { ApiGroup } from "../types";
+import { ItemId } from "@kubevious/helper-logic-processor";
+import { ApiGroup } from "./types";
 
 import { Context } from "../context";
 

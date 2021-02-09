@@ -11,14 +11,9 @@ import RemoteLoader from "./loaders/remote";
 
 import { K8sParser } from "./parsers/k8s";
 import { FacadeRegistry } from "./facade/registry";
-import { WorldviousClient } from "@kubevious/worldvious-client";
 import { DebugObjectLogger } from "./utils/debug-object-logger";
 
-import { LogicProcessor } from "./logic/processor";
-
 import { Context as BackendContext } from "../lib/context";
-
-import VERSION from "../version";
 
 export class Context {
   private _logger: ILogger;
@@ -26,9 +21,7 @@ export class Context {
   private _loaders: any[] = [];
   private _concreteRegistry: ConcreteRegistry;
   private _k8sParser: K8sParser;
-  private _logicProcessor: LogicProcessor;
   private _facadeRegistry: FacadeRegistry;
-  private _worldvious: WorldviousClient;
   private _areLoadersReady = false;
   private _appContext: BackendContext;
   private _loaderInfo: { loader: RemoteLoader } | null;
@@ -43,11 +36,9 @@ export class Context {
 
     this._concreteRegistry = new ConcreteRegistry(this);
     this._k8sParser = new K8sParser(this);
-    this._logicProcessor = new LogicProcessor(this);
 
     this._facadeRegistry = new FacadeRegistry(this);
 
-    this._worldvious = new WorldviousClient(this._logger, "parser", VERSION);
     this._debugObjectLogger = new DebugObjectLogger(this);
   }
 
@@ -71,10 +62,6 @@ export class Context {
     return this._k8sParser;
   }
 
-  get logicProcessor(): LogicProcessor {
-    return this._logicProcessor;
-  }
-
   get areLoadersReady(): boolean {
     return this._areLoadersReady;
   }
@@ -87,13 +74,8 @@ export class Context {
     return this._appContext;
   }
 
-  get worldvious(): WorldviousClient {
-    return this._worldvious;
-  }
-
-  init() {
-    this.run();
-    return Promise.resolve().then(() => this.facadeRegistry.init());
+  get worldvious() {
+    return this._appContext.worldvious;
   }
 
   addLoader(loader: RemoteLoader) {
@@ -114,8 +96,9 @@ export class Context {
     this._setupTracker();
 
     return Promise.resolve()
-      .then(() => this._worldvious.init())
-      .then(() => this._processLoaders());
+      .then(() => this._processLoaders())
+      .then(() => this.facadeRegistry.init())
+      ;
   }
 
   private _setupTracker() {
@@ -124,10 +107,6 @@ export class Context {
     } else {
       this.tracker.enablePeriodicDebugOutput(30);
     }
-
-    this.tracker.registerListener((extractedData: Handler) => {
-      this._worldvious.acceptMetrics(extractedData);
-    });
   }
 
   private _processLoaders() {

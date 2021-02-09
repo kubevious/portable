@@ -5,4 +5,4 @@ cd $MY_DIR
 
 export BACKEND_URL=http://localhost:5001
 
-npm start
+npm run start

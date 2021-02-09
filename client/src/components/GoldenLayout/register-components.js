@@ -39,6 +39,7 @@ class RegisterComponents {
             location: 'bottom',
             title: 'Alerts',
             allowVerticalScroll: true,
+            height: 20
         })
     }
 }
