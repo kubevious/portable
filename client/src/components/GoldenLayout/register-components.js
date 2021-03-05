@@ -1,5 +1,8 @@
+// import { Diagram } from '@kubevious/ui-diagram'
 import Diagram from '../Diagram'
+// import { Properties, Summary } from '@kubevious/ui-properties'
 import Properties from '../Properties'
+// import { Alerts } from '@kubevious/ui-alerts'
 import Alerts from '../Alerts'
 import Summary from '../Summary'
 
@@ -39,7 +42,7 @@ class RegisterComponents {
             location: 'bottom',
             title: 'Alerts',
             allowVerticalScroll: true,
-            height: 20
+            height: 20,
         })
     }
 }
