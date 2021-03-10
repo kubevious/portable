@@ -2,8 +2,9 @@ import React from 'react'
 import { isEmptyArray } from '../../utils/util'
 import cx from 'classnames'
 import CopyClipboard from '../CopyClipboard'
+import { ClusterErrorProps } from './types'
 
-const ClusterError = ({
+export const ClusterError: React.FunctionComponent<ClusterErrorProps> = ({
     error,
     selectedCommand,
     backToList,
@@ -12,7 +13,7 @@ const ClusterError = ({
     return (
         <>
             <div className='error-box'>
-                {!isEmptyArray(error.messages) && (
+                {error && !isEmptyArray(error.messages) && (
                     <div className='error-messages'>
                         {error.messages.map((msg, i) => (
                             <div key={i} className='message'>
@@ -23,13 +24,13 @@ const ClusterError = ({
                 )}
             </div>
 
-            {!isEmptyArray(error.runCommands) && (
+            {error && !isEmptyArray(error.runCommands) && (
                 <div>
                     Please try running Kubevious Portable using following
                     command:
                     <div className='commands'>
                         <div className='os-tabs'>
-                            {error.runCommands.map((cmd) => (
+                            {error && error.runCommands.map((cmd) => (
                                 <div
                                     className={cx('tab', {
                                         selected: cmd.os === selectedCommand.os,
@@ -55,5 +56,3 @@ const ClusterError = ({
         </>
     )
 }
-
-export default ClusterError

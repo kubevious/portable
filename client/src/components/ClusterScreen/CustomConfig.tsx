@@ -4,41 +4,42 @@ import { Controlled as CodeMirrorEditor } from 'react-codemirror2'
 import 'codemirror/theme/darcula.css'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/yaml/yaml'
+import { CustomConfigProps } from './types'
 
-const CustomConfig = ({ backToList, createCustomConfig }) => {
-    const [config, setConfig] = useState('')
+export const CustomConfig: React.FunctionComponent<CustomConfigProps> = ({ backToList, createCustomConfig }) => {
+    const [config, setConfig] = useState<string>('')
 
-    const handleChangeConfig = ({ editor, data, value }) => {
+    const handleChangeConfig = (value: React.SetStateAction<string>) => {
         setConfig(value)
     }
 
     const uploadConfig = () => {
-        const input = document.getElementById('config-file')
+        const input = document.getElementById('config-file') as HTMLInputElement
 
-        if (input.files.length === 0) {
+        if (input.files && input.files.length === 0) {
             console.error('No file selected.')
             return
         }
 
-        const reader = new FileReader()
+        const reader: FileReader = new FileReader()
         reader.onload = () => {
+            // @ts-ignore: Unreachable code error
             createCustomConfig(reader.result)
         }
 
-        reader.readAsText(input.files[0])
+        input.files && reader.readAsText(input.files[0])
     }
 
     return (
         <div className='CustomConfig-container'>
             <CodeMirrorEditor
                 value={config}
-                name='editedConfig'
                 options={{
                     mode: 'yaml',
                     theme: 'darcula',
                 }}
-                onBeforeChange={(editor, data, value) =>
-                    handleChangeConfig({ editor, data, value })
+                onBeforeChange={(_editor, _data, value) =>
+                    handleChangeConfig(value)
                 }
             />
 
@@ -66,5 +67,3 @@ const CustomConfig = ({ backToList, createCustomConfig }) => {
         </div>
     )
 }
-
-export default CustomConfig

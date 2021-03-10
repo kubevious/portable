@@ -1,7 +1,8 @@
 import React from 'react'
 import cx from 'classnames'
+import { ClusterListProps } from './types'
 
-const ClusterList = ({ clusters, selectedCluster, selectCluster }) => {
+export const ClusterList: React.FunctionComponent<ClusterListProps> = ({ clusters, selectedCluster, selectCluster, addCustomConfig }) => {
     return (
         <div className='clusters'>
             {clusters.map((item) => (
