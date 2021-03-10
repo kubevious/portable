@@ -1,5 +1,5 @@
 import _ from 'the-lodash'
-import FieldsSaver from '../utils/save-fields';
+import { FieldsSaver } from '../utils/save-fields';
 
 import * as DnUtils from '@kubevious/helpers/dist/dn-utils';
 

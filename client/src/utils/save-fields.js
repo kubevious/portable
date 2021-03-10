@@ -4,7 +4,7 @@
 
 import _ from 'the-lodash'
 
-class FieldsSaver {
+export class FieldsSaver {
     constructor(title) {
         this._title = title
         this.fields = {}
@@ -66,5 +66,3 @@ class FieldsSaver {
         return obj
     }
 }
-
-export default FieldsSaver
