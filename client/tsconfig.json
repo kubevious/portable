@@ -17,10 +17,10 @@
         "noEmit": true,
         "jsx": "react-jsx",
         "noImplicitAny": false,
-        "types": ["node"],
+        "types": ["node", "react"],
         "sourceMap": true,
         "strictNullChecks": true
     },
     "include": ["./src"],
-    "exclude": ["node_modules", "test", "dist"]
+    "exclude": ["node_modules"]
 }
