@@ -1,16 +1,19 @@
-import React from 'react'
-import './styles.scss'
-import GoldenLayoutComponent from '../GoldenLayout'
-import Popup from '../Popup'
-import Header from '../Header'
-import BaseComponent from '../../HOC/BaseComponent'
-import SEO from '../SEO'
-import FieldsSaver from '../../utils/save-fields'
-import ErrorBox from '../ErrorBox'
+import React from "react"
+import "./styles.scss"
+import { ClassComponent } from "@kubevious/ui-framework"
+import { FieldsSaver } from "../../utils/save-fields"
+import { ErrorBox, Popup } from '@kubevious/ui-components';
+import { GoldenLayout } from '@kubevious/ui-components';
+import { Header } from "../Header"
+import { SEO } from "../SEO"
 import ClusterScreen from '../ClusterScreen'
+import { RootState } from "./types"
+import { sharedState } from "../../configureService";
+import { components } from "./components";
 
-class Root extends BaseComponent {
-    constructor(props) {
+export class Root extends ClassComponent<{}, RootState> {
+    private _fieldsSaver: FieldsSaver
+    constructor(props: {} | Readonly<{}>) {
         super(props)
 
         this.state = {
@@ -57,33 +60,33 @@ class Root extends BaseComponent {
         )
     }
 
-    handleLayout(value) {
+    handleLayout(value: GoldenLayout): void {
         this.setState({
             layout: value,
-            windows: value._components
+            windows: value.components
                 .filter((item) => !item.skipClose)
                 .map((component) => ({ ...component, isVisible: true })),
         })
 
         this.subscribeToSharedState(
-            ['selected_dn', 'auto_pan_to_selected_dn'],
+            ["selected_dn", "auto_pan_to_selected_dn"],
             ({ selected_dn, auto_pan_to_selected_dn }) => {
                 if (selected_dn) {
-                    value.activateComponent('universeComponent')
+                    value.activateComponent("universeComponent")
                 }
             }
         )
     }
 
-    closeError() {
-        this.sharedState.set('is_error', false)
-        this.sharedState.set('error', null)
+    closeError(): void {
+        this.sharedState.set("is_error", false)
+        this.sharedState.set("error", null)
     }
 
-    handleChangeWindow(e) {
+    handleChangeWindow(e: React.ChangeEvent<HTMLInputElement>): void {
         const { windows, layout } = this.state
 
-        const windowId = e.target.getAttribute('tool-window-id')
+        const windowId = e.target.getAttribute("tool-window-id") || ""
         const isVisible = document.getElementById(windowId) !== null
 
         this.setState({
@@ -98,21 +101,21 @@ class Root extends BaseComponent {
         })
 
         if (isVisible) {
-            layout.hideComponent(windowId)
+            layout && layout.hideComponent(windowId)
         } else {
-            layout.showComponent(windowId)
+            layout && layout.showComponent(windowId)
         }
     }
 
     componentDidMount() {
         this.subscribeToSharedState(
-            ['is_error', 'error'],
+            ["is_error", "error"],
             ({ is_error, error }) => {
                 this.setState({ error: error, isError: is_error })
             }
         )
 
-        this.subscribeToSharedState('popup_window', (popup_window) => {
+        this.subscribeToSharedState("popup_window", (popup_window) => {
             if (popup_window) {
                 this.setState({
                     showPopup: true,
@@ -147,12 +150,16 @@ class Root extends BaseComponent {
             showClustersPopup,
         } = this.state
 
+        function closePopup() {
+            sharedState.set('popup_window', null);
+        }
+
         return (
             <>
                 <SEO />
-                <div className='mobile-wrapper'>
-                    <div className='logo' />
-                    <div className='available-msg'>
+                <div className="mobile-wrapper">
+                    <div className="logo" />
+                    <div className="available-msg">
                         Sorry!
                         <br />
                         <br />
@@ -160,8 +167,8 @@ class Root extends BaseComponent {
                         <br />
                         <br />
                         <a
-                            href='https://kubevious.io/youtube.html'
-                            className='link-cta'
+                            href="https://kubevious.io/youtube.html"
+                            className="link-cta"
                         >
                             See Demo in Youtube
                         </a>
@@ -180,14 +187,14 @@ class Root extends BaseComponent {
                         />
                     )}
 
-                    <GoldenLayoutComponent
-                        diagramSource={this.diagramSource}
+                    <GoldenLayout
                         handleLayout={this.handleLayout}
+                        windows={components}
                     />
 
-                    {showPopup && <Popup popupContent={popupContent} />}
+                    {showPopup && <Popup popupContent={popupContent}  closePopup={closePopup} />}
 
-                    {isError && (
+                    {isError && error && (
                         <ErrorBox error={error} closeError={this.closeError} />
                     )}
                 </div>
@@ -195,5 +202,3 @@ class Root extends BaseComponent {
         )
     }
 }
-
-export default Root
