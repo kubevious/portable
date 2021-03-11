@@ -1,7 +1,8 @@
 import React from 'react'
-import BaseComponent from '../../HOC/BaseComponent'
 import { isEmptyArray } from '../../utils/util'
 import cx from 'classnames'
+import { ClassComponent } from "@kubevious/ui-framework"
+import { IClustersService } from "@kubevious/ui-middleware/dist"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { ClusterList } from './ClusterList'
@@ -10,12 +11,11 @@ import { CustomConfig } from './CustomConfig'
 
 import './styles.scss'
 import './customStyles.scss'
+import { ClusterScreenProps, ClusterScreenState, Cluster } from './types'
 
-class ClusterScreen extends BaseComponent {
-    constructor(props) {
-        super(props)
-
-        this.registerService({ kind: 'clusters' })
+export class ClusterScreen extends ClassComponent<ClusterScreenProps, ClusterScreenState, IClustersService> {
+    constructor(props: ClusterScreenProps) {
+        super(props, null, { kind: 'clusters' })
 
         this.state = {
             clusters: [],
@@ -35,11 +35,11 @@ class ClusterScreen extends BaseComponent {
     }
 
     componentDidMount() {
-        this.service.fetchClusters((result) => {
+        this.service.fetchClusters((result: Cluster[]) => {
             this.setState({ clusters: result })
         })
 
-        this.subscribeToSharedState('selected_cluster', (selected_cluster) => {
+        this.subscribeToSharedState('selected_cluster', (selected_cluster: Cluster) => {
             this.setState({ selectedCluster: selected_cluster })
         })
     }

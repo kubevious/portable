@@ -13,7 +13,7 @@ export type Error = {
 export type Command = {
     os: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal
     command: string
-}
+} | null
 
 export type ClusterErrorProps = {
     error: Error
@@ -29,13 +29,26 @@ export type ClusterListProps = {
     addCustomConfig: () => void
 }
 
-export interface Cluster {
+export type Cluster = {
     name?: string
     kind?: string
     ready?: boolean
-}
+} | null
 
 export type CustomConfigProps = {
     backToList: () => void
     createCustomConfig: (config: string) => void
+}
+
+export type ClusterScreenProps = {
+    handleCloseClusters: () => void
+}
+
+export type ClusterScreenState = {
+    clusters: Cluster[],
+    error: Error,
+    selectedCommand: Command,
+    selectedCluster: Cluster,
+    isLoading: boolean,
+    isCustomConfig: boolean,
 }

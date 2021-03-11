@@ -33,18 +33,18 @@ export const ClusterError: React.FunctionComponent<ClusterErrorProps> = ({
                             {error && error.runCommands.map((cmd) => (
                                 <div
                                     className={cx('tab', {
-                                        selected: cmd.os === selectedCommand.os,
+                                        selected: cmd?.os === selectedCommand?.os,
                                     })}
                                     onClick={() => selectCommand(cmd)}
                                 >
-                                    {cmd.os}
+                                    {cmd?.os}
                                 </div>
                             ))}
                         </div>
 
                         <pre className='command-box'>
-                            <CopyClipboard text={selectedCommand.command} />
-                            {selectedCommand.command}
+                            <CopyClipboard text={selectedCommand?.command} />
+                            {selectedCommand?.command}
                         </pre>
                     </div>
                 </div>

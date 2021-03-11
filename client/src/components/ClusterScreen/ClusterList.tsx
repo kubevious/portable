@@ -7,20 +7,20 @@ export const ClusterList: React.FunctionComponent<ClusterListProps> = ({ cluster
         <div className='clusters'>
             {clusters.map((item) => (
                 <div
-                    key={item.name}
+                    key={item?.name}
                     className={cx('cluster', {
                         selected:
                             selectedCluster &&
-                            selectedCluster.name === item.name,
+                            selectedCluster.name === item?.name,
                     })}
                     onClick={() => selectCluster(item)}
                 >
                     <img
                         className='kubernetes-logo'
-                        src={`/img/clusters/${item.kind}.svg`}
-                        alt={item.kind}
+                        src={`/img/clusters/${item?.kind}.svg`}
+                        alt={item?.kind}
                     />
-                    {item.name}
+                    {item?.name}
                 </div>
             ))}
         </div>
