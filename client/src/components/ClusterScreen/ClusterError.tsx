@@ -1,7 +1,7 @@
 import React from 'react'
 import { isEmptyArray } from '../../utils/util'
 import cx from 'classnames'
-import CopyClipboard from '../CopyClipboard'
+import { CopyClipboard } from '@kubevious/ui-components';
 import { ClusterErrorProps } from './types'
 
 export const ClusterError: React.FunctionComponent<ClusterErrorProps> = ({

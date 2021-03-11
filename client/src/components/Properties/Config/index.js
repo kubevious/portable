@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cx from 'classnames'
 import { Controlled as CodeMirrorEditor } from 'react-codemirror2'
 import _ from 'the-lodash'
-import CopyClipboard from '../../CopyClipboard';
+import { CopyClipboard } from '@kubevious/ui-components';
 
 import './styles.scss'
 
