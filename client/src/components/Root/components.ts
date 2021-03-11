@@ -1,39 +1,27 @@
 import { Alerts } from '@kubevious/ui-alerts';
 import { Diagram } from '@kubevious/ui-diagram';
-import { RuleEditor, MarkerEditor } from '@kubevious/ui-rule-engine'
 import { Properties, Summary } from '@kubevious/ui-properties'
-import { Timeline } from '@kubevious/ui-time-machine'
-import { GoldenLayoutLocation } from '../../types';
 
-export const components = [
+import { GoldenLayoutWindowInfo, GoldenLayoutLocation } from '@kubevious/ui-components';
+
+export const components : GoldenLayoutWindowInfo[] = [
     {
-        name: "Summary",
+        id: "summaryComponent",
         component: Summary,
         location: GoldenLayoutLocation.main,
         title: "Summary",
+        skipClose: true,
         allowVerticalScroll: false,
     },
     {
-        name: "Universe",
+        id: "universeComponent",
         component: Diagram,
         location: GoldenLayoutLocation.main,
         title: "Universe",
         skipClose: true,
     },
     {
-        name: "Rule Editor",
-        component: RuleEditor,
-        location: GoldenLayoutLocation.main,
-        title: "Rule Editor",
-    },
-    {
-        name: "Marker Editor",
-        component: MarkerEditor,
-        location: GoldenLayoutLocation.main,
-        title: "Marker Editor",
-    },
-    {
-        name: "Properties",
+        id: "propertiesComponent",
         component: Properties,
         location: GoldenLayoutLocation.right,
         title: "Properties",
@@ -41,16 +29,9 @@ export const components = [
         allowVerticalScroll: true,
     },
     {
-        name: "Alerts",
+        id: "alertsComponent",
         component: Alerts,
         location: GoldenLayoutLocation.bottom,
         title: "Alerts",
         allowVerticalScroll: true,
-    },
-    {
-        name: "Timeline",
-        component: Timeline,
-        location: GoldenLayoutLocation.bottom,
-        title: "Timeline",
-        allowVerticalScroll: false,
     }]

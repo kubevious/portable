@@ -1,4 +1,5 @@
 import React from "react"
+import _ from "the-lodash"
 import "./styles.scss"
 import { ClassComponent } from "@kubevious/ui-framework"
 import { FieldsSaver } from "../../utils/save-fields"
@@ -13,14 +14,14 @@ import { components } from "./components";
 
 export class Root extends ClassComponent<{}, RootState> {
     private _fieldsSaver: FieldsSaver
+    private _latestVisibleWindows : Record<string, boolean>
+
     constructor(props: {} | Readonly<{}>) {
         super(props)
 
         this.state = {
             showPopup: false,
             popupContent: null,
-            layout: null,
-            windows: [],
             isError: false,
             error: null,
             showClustersPopup: true,
@@ -29,10 +30,13 @@ export class Root extends ClassComponent<{}, RootState> {
         this._fieldsSaver = new FieldsSaver('Diagram')
 
         this.handleLayout = this.handleLayout.bind(this)
-        this.handleChangeWindow = this.handleChangeWindow.bind(this)
         this.closeError = this.closeError.bind(this)
+        this.handleWindowClose = this.handleWindowClose.bind(this);
         this.handleOpenCluster = this.handleOpenCluster.bind(this)
         this.handleCloseClusters = this.handleCloseClusters.bind(this)
+
+        this._latestVisibleWindows = _.makeDict(components, x => x.id, x => true);
+        this.sharedState.set("visible_windows", _.clone(this._latestVisibleWindows));
 
         this.subscribeToSharedState(
             [
@@ -60,19 +64,43 @@ export class Root extends ClassComponent<{}, RootState> {
         )
     }
 
-    handleLayout(value: GoldenLayout): void {
-        this.setState({
-            layout: value,
-            windows: value.components
-                .filter((item) => !item.skipClose)
-                .map((component) => ({ ...component, isVisible: true })),
-        })
+    handleWindowClose(id: string): void {
+        const visible_windows = this.sharedState.get("visible_windows");
+        delete visible_windows[id];
+        delete this._latestVisibleWindows[id];
+        this.sharedState.set("visible_windows", visible_windows);
+    }
+
+    handleLayout(goldenLayout: GoldenLayout): void {
+
+        this.subscribeToSharedState("visible_windows", (visible_windows) => {
+            const toHide = _.keys(this._latestVisibleWindows).filter(x => !visible_windows[x]);
+            const toShow = _.keys(visible_windows).filter(x => !this._latestVisibleWindows[x]);
+            this._latestVisibleWindows = _.clone(visible_windows);
+
+            for(let windowId of toHide) {
+                goldenLayout.hideComponent(windowId)
+            }
+            for(let windowId of toShow) {
+                goldenLayout.showComponent(windowId)
+            }
+        });
 
         this.subscribeToSharedState(
             ["selected_dn", "auto_pan_to_selected_dn"],
             ({ selected_dn, auto_pan_to_selected_dn }) => {
                 if (selected_dn) {
-                    value.activateComponent("universeComponent")
+                    goldenLayout.activateComponent("universeComponent")
+                }
+            }
+        )
+
+        this.subscribeToSharedState(
+            ["rule_editor_selected_rule_id", "focus_rule_editor"],
+            ({ rule_editor_selected_rule_id, focus_rule_editor }) => {
+                if (rule_editor_selected_rule_id && focus_rule_editor) {
+                    goldenLayout.activateComponent("ruleEditorComponent")
+                    this.sharedState.set("focus_rule_editor", false)
                 }
             }
         )
@@ -81,30 +109,6 @@ export class Root extends ClassComponent<{}, RootState> {
     closeError(): void {
         this.sharedState.set("is_error", false)
         this.sharedState.set("error", null)
-    }
-
-    handleChangeWindow(e: React.ChangeEvent<HTMLInputElement>): void {
-        const { windows, layout } = this.state
-
-        const windowId = e.target.getAttribute("tool-window-id") || ""
-        const isVisible = document.getElementById(windowId) !== null
-
-        this.setState({
-            windows: windows.map((component) =>
-                component.id === windowId
-                    ? {
-                          ...component,
-                          isVisible: isVisible,
-                      }
-                    : component
-            ),
-        })
-
-        if (isVisible) {
-            layout && layout.hideComponent(windowId)
-        } else {
-            layout && layout.showComponent(windowId)
-        }
     }
 
     componentDidMount() {
@@ -144,7 +148,6 @@ export class Root extends ClassComponent<{}, RootState> {
         const {
             showPopup,
             popupContent,
-            windows,
             isError,
             error,
             showClustersPopup,
@@ -176,9 +179,8 @@ export class Root extends ClassComponent<{}, RootState> {
                 </div>
                 <div className='wrapper'>
                     <Header
-                        handleChangeWindow={this.handleChangeWindow}
+                        windows={components}
                         handleOpenCluster={this.handleOpenCluster}
-                        windows={windows}
                     />
 
                     {showClustersPopup && (
@@ -188,8 +190,9 @@ export class Root extends ClassComponent<{}, RootState> {
                     )}
 
                     <GoldenLayout
-                        handleLayout={this.handleLayout}
                         windows={components}
+                        handleLayout={this.handleLayout}
+                        handleClose={this.handleWindowClose}
                     />
 
                     {showPopup && <Popup popupContent={popupContent}  closePopup={closePopup} />}
