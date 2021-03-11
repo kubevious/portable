@@ -12,4 +12,14 @@ cd $MY_DIR/client
 rm -rf node_modules/
 npm install
 npm install --save-dev
-npm update the-lodash @kubevious/helpers
+
+npm update \
+    the-lodash \
+    @kubevious/ui-framework \
+    @kubevious/ui-middleware \
+    @kubevious/ui-components \
+    @kubevious/ui-diagram \
+    @kubevious/ui-alerts \
+    @kubevious/ui-properties \
+    @kubevious/helpers \
+    @kubevious/websocket-client
