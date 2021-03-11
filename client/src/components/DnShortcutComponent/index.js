@@ -1,5 +1,5 @@
 import React from 'react'
-import DnComponent from '../DnComponent'
+import { DnComponent } from '@kubevious/ui-components';
 import BaseComponent from '../../HOC/BaseComponent'
 
 import './styles.scss'

@@ -5,13 +5,12 @@
 import React, { useEffect, useState } from 'react'
 import jsyaml from 'js-yaml'
 import hljs from 'highlight.js'
-import DnComponent from '../../DnComponent'
 import { faDownload, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cx from 'classnames'
 import { Controlled as CodeMirrorEditor } from 'react-codemirror2'
 import _ from 'the-lodash'
-import { CopyClipboard } from '@kubevious/ui-components';
+import { CopyClipboard, DnComponent } from '@kubevious/ui-components';
 
 import './styles.scss'
 

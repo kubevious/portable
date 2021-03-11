@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import { propertyGroupTooltip } from '@kubevious/helpers/dist/docs'
 import _ from 'the-lodash'
 import PropertiesContents from '../PropertiesContents'
-import DnComponent from '../../DnComponent'
+import { DnComponent } from '@kubevious/ui-components';
 import BaseComponent from '../../../HOC/BaseComponent'
 
 class PropertyGroup extends BaseComponent {

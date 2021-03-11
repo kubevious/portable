@@ -43,7 +43,7 @@ export const ClusterError: React.FunctionComponent<ClusterErrorProps> = ({
                         </div>
 
                         <pre className='command-box'>
-                            <CopyClipboard text={selectedCommand?.command} />
+                            <CopyClipboard text={selectedCommand?.command || ''} />
                             {selectedCommand?.command}
                         </pre>
                     </div>
