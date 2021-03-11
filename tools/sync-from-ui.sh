@@ -27,7 +27,6 @@ sync "src/components/Feedback/types.ts" "src/components/Feedback/types.ts"
 sync "src/components/Feedback/styles.scss" "src/components/Feedback/styles.scss"
 
 sync "src/components/Header/styles.scss" "src/components/Header/styles.scss"
-sync "src/components/Header/types.ts" "src/components/Header/types.ts"
 
 sync "src/components/MessageNotification/index.tsx" "src/components/MessageNotification/index.tsx"
 sync "src/components/MessageNotification/types.ts" "src/components/MessageNotification/types.ts"
@@ -48,11 +47,10 @@ sync "src/components/Notifications/styles.scss" "src/components/Notifications/st
 sync "src/components/PostFeedback/index.tsx" "src/components/PostFeedback/index.tsx"
 sync "src/components/PostFeedback/styles.scss" "src/components/PostFeedback/styles.scss"
 
-sync "src/components/Root/components.ts" "src/components/Root/components.ts"
-sync "src/components/Root/types.ts" "src/components/Root/types.ts"
 sync "src/components/Root/styles.scss" "src/components/Root/styles.scss"
 
 sync "src/components/Search/styles.scss" "src/components/Search/styles.scss"
+sync "src/components/Search/types.ts" "src/components/Search/types.ts"
 
 sync "src/components/SEO/index.tsx" "src/components/SEO/index.tsx"
 
@@ -63,40 +61,40 @@ sync "src/components/Snooze/styles.scss" "src/components/Snooze/styles.scss"
 sync "src/components/UiLogs/index.tsx" "src/components/UiLogs/index.tsx"
 # Finish copying components
 
-# Copying services
-sync "src/services/BaseService.ts" "src/services/BaseService.ts"
-sync "src/services/WebSocketService.ts" "src/services/WebSocketService.ts"
-# Finish copying services
+# # Copying services
+# sync "src/services/BaseService.ts" "src/services/BaseService.ts"
+# sync "src/services/WebSocketService.ts" "src/services/WebSocketService.ts"
+# # Finish copying services
 
-# Copying services-mock
-sync "src/services-mock/MockMiscService.ts" "src/services-mock/MockMiscService.ts"
-# Finish copying services-mock
+# # Copying services-mock
+# sync "src/services-mock/MockMiscService.ts" "src/services-mock/MockMiscService.ts"
+# # Finish copying services-mock
 
-#Copying state
-sync "src/state/diagram-source.ts" "src/state/diagram-source.ts"
-sync "src/state/kubevious-handler.ts" "src/state/kubevious-handler.ts"
-sync "src/state/state-handler.ts" "src/state/state-handler.ts"
-# Finish copying state
+# #Copying state
+# sync "src/state/diagram-source.ts" "src/state/diagram-source.ts"
+# sync "src/state/kubevious-handler.ts" "src/state/kubevious-handler.ts"
+# sync "src/state/state-handler.ts" "src/state/state-handler.ts"
+# # Finish copying state
 
-#Copying styles
-sync "src/styles/fonts.scss" "src/styles/fonts.scss"
-# Finish copying utils
+# #Copying styles
+# sync "src/styles/fonts.scss" "src/styles/fonts.scss"
+# # Finish copying utils
+
+# #Copying utils
+# sync "src/utils/save-fields.ts" "src/utils/save-fields.ts"
+# sync "src/utils/ui-utils.ts" "src/utils/ui-utils.ts"
+# sync "src/utils/util.ts" "src/utils/util.ts"
+# # Finish copying utils
 
 #Copying utils
-sync "src/utils/save-fields.ts" "src/utils/save-fields.ts"
-sync "src/utils/ui-utils.ts" "src/utils/ui-utils.ts"
-sync "src/utils/util.ts" "src/utils/util.ts"
-# Finish copying utils
+# sync "src/boot/aboutMockData.ts" "src/boot/aboutMockData.ts"
+# sync "src/boot/diagramMockData.ts" "src/boot/diagramMockData.ts"
+# sync "src/boot/filterData.ts" "src/boot/filterData.ts"
+# sync "src/boot/targetSnippets.ts" "src/boot/targetSnippets.ts"
+# # Finish copying utils
 
-#Copying utils
-sync "src/boot/aboutMockData.ts" "src/boot/aboutMockData.ts"
-sync "src/boot/diagramMockData.ts" "src/boot/diagramMockData.ts"
-sync "src/boot/filterData.ts" "src/boot/filterData.ts"
-sync "src/boot/targetSnippets.ts" "src/boot/targetSnippets.ts"
-# Finish copying utils
-
-sync "src/configureService.ts" "src/configureService.ts"
-sync "src/index.scss" "src/index.scss"
+# sync "src/configureService.ts" "src/configureService.ts"
+# sync "src/index.scss" "src/index.scss"
 
 if [[ global_status -ne 0 ]]; then
     log_error "[sync-from-ui] failed"
