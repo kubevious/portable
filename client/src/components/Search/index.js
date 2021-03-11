@@ -4,7 +4,7 @@ import Autocomplete from 'react-autocomplete';
 import { isEmptyArray, isEmptyObject } from '../../utils/util'
 import { KIND_TO_USER_MAPPING } from '@kubevious/helpers/dist/docs'
 import { prettyKind } from '../../utils/ui-utils'
-import DnShortcutComponent from '../DnShortcutComponent'
+import { DnShortcutComponent } from '@kubevious/ui-components';
 import BaseComponent from '../../HOC/BaseComponent'
 import { FILTERS_LIST } from '../../boot/filterData'
 import cx from 'classnames'

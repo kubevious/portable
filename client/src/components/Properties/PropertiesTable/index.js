@@ -5,7 +5,7 @@
 import React from 'react'
 import _ from 'the-lodash'
 import cx from 'classnames'
-import DnShortcutComponent from '../../DnShortcutComponent'
+import { DnShortcutComponent } from '@kubevious/ui-components';
 
 import './styles.scss'
 

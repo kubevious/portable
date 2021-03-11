@@ -3,7 +3,7 @@
 /*** SOURCE: ../ui.git/src/src/components/Properties/DnList/index.js                                      ***/
 
 import React from 'react'
-import DnShortcutComponent from '../../DnShortcutComponent'
+import { DnShortcutComponent } from '@kubevious/ui-components';
 import { isEmptyArray } from '../../../utils/util'
 
 import './styles.scss'
