@@ -1,35 +1,46 @@
-import _ from 'the-lodash'
-import moment from 'moment'
-import {
-    ALERTS_DATA,
-    GRAPH_DATA,
-    HISTORY_GRAPH_DATA,
-    HISTORY_ALERTS,
-    HISTORY_PROPERTIES,
-    HISTORY_RANGE,
-    PROPERTIES_DATA,
-    DN_LIST,
-    SUMMARY_DATA,
-} from '../boot/diagramMockData'
+import _ from "the-lodash"
+import moment from "moment"
 
-class MockDiagramService {
-    constructor(sharedState) {
+import { getRandomDnList } from "./utils"
+
+import { ISharedState } from "@kubevious/ui-framework"
+
+import { IDiagramService } from "@kubevious/ui-middleware"
+import { MockRootApiService } from "./MockRootApiService"
+import {
+    SUMMARY_DATA,
+    GRAPH_DATA,
+    PROPERTIES_DATA,
+    ALERTS_DATA,
+    HISTORY_RANGE,
+    HISTORY_GRAPH_DATA,
+    HISTORY_PROPERTIES,
+    HISTORY_ALERTS,
+} from "../boot/diagramMockData"
+
+export class MockDiagramService implements IDiagramService {
+    private sharedState: ISharedState
+
+    private dateInit: any
+    private _intervals: any[] = []
+
+    constructor(parent: MockRootApiService, sharedState: ISharedState) {
         this.dateInit = moment()
         this.sharedState = sharedState
 
         this.sharedState.set('summary', SUMMARY_DATA)
 
         this.sharedState.subscribe(
-            ['selected_dn', 'time_machine_enabled'],
+            ["selected_dn", "time_machine_enabled"],
             ({ selected_dn, time_machine_enabled }) => {
                 if (selected_dn) {
                     if (!time_machine_enabled) {
                         this.fetchProperties(selected_dn, (data) => {
-                            this.sharedState.set('selected_object_props', data)
+                            this.sharedState.set("selected_object_props", data)
                         })
 
                         this.fetchAlerts(selected_dn, (data) => {
-                            this.sharedState.set('selected_raw_alerts', data)
+                            this.sharedState.set("selected_raw_alerts", data)
                         })
                     }
                 }
@@ -60,31 +71,16 @@ class MockDiagramService {
         }, 200)
     }
 
-    getRandomDnList() {
-        const count = this._randomInt(10) + 3
-        var res = []
-
-        for (var i = 0; i < count; i++) {
-            var dn = DN_LIST[this._randomInt(DN_LIST.length)]
-            res.push(dn)
-        }
-        return res
-    }
-
     fetchSearchResults(criteria, cb) {
         if (!criteria) {
             cb([])
             return
         }
-        var res = this.getRandomDnList()
-        res = res.map((x) => ({
+        let res = getRandomDnList()
+        let res2 = res.map((x) => ({
             dn: x,
         }))
-        cb(res)
-    }
-
-    _randomInt(x) {
-        return Math.floor(Math.random() * x)
+        cb(res2)
     }
 
     fetchHistoryRange(cb) {
@@ -100,19 +96,29 @@ class MockDiagramService {
 
     fetchHistoryProps(dn, date, cb) {
         if (!date) {
-            throw new Error('MISSING DATE')
+            throw new Error("MISSING DATE")
         }
-        dn !== 'summary'
+        dn !== "summary"
             ? cb(_.cloneDeep(HISTORY_PROPERTIES))
             : cb(_.cloneDeep(SUMMARY_DATA))
     }
 
     fetchHistoryAlerts(dn, date, cb) {
         if (!date) {
-            throw new Error('MISSING DATE')
+            throw new Error("MISSING DATE")
         }
         cb(_.cloneDeep(HISTORY_ALERTS))
     }
-}
 
-export default MockDiagramService
+    fetchAutocompleteKeys(
+        type: string,
+        criteria: any,
+        cb: (data: any) => any
+    ): void {}
+
+    fetchAutocompleteValues(
+        type: string,
+        criteria: any,
+        cb: (data: any) => any
+    ): void {}
+}
