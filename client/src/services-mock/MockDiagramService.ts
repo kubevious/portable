@@ -48,6 +48,12 @@ export class MockDiagramService implements IDiagramService {
         )
     }
 
+    fetchHistoryTimeline() {}
+
+    subscribeTimelinePreview() {}
+
+    fetchHistoryTimelinePreview() {}
+
     close() {
         for (let i of this._intervals) {
             clearInterval(i)

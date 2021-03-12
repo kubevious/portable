@@ -21,6 +21,12 @@ export class DiagramService extends BaseService implements IDiagramService {
         this._intervals = [];
     }
 
+    fetchHistoryTimeline() {}
+
+    subscribeTimelinePreview() {}
+
+    fetchHistoryTimelinePreview() {}
+
     fetchDiagram(cb) {
         return this.client.get('/diagram/tree')
             .then(result => {
