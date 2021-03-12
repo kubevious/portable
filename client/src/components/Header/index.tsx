@@ -197,29 +197,6 @@ export class Header extends ClassComponent<HeaderProps, HeaderState, IMiscServic
                         </div>
                     )}
 
-                    <div className='btn-container'>
-                        <button
-                            id='btnHeaderSearch'
-                            type='button'
-                            className='btn btn-search'
-                            onClick={this.openSearch}
-                        />
-                        <span className='tooltiptext'>Object Search</span>
-                    </div>
-
-                    <div className='btn-container'>
-                        <button
-                            className='btn btn-settings'
-                            onMouseEnter={() =>
-                                this.setState({ showSettings: true })
-                            }
-                            onMouseLeave={() =>
-                                this.setState({ showSettings: false })
-                            }
-                        />
-                        {showSettings && this.renderSettings()}
-                    </div>
-
                     <div className="btn-container">
                         <button
                             id="btnHeaderSearch"
