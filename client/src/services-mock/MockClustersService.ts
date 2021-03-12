@@ -1,7 +1,12 @@
+import { ISharedState } from '@kubevious/ui-framework'
+import { IClustersService } from '@kubevious/ui-middleware'
 import { CLUSTERS } from '../boot/clustersMockData'
+import { MockRootApiService } from './MockRootApiService'
 
-class MockClustersService {
-    constructor(sharedState) {
+export class MockClustersService implements IClustersService {
+    private sharedState: ISharedState
+    private _index: number
+    constructor(parent: MockRootApiService, sharedState: ISharedState) {
         this.sharedState = sharedState
 
         this._index = 0
@@ -13,6 +18,10 @@ class MockClustersService {
             }
         }, 2000)
     }
+    
+    createCustomConfig() {}
+
+    close() {}
 
     fetchClusters(cb) {
         cb(CLUSTERS)
@@ -41,5 +50,3 @@ class MockClustersService {
         })
     }
 }
-
-export default MockClustersService
