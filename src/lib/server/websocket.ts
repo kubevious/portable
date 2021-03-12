@@ -8,7 +8,7 @@ import { ILogger } from 'the-logger';
 import { Context } from '../context';
 import { WebServer } from './';
 
-const WebSocketServer = require('websocket-subscription-server').WebSocketServer;
+import { WebSocketServer, WebSocketItem } from '@kubevious/websocket-server'
 
 import * as HashUtils from '@kubevious/helpers/dist/hash-utils';
 
@@ -17,7 +17,7 @@ export class WebSocket
     private _context : Context;
     private _logger : ILogger;
     private _webServer : WebServer;
-    private _socket? : any; //WebSocketServer;
+    private _socket? : WebSocketServer;
 
     constructor(context: Context, webServer : WebServer )
     {
@@ -103,21 +103,16 @@ export class WebSocket
 
     private _makeWsItem(dn: string, config: any) : WebSocketItem
     {
-        let key = {
-            dn: dn,
-            config: config
-        }
-        let item = {
+        // let key = {
+        //     dn: dn,
+        //     config: config
+        // }
+        // config_hash: HashUtils.calculateObjectHashStr(key)
+
+        let item : WebSocketItem = {
             target: { dn: dn },
             value: _.cloneDeep(config),
-            config_hash: HashUtils.calculateObjectHashStr(key)
         }
         return item;
     }
-}
-
-interface WebSocketItem {
-    target: { dn: string },
-    value: any,
-    config_hash: string,
 }

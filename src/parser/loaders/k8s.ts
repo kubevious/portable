@@ -12,21 +12,21 @@ import * as Path from 'path'
 import { Context } from '../context';
 
 import moment from 'moment';
+import { KubernetesClient } from 'k8s-super-client';
 
 export type ReadyHandler = (isReady : boolean) => void;
-
 
 export class K8sLoader 
 {
     private _context : Context;
     private _logger : ILogger;
 
-    private _client : any;
+    private _client : KubernetesClient;
     private _info : any;
     private _apiTargets : Record<string, any> = {};
     private _readyHandler? : ReadyHandler;
 
-    constructor(context : Context, client : any, info : any)
+    constructor(context : Context, client : KubernetesClient, info : any)
     {
         this._logger = context.logger.sublogger("ConcreteRegistry");
         this._context = context;

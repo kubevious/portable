@@ -9,6 +9,9 @@ app.sharedState.register("diagram_expanded_dns", {
     skipCompare: true,
     skipValueOutput: true,
 })
+app.sharedState.register("visible_windows", {
+    skipCompare: true,
+})
 
 function apiFactory(): MockRootApiService | RootApiService {
     const factory =

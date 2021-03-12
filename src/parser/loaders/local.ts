@@ -9,9 +9,7 @@ import { Context } from '../context';
 
 import { K8sLoader, ReadyHandler } from './k8s';
 
-import * as fs from 'fs';
-
-const K8sClient = require('k8s-super-client');
+import { connectFromPod  } from 'k8s-super-client';
 
 export class LocalLoader 
 {
@@ -43,15 +41,7 @@ export class LocalLoader
     
     run() : Promise<any>
     {
-        let k8sConfig = {
-            server: 'https://' + process.env.KUBERNETES_SERVICE_HOST + ':' + process.env.KUBERNETES_SERVICE_PORT_HTTPS,
-            token: fs.readFileSync('/var/run/secrets/kubernetes.io/serviceaccount/token', 'utf8'),
-            httpAgent: {
-                ca: fs.readFileSync('/var/run/secrets/kubernetes.io/serviceaccount/ca.crt', 'utf8')
-            }
-        };
-
-        return Promise.resolve(K8sClient.connect(this._logger, k8sConfig))
+        return Promise.resolve(connectFromPod(this._logger))
             .then(client => {
                 let info = {
                     infra: "local"

@@ -6,12 +6,20 @@ cd $MY_DIR
 cd $MY_DIR/src
 rm -rf node_modules/
 npm install
-npm update @kubevious/helpers @kubevious/helper-backend @kubevious/worldvious-client websocket-subscription-server the-promise the-lodash the-logger k8s-super-client @kubevious/helper-logic-processor
+npm update \
+    the-promise \
+    the-lodash \
+    the-logger \
+    k8s-super-client \
+    @kubevious/helpers \
+    @kubevious/helper-backend \
+    @kubevious/worldvious-client \
+    @kubevious/websocket-server \
+    @kubevious/helper-logic-processor
 
 cd $MY_DIR/client
 rm -rf node_modules/
 npm install
-npm install --save-dev
 
 npm update \
     the-lodash \

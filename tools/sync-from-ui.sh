@@ -58,7 +58,7 @@ sync "src/components/Snooze/index.tsx" "src/components/Snooze/index.tsx"
 sync "src/components/Snooze/types.ts" "src/components/Snooze/types.ts"
 sync "src/components/Snooze/styles.scss" "src/components/Snooze/styles.scss"
 
-sync "src/components/UiLogs/index.tsx" "src/components/UiLogs/index.tsx"
+# sync "src/components/UiLogs/index.tsx" "src/components/UiLogs/index.tsx"
 # Finish copying components
 
 # # Copying services

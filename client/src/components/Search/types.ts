@@ -79,5 +79,7 @@ export type SearchState = {
             values: string[]
         }
     }
-    wasFiltered?: boolean
+    wasFiltered?: boolean,
+    markers?: string[]
+
 }
