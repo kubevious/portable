@@ -6,28 +6,9 @@ cd $MY_DIR
 cd $MY_DIR/src
 rm -rf node_modules/
 npm install
-npm update \
-    the-promise \
-    the-lodash \
-    the-logger \
-    k8s-super-client \
-    @kubevious/helpers \
-    @kubevious/helper-backend \
-    @kubevious/worldvious-client \
-    @kubevious/websocket-server \
-    @kubevious/helper-logic-processor
+${MY_DIR}/update-backend-dependencies.sh
 
 cd $MY_DIR/client
 rm -rf node_modules/
 npm install
-
-npm update \
-    the-lodash \
-    @kubevious/ui-framework \
-    @kubevious/ui-middleware \
-    @kubevious/ui-components \
-    @kubevious/ui-diagram \
-    @kubevious/ui-alerts \
-    @kubevious/ui-properties \
-    @kubevious/helpers \
-    @kubevious/websocket-client
+${MY_DIR}/update-frontend-dependencies.sh

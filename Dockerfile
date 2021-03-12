@@ -1,6 +1,6 @@
 ###############################################################################
 # Step 1 : React Builder Image
-FROM kubevious/node-builder:14 as build
+FROM kubevious/node-builder:14 as react-build
 WORKDIR /app
 # ENV NODE_ENV production
 ENV PATH /app/node_modules/.bin:$PATH

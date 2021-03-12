@@ -11,3 +11,6 @@ docker build \
     --build-arg INSTALL_DO=true \
     -t kubevious/portable \
     .
+
+echo "*** RUN WITH:"
+echo "    $ ./run-dev-docker.sh"
