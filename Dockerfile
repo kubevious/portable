@@ -5,8 +5,8 @@ WORKDIR /app
 # ENV NODE_ENV production
 ENV PATH /app/node_modules/.bin:$PATH
 ENV SKIP_PREFLIGHT_CHECK true
-COPY src/package.json ./
-COPY src/package-lock.json ./
+COPY client/package.json ./
+COPY client/package-lock.json ./
 RUN npm ci
 # RUN npm ci --also=dev
 COPY client/ ./
