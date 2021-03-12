@@ -3,7 +3,7 @@ import _ from "the-lodash"
 import { MockDiagramService } from "./MockDiagramService"
 import { MockWebSocketService } from "./MockWebSocketService"
 import { MockMiscService } from "./MockMiscService"
-import { ClustersService } from './MockClustersService'
+import { MockClustersService } from './MockClustersService'
 
 import { app } from "@kubevious/ui-framework"
 
@@ -24,7 +24,7 @@ export class MockRootApiService {
         })
 
         app.registerService({ kind: 'clusters' }, () => {
-            return new ClustersService(this, sharedState)
+            return new MockClustersService(this, sharedState)
         })
     }
 
