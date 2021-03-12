@@ -6,15 +6,16 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 10px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
 
     & > * {
         padding: 0 20px;
 
         &:focus {
-        outline: none;
-        border: 1px solid #4E515B;
-    }}
+            outline: none;
+            border: 1px solid #4e515b;
+        }
+    }
 
     .left-btn {
         border-radius: 3px 0 0 3px;

@@ -6,10 +6,9 @@ cd $MY_DIR
 cd $MY_DIR/src
 rm -rf node_modules/
 npm install
-npm update @kubevious/helpers @kubevious/helper-backend @kubevious/worldvious-client websocket-subscription-server the-promise the-lodash the-logger k8s-super-client @kubevious/helper-logic-processor
+${MY_DIR}/update-backend-dependencies.sh
 
 cd $MY_DIR/client
 rm -rf node_modules/
 npm install
-npm install --save-dev
-npm update the-lodash @kubevious/helpers
+${MY_DIR}/update-frontend-dependencies.sh

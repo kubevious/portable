@@ -63,17 +63,6 @@ export interface ProcessorInfo {
   isDisabled: boolean;
   handler?: Handler;
 }
-export interface K8sConfig {
-  server: {} | null;
-  token: string | null;
-  httpAgent: {
-    ca?: string;
-    cert?: string;
-    key?: string;
-    rejectUnauthorized?: boolean;
-    servername?: string;
-  };
-}
 
 export interface Options {
   timeout?: number;

@@ -22,6 +22,7 @@
     "@kubevious/helper-backend": "^1.0.17",
     "@kubevious/helper-logic-processor": "^1.0.9",
     "@kubevious/helpers": "^1.0.49",
+    "@kubevious/websocket-server": "^1.0.11",
     "@kubevious/worldvious-client": "^1.0.6",
     "base-64": "^0.1.0",
     "cron": "^1.8.2",
@@ -29,7 +30,7 @@
     "flexsearch": "^0.6.32",
     "joi": "^17.3.0",
     "js-yaml": "^3.14.1",
-    "k8s-super-client": "^1.1.15",
+    "k8s-super-client": "^2.0.0",
     "moment": "^2.29.1",
     "morgan": "^1.10.0",
     "the-lodash": "^2.0.0",
@@ -37,7 +38,6 @@
     "the-promise": "^2.0.4",
     "uuid": "^7.0.2",
     "uuid-parse": "^1.1.0",
-    "websocket-subscription-server": "^1.0.27",
     "yargs": "^15.4.1"
   },
   "devDependencies": {
