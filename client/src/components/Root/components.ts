@@ -33,5 +33,6 @@ export const components : GoldenLayoutWindowInfo[] = [
         component: Alerts,
         location: GoldenLayoutLocation.bottom,
         title: "Alerts",
+        height: 20,
         allowVerticalScroll: true,
     }]
