@@ -33,20 +33,18 @@ export default function (router: Router, context: Context) {
         })
     );
 
-    router.get("/create-config", (req, res) => {
+    router.post("/create-config", (req, res) => {
         const config = <Body>req.body;
 
         return context.clusterEngine.createConfig(config);
     })
     .bodySchema(
         Joi.object({
-            config: Joi.object({
-                config: Joi.string().required(),
-                username: Joi.string().required(),
-                password: Joi.string().required(),
-                remember: Joi.boolean().required(),
-                title: Joi.string().required(),
-            }).required(),
+            config: Joi.string().required(),
+            username: Joi.string(),
+            password: Joi.string(),
+            remember: Joi.boolean(),
+            title: Joi.string(),
         })
     );
 }
