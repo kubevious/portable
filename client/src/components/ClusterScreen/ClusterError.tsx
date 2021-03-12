@@ -30,8 +30,9 @@ export const ClusterError: React.FunctionComponent<ClusterErrorProps> = ({
                     command:
                     <div className='commands'>
                         <div className='os-tabs'>
-                            {error && error.runCommands.map((cmd) => (
+                            {error && error.runCommands.map((cmd, i) => (
                                 <div
+                                    key={i}
                                     className={cx('tab', {
                                         selected: cmd?.os === selectedCommand?.os,
                                     })}
