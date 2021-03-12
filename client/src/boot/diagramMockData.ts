@@ -2,6 +2,8 @@
 /*** FROM OSS UI. ANY CHANGES TO BE MADE IN KUBEVIOUS OSS UI.                                             ***/
 /*** SOURCE: ../ui.git/src/src/boot/diagramMockData.ts                                                    ***/
 
+import { DiagramData } from "../types"
+
 export const GRAPH_DATA = {
     rn: "root",
     kind: "root",
