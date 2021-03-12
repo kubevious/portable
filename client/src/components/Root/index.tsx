@@ -94,16 +94,6 @@ export class Root extends ClassComponent<{}, RootState> {
                 }
             }
         )
-
-        this.subscribeToSharedState(
-            ["rule_editor_selected_rule_id", "focus_rule_editor"],
-            ({ rule_editor_selected_rule_id, focus_rule_editor }) => {
-                if (rule_editor_selected_rule_id && focus_rule_editor) {
-                    goldenLayout.activateComponent("ruleEditorComponent")
-                    this.sharedState.set("focus_rule_editor", false)
-                }
-            }
-        )
     }
 
     closeError(): void {
