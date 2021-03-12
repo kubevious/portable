@@ -1,20 +1,25 @@
-import BaseService from './BaseService'
+import _ from 'the-lodash'
+import { IClustersService } from '@kubevious/ui-middleware';
+import { HttpClient } from '@kubevious/http-client/dist';
+import { SharedState } from '@kubevious/ui-framework/dist';
+import { WebSocketService } from './WebSocketService';
+import { BaseService } from './BaseService';
 
-class ClustersService extends BaseService {
-    constructor(client, sharedState, socket) {
+export class ClustersService extends BaseService  implements IClustersService {
+    constructor(client: HttpClient, sharedState: SharedState, socket: WebSocketService) {
         super(client, sharedState, socket)
 
         this._setupWebSocket()
     }
 
     fetchClusters(cb) {
-        return this._client.get('/').then((result) => {
+        return this.client.get('/').then((result) => {
             cb(result.data)
         })
     }
 
     activateCluster(data, cb) {
-        return this._client.post('/active', {
+        return this.client.post('/active', {
             name: data.name
         }).then((result) => {
             cb(result.data)
@@ -22,7 +27,7 @@ class ClustersService extends BaseService {
     }
 
     createCustomConfig(data, cb) {
-        return this._client
+        return this.client
             .post('/create-config', data)
             .then((result) => {
                 cb(result.data)
@@ -38,5 +43,3 @@ class ClustersService extends BaseService {
         })
     }
 }
-
-export default ClustersService
