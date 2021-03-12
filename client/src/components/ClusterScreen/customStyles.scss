@@ -1,6 +1,4 @@
 .btn-group {
-  display: flex;
-
   button {
       margin-right: 10px;
 
@@ -16,4 +14,8 @@ input[type='file'] {
 
 .cluster {
   align-items: center;
+}
+
+.label-btn {
+  justify-content: center;
 }
