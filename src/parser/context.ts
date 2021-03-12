@@ -7,7 +7,7 @@ import {
 } from "@kubevious/helpers/dist/processing-tracker";
 
 import { ConcreteRegistry } from "./concrete/registry";
-import RemoteLoader from "./loaders/remote";
+import { RemoteLoader } from "./loaders/remote";
 
 import { K8sParser } from "./parsers/k8s";
 import { FacadeRegistry } from "./facade/registry";
