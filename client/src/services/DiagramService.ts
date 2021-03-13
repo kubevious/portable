@@ -140,7 +140,7 @@ export class DiagramService extends BaseService implements IDiagramService {
 
     private _setupProperties()
     {
-        const socketScope = this._socketScope((value, target: { dn: string; }) => {
+        const socketScope = this._socketScope((value, target) => {
             if (!this.sharedState.get('time_machine_enabled'))
             {
                 if (target.dn === this.sharedState.get('selected_dn'))
@@ -168,7 +168,7 @@ export class DiagramService extends BaseService implements IDiagramService {
 
     private _setupAlerts()
     {
-        const socketScope = this._socketScope((value, target: { dn: string; }) => {
+        const socketScope = this._socketScope((value, target) => {
             if (!this.sharedState.get('time_machine_enabled'))
             {
                 if (target.dn === this.sharedState.get('selected_dn'))
