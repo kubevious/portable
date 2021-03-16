@@ -11,7 +11,7 @@ import { ISharedState } from '@kubevious/ui-framework'
 import { IWebSocketService } from '@kubevious/ui-middleware'
 
 import { GRAPH_DATA } from '../boot/diagramMockData'
-import { WebSocketTarget, WebSocketSubscription, WebSocketScope } from '@kubevious/ui-middleware/dist/services/websocket';
+import { WebSocketTarget, WebSocketSubscription, WebSocketScope } from '@kubevious/ui-middleware';
 
 export class MockWebSocketService implements IWebSocketService
 {
@@ -112,6 +112,10 @@ export class MockWebSocketService implements IWebSocketService
 
             }
         }
+    }
+
+    updateContext(updatedContext: WebSocketTarget)
+    {
     }
 
     private _handleSubscriptions(subscriptions: WebSocketTarget[], cb: (value: any, target: WebSocketTarget) => any)

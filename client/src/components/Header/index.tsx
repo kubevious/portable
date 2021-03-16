@@ -12,8 +12,8 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import './styles.scss'
 import './customStyles.scss'
 import { HeaderProps, HeaderState } from './types'
-import { ClassComponent } from '@kubevious/ui-framework/dist'
-import { IMiscService } from '@kubevious/ui-middleware/dist'
+import { ClassComponent } from '@kubevious/ui-framework'
+import { IMiscService } from '@kubevious/ui-middleware'
 import { GoldenLayoutWindowInfo } from "@kubevious/ui-components"
 import { Cluster } from '../ClusterScreen/types'
 

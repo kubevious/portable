@@ -6,7 +6,7 @@ import _ from 'the-lodash';
 
 import { HttpClient, ISharedState } from '@kubevious/ui-framework'
 import { IWebSocketService } from '@kubevious/ui-middleware';
-import { WebSocketTarget, WebSocketSubscription, WebSocketScope } from '@kubevious/ui-middleware/dist/services/websocket';
+import { WebSocketTarget, WebSocketSubscription, WebSocketScope } from '@kubevious/ui-middleware';
 
 export class BaseService
 {

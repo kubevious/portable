@@ -2,7 +2,7 @@ import React from 'react'
 import { isEmptyArray } from '../../utils/util'
 import cx from 'classnames'
 import { ClassComponent } from "@kubevious/ui-framework"
-import { IClustersService } from "@kubevious/ui-middleware/dist"
+import { IClustersService } from "@kubevious/ui-middleware"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { ClusterList } from './ClusterList'

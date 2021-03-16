@@ -6,7 +6,7 @@ import { StateHandler } from './state-handler'
 import { DiagramSource } from './diagram-source'
 
 import { app } from '@kubevious/ui-framework';
-import { IDiagramService, IWebSocketService } from '@kubevious/ui-middleware/dist';
+import { IDiagramService, IWebSocketService } from '@kubevious/ui-middleware';
 
 export class KubeviousHandler
 {
