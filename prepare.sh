@@ -12,3 +12,4 @@ cd $MY_DIR/client
 rm -rf node_modules/
 npm install
 ${MY_DIR}/update-frontend-dependencies.sh
+${MY_DIR}/dev-sync-public.sh

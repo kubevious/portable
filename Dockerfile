@@ -10,6 +10,7 @@ COPY client/package-lock.json ./
 RUN npm ci
 # RUN npm ci --also=dev
 COPY client/ ./
+RUN ./tools/sync-public.sh
 RUN npm run build
 
 ###############################################################################
