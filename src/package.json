@@ -31,7 +31,7 @@
     "joi": "^17.3.0",
     "js-yaml": "^3.14.1",
     "k8s-super-client": "^2.0.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "morgan": "^1.10.0",
     "the-lodash": "^2.0.0",
     "the-logger": "^2.0.5",
