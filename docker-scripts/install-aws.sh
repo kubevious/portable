@@ -1,4 +1,4 @@
-apk --no-cache add ca-certificates wget curl
+apk --no-cache add ca-certificates wget curl zstd tar
 
 wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
 wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk
@@ -7,7 +7,7 @@ rm glibc-2.28-r0.apk
 
 curl -Lso /tmp/libz.tar.xz https://www.archlinux.org/packages/core/x86_64/zlib/download
 mkdir -p /tmp/libz
-tar -xf /tmp/libz.tar.xz -C /tmp/libz
+tar --zstd -vxf /tmp/libz.tar.xz -C /tmp/libz
 cp /tmp/libz/usr/lib/libz.so.* /usr/glibc-compat/lib
 
 # Install aws cli
